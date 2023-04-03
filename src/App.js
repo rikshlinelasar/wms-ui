@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
-function App() {
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
+
+import LoginForm from "./components/LoginForm/LoginForm";
+import Home from "./pages/Home/Home";
+import LPNDateCheck from "./pages/LPNDateCheck/LPNDateCheck";
+import { persistor, store } from "./redux/store";
+import theme from "./styles/theme";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Router>
+              <Routes>
+                <Route exact path="/" Component={Home} />
+                <Route path="/login" Component={LoginForm} />
+                <Route path="/lpn-date-check" Component={LPNDateCheck} />
+              </Routes>
+            </Router>
+          </LocalizationProvider>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
-}
+};
 
 export default App;
