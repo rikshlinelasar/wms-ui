@@ -13,8 +13,8 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginUser } from "../../redux/reducers/settingsSlice";
 
+import { loginUser } from "../../redux/reducers/settingsSlice";
 import Copyright from "../Copyright/Copyright";
 
 const LoginForm = () => {
@@ -74,12 +74,7 @@ const LoginForm = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
           <Grid container>

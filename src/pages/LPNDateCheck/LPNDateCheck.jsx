@@ -65,7 +65,7 @@ import rows from "../../constants/rows";
 //   createData("Brazil", "BR", 210147125, 8515767),
 // ];
 
-const LPNDateCheck = (props) => {
+const LPNDateCheck = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage] = React.useState(10);
 
@@ -101,12 +101,7 @@ const LPNDateCheck = (props) => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         const renderChildren = (() => {
@@ -117,9 +112,7 @@ const LPNDateCheck = (props) => {
                               return (
                                 <DatePicker
                                   inputFormat="MM/DD/YYYY"
-                                  defaultValue={
-                                    value ? dayjs(value) : undefined
-                                  }
+                                  defaultValue={value ? dayjs(value) : undefined}
                                 />
                               );
                             case column.isSave:
