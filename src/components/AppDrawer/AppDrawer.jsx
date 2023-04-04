@@ -1,5 +1,4 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { Divider, Drawer, IconButton } from "@mui/material";
+import { Divider, Drawer } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -42,11 +41,7 @@ const AppDrawer = () => {
         },
       }}
     >
-      <DrawerHeader>
-        <IconButton onClick={handleClose}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </DrawerHeader>
+      <DrawerHeader />
       <Divider />
       <List>
         <ListItemButton>

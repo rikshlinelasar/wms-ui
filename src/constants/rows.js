@@ -28,6 +28,7 @@ const rows = [
     expiryDate: 1,
     manufactureDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    expirationDate: "2022-04-12",
   },
   {
     code: "3",
