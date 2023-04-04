@@ -7,13 +7,13 @@ import Toolbar from "@mui/material/Toolbar";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { logoutUser } from "../../redux/reducers/settingsSlice";
-import { settingsState } from "../../redux/store";
+import { logoutUser } from "../../redux/reducers/authSlice";
+import { authState } from "../../redux/store";
 import AppDrawer from "../AppDrawer/AppDrawer";
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector(settingsState);
+  const { user } = useSelector(authState);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);

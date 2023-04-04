@@ -1,6 +1,9 @@
 import "./App.css";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
@@ -10,8 +13,6 @@ import Home from "./pages/Home/Home";
 import LPNDateCheck from "./pages/LPNDateCheck/LPNDateCheck";
 import { persistor, store } from "./redux/store";
 import theme from "./styles/theme";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const App = () => {
   return (

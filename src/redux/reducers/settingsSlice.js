@@ -1,32 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
-import axios from "../../constants/axios";
-
-import { TOKEN_COOKIE } from "./../../constants/cookies";
 
 const initialState = {
-  user: null,
+  isDrawerOpen: false,
 };
 
 export const settingsSlice = createSlice({
   name: "settings",
   initialState: initialState,
   reducers: {
-    loginUser(state, { payload }) {
-      Cookies.set(TOKEN_COOKIE, payload.token, { expires: 10 });
-      axios.defaults.headers.common.Authorization = `Bearer ${payload.token}`;
-      state.user = payload;
+    openDrawer(state) {
+      state.isDrawerOpen = true;
     },
-    logoutUser(state) {
-      Cookies.remove(TOKEN_COOKIE);
-      axios.defaults.headers.common.Authorization = undefined;
-      state.user = null;
+    closeDrawer(state) {
+      state.isDrawerOpen = false;
     },
   },
 });
 
-export const { loginUser, logoutUser } = settingsSlice.actions;
+export const { openDrawer, closeDrawer } = settingsSlice.actions;
 
-export const authReducer = settingsSlice.reducer;
+export const settingsReducer = settingsSlice.reducer;
 
-export default authReducer;
+export default settingsReducer;

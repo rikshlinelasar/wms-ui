@@ -14,7 +14,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { loginUser } from "../../redux/reducers/settingsSlice";
+import { loginUser } from "../../redux/reducers/authSlice";
 import Copyright from "../Copyright/Copyright";
 
 const LoginForm = () => {
