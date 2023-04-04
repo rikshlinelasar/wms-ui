@@ -1,37 +1,35 @@
 import { Menu } from "@mui/icons-material";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import AppBar from "../../components-styled/AppBar/AppBar";
 import { logoutUser } from "../../redux/reducers/authSlice";
-import { authState } from "../../redux/store";
-import AppDrawer from "../AppDrawer/AppDrawer";
+import { toggleDrawer } from "../../redux/reducers/settingsSlice";
+import { authState, settingsState } from "../../redux/store";
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(authState);
-  const [isOpen, setIsOpen] = useState(false);
+  const { isDrawerOpen } = useSelector(settingsState);
 
-  const handleOpen = () => setIsOpen(true);
-
-  const handleClose = () => setIsOpen(false);
+  const handleToggle = () => dispatch(toggleDrawer());
 
   const handleLogout = () => dispatch(logoutUser());
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" isOpen={isDrawerOpen}>
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            onClick={handleOpen}
+            onClick={handleToggle}
             sx={{ mr: 2 }}
           >
             <Menu />
@@ -47,7 +45,6 @@ const NavBar = () => {
           ) : null}
         </Toolbar>
       </AppBar>
-      <AppDrawer open={isOpen} onOpen={handleOpen} onClose={handleClose} />
     </Box>
   );
 };

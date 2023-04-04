@@ -14,26 +14,23 @@ import LPNDateCheck from "./pages/LPNDateCheck/LPNDateCheck";
 import { persistor, store } from "./redux/store";
 import theme from "./styles/theme";
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Router>
-              <Routes>
-                <Route exact path="/" Component={Home} />
-                <Route path="/login" Component={LoginForm} />
-                <Route path="/lpn-date-check" Component={LPNDateCheck} />
-              </Routes>
-            </Router>
-          </LocalizationProvider>
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
-  );
-};
+const App = () => (
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Router>
+            <Routes>
+              <Route exact path="/" Component={Home} />
+              <Route path="/login" Component={LoginForm} />
+              <Route path="/lpn-date-check" Component={LPNDateCheck} />
+            </Routes>
+          </Router>
+        </LocalizationProvider>
+      </ThemeProvider>
+    </PersistGate>
+  </Provider>
+);
 
 export default App;

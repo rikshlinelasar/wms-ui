@@ -3,12 +3,15 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { authState } from "../../redux/store";
+import Main from "../../components-styled/Main/Main";
+import { authState, settingsState } from "../../redux/store";
+import AppDrawer from "../AppDrawer/AppDrawer";
 import NavBar from "../NavBar/NavBar";
 
 const PageLayout = (props) => {
   const navigate = useNavigate();
   const { user } = useSelector(authState);
+  const { isDrawerOpen } = useSelector(settingsState);
 
   useEffect(() => {
     if (!user) {
@@ -19,7 +22,8 @@ const PageLayout = (props) => {
   return (
     <div>
       <NavBar />
-      {props.children}
+      <AppDrawer />
+      <Main isOpen={isDrawerOpen}>{props.children}</Main>
     </div>
   );
 };

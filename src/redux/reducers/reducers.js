@@ -8,7 +8,7 @@ import settingsReducer from "./settingsSlice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["settingsReducer"],
+  whitelist: ["settingsReducer", "authReducer"],
 };
 
 const reducers = combineReducers({

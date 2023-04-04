@@ -80,7 +80,7 @@ const LPNDateCheck = () => {
 
   return (
     <PageLayout>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+      <Paper sx={{ mb: 2 }}>
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -99,45 +99,44 @@ const LPNDateCheck = () => {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        const renderChildren = (() => {
-                          switch (true) {
-                            case column.format && typeof value === "number":
-                              return column.format(value);
-                            case column.isDate:
-                              return (
-                                <DatePicker
-                                  inputFormat="MM/DD/YYYY"
-                                  defaultValue={value ? dayjs(value) : undefined}
-                                />
-                              );
-                            case column.isSave:
-                              return (
-                                <Button
-                                  variant="contained"
-                                  endIcon={<SaveOutlined />}
-                                >
-                                  Save
-                                </Button>
-                              );
-                            default:
-                              return value;
-                          }
-                        })();
+                .map((row) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      const renderChildren = (() => {
+                        switch (true) {
+                          case column.format && typeof value === "number":
+                            return column.format(value);
+                          case column.isDate:
+                            return (
+                              <DatePicker
+                                inputFormat="MM/DD/YYYY"
+                                defaultValue={value ? dayjs(value) : undefined}
+                              />
+                            );
+                          case column.isSave:
+                            return (
+                              <Button variant="contained" endIcon={<SaveOutlined />}>
+                                Save
+                              </Button>
+                            );
+                          default:
+                            return value;
+                        }
+                      })();
 
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {renderChildren}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+                      return (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          sx={{ p: 1 }}
+                        >
+                          {renderChildren}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
