@@ -1,36 +1,27 @@
-import { Divider, Drawer } from "@mui/material";
+import { ChevronLeft, DateRangeOutlined, TaskOutlined } from "@mui/icons-material";
+import { Divider, Drawer, IconButton } from "@mui/material";
 import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 
 import DrawerHeader from "../../components-styled/DrawerHeader/DrawerHeader";
-import { closeDrawer, openDrawer } from "../../redux/reducers/settingsSlice";
+import { LPN_DATE_CHECK_ROUTE, TASK_GROUP_ROUTE } from "../../constants/routes";
+import { closeDrawer } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
 import { drawerWidth } from "../../styles/styles";
+import DrawerItem from "../DrawerItem/DrawerItem";
 
 const AppDrawer = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { isDrawerOpen } = useSelector(settingsState);
 
-  const handleNavigate = () => {
-    navigate("/lpn-date-check");
-    handleClose();
-  };
-
   const handleClose = () => dispatch(closeDrawer());
-
-  const handleOpen = () => dispatch(openDrawer());
 
   return (
     <Drawer
       variant="persistent"
       anchor="left"
       open={isDrawerOpen}
-      onOpen={handleOpen}
       onClose={handleClose}
       sx={{
         width: drawerWidth,
@@ -41,12 +32,19 @@ const AppDrawer = () => {
         },
       }}
     >
-      <DrawerHeader />
+      <DrawerHeader>
+        <IconButton onClick={handleClose}>
+          <ChevronLeft />
+        </IconButton>
+      </DrawerHeader>
       <Divider />
       <List>
-        <ListItemButton>
-          <ListItemText onClick={handleNavigate}>LPN Date Check</ListItemText>
-        </ListItemButton>
+        <DrawerItem
+          to={LPN_DATE_CHECK_ROUTE}
+          label="LPN Date Check"
+          icon={DateRangeOutlined}
+        />
+        <DrawerItem to={TASK_GROUP_ROUTE} label="Task Group" icon={TaskOutlined} />
       </List>
     </Drawer>
   );

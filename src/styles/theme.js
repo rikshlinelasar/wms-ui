@@ -1,5 +1,7 @@
 import { createTheme } from "@mui/material";
 
+const defaultTheme = createTheme();
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -17,7 +19,19 @@ const theme = createTheme({
           fontWeight: "Regular",
           color: "#1D1D1D",
           fontSize: "14px",
-          spacing: 29,
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          "&:nth-of-type(odd)": {
+            backgroundColor: defaultTheme.palette.action.hover,
+          },
+          // hide last border
+          "&:last-child td, &:last-child th": {
+            border: 0,
+          },
         },
       },
     },
@@ -27,13 +41,11 @@ const theme = createTheme({
           fontFamily: "Open Sans",
           fontWeight: "Regular",
           color: "#1D1D1D",
-          spacing: 29,
         },
         h1: {
           fontSize: "3.375rem",
           fontWeight: "bold",
           textTransform: "uppercase",
-          marginBottom: "1.25rem",
           letterSpacing: "-0.01rem",
         },
         h2: {

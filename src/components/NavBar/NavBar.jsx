@@ -1,8 +1,8 @@
 import { Menu } from "@mui/icons-material";
+import { Grid, Toolbar, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,7 +22,7 @@ const NavBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" isOpen={isDrawerOpen}>
+      <AppBar position="static" open={isDrawerOpen}>
         <Toolbar>
           <IconButton
             size="large"
@@ -34,6 +34,12 @@ const NavBar = () => {
           >
             <Menu />
           </IconButton>
+          <Grid container justifyContent="center">
+            <Typography variant="h2" color="white">
+              RNDC
+            </Typography>
+          </Grid>
+
           {user ? (
             <Button
               color="inherit"

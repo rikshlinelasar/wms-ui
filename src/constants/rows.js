@@ -40,6 +40,7 @@ const rows = [
     lpnQuantity: 13,
     reason: "EXP DATE ITEM MISSING EXPDATE",
     dateCode: "E",
+    manufacturingDate: 0,
     expiryDate: 1,
     manufactureDateDiff: 8,
     manufacturedDate: "2022-06-17",
@@ -55,6 +56,7 @@ const rows = [
     reason: "EXP DATE ITEM MISSING EXPDATE",
     dateCode: "E",
     manufacturingDate: 1,
+    expiryDate: 0,
     manufacturedDate: "2022-06-17",
   },
   {
@@ -85,6 +87,7 @@ const rows = [
     manufacturingDate: 1,
     expiryDate: 1,
     manufacturedDate: "2022-06-17",
+    expirationDate: "2022-03-27",
   },
   {
     code: "7",
