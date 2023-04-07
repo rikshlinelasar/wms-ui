@@ -5,13 +5,13 @@ const columns = [
   {
     id: "lpnStatusDescription",
     label: "LPN Status Description",
-    minWidth: 120,
+    minWidth: 150,
   },
   { id: "displayLocation", label: "Display Location", minWidth: 100 },
   {
     id: "lpnQuantity",
     label: "LPN Quantity In Cases",
-    minWidth: 120,
+    minWidth: 180,
     format: (value) => value.toFixed(2),
   },
   { id: "reason", label: "Reason", minWidth: 160 },
@@ -21,9 +21,9 @@ const columns = [
     label: "Item Track Manufacturing Date",
     minWidth: 180,
   },
-  { id: "expiryDate", label: "Item Track Expiry Date", minWidth: 130 },
-  { id: "manufactureDateDiff", label: "Manufacture Date Diff", minWidth: 100 },
-  { id: "expirationDateDiff", label: "Expiration Date Diff", minWidth: 100 },
+  { id: "expiryDate", label: "Item Track Expiry Date", minWidth: 140 },
+  { id: "manufactureDateDiff", label: "Manufacture Date Diff", minWidth: 160 },
+  { id: "expirationDateDiff", label: "Expiration Date Diff", minWidth: 130 },
   {
     id: "manufacturedDate",
     label: "Manufactured Date",

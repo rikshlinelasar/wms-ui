@@ -1,114 +1,170 @@
-import { FilterAltOutlined, SaveOutlined } from "@mui/icons-material";
-import {
-  Button,
-  Divider,
-  Grid,
-  IconButton,
-  TableContainer,
-  TextField,
-} from "@mui/material";
+import { SaveOutlined } from "@mui/icons-material";
+import { Button, Divider, Grid, TableContainer } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
+import LPNDateTableHead from "../../components/LPNDateTableHead/LPNDateTableHead";
 import LPNDateTableRow from "../../components/LPNDateTableRow/LPNDateTableRow";
 import PageLayout from "../../components/PageLayout/PageLayout";
 import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
-import columns from "../../constants/columns";
 import rows from "../../constants/rows";
+import { SortOrders } from "../../constants/sort";
+import { getComparator } from "../../functions/sort";
+import { appBarHeight } from "../../styles/styles";
 
 const LPNDateCheck = () => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage] = React.useState(10);
+  const filtersLengthRef = useRef(0);
+  const unsavedRowsRef = useRef({});
+  const filteredRowsRef = useRef([...rows]);
+  const originalRowsRef = useRef([...rows]);
+  const [sort, setSort] = useState(null);
+  const [sortOrder, setSortOrder] = useState(SortOrders.asc);
+  const [page, setPage] = useState(0);
+  const [saveAllCounter, setSaveAllCounter] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [tableHeight, setTableHeight] = useState(
+    window.innerHeight - appBarHeight - 40 - 135
+  );
+  const [filters, setFilters] = useState({});
+  const [updatedRows, setUpdatedRows] = useState(originalRowsRef.current);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(+event.target.value);
-  //   setPage(0);
-  // };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(event.target.value);
+    setPage(0);
+  };
+
+  const handleSaveAll = () => {
+    for (const rowKey in unsavedRowsRef.current) {
+      originalRowsRef.current[rowKey] = unsavedRowsRef.current[rowKey];
+    }
+    setSaveAllCounter(saveAllCounter + 1);
+    handleFilter();
+  };
+
+  const handleRowUpdate = (row, i) => {
+    originalRowsRef.current[i] = row;
+    handleFilter();
+  };
+
+  const handleClearFilters = () => {
+    filteredRowsRef.current = [...originalRowsRef.current];
+    setSort(null);
+    setSortOrder(SortOrders.asc);
+    setFilters([]);
+  };
+
+  const handleFilter = () => {
+    let temp = [...originalRowsRef.current];
+
+    for (const filterKey in filters) {
+      if (filters[filterKey]) {
+        temp = temp.filter((row) => {
+          if (typeof row[filterKey] === "string") {
+            return row[filterKey]
+              .toLowerCase()
+              .includes(filters[filterKey].toLowerCase());
+          }
+
+          return row[filterKey] === Number(filters[filterKey]);
+        });
+      }
+    }
+
+    filteredRowsRef.current = temp;
+    if (sort) {
+      temp = temp.sort(getComparator(sortOrder, sort));
+    }
+
+    setUpdatedRows(temp);
+  };
+
+  useEffect(() => {
+    const resizeListener = () => {
+      setTableHeight(window.innerHeight - appBarHeight - 40 - 135);
+    };
+
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (sort === null) {
+      setUpdatedRows(filteredRowsRef.current);
+    } else {
+      setUpdatedRows(
+        [...filteredRowsRef.current].sort(getComparator(sortOrder, sort))
+      );
+    }
+  }, [sort, sortOrder]);
+
+  useEffect(() => {
+    const length = Object.keys(filters).length;
+
+    if (length != filtersLengthRef.current && length < filtersLengthRef.current) {
+      filtersLengthRef.current = length;
+      handleFilter();
+    }
+  }, [filters]);
 
   return (
     <PageLayout>
       <Grid pt={2}>
-        {/* 
-        <Grid container alignItems="center" gap={2}>
-          <Typography variant="h1" color="primary">
-            RNDC
-          </Typography>
-          <Typography variant="h2" color="primary" mb={1}>
-            Warehouse Management
-          </Typography>
-        </Grid> */}
         <WarehousePicker />
-        <TableContainer>
+        <TableContainer sx={{ height: tableHeight }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    sx={{
-                      minWidth: column.minWidth,
-                      fontSize: "16px",
-                      color: "primary.main",
-                      pt: 0.5,
-                      p: 1,
-                    }}
-                  >
-                    {!column.isSave ? (
-                      <Grid container flexDirection="column">
-                        <Grid item sx={{ height: 55 }}>
-                          {column.label}
-                        </Grid>
-                        <Grid container flexDirection="row" alignItems="center">
-                          <Grid item xs={8}>
-                            <TextField size="small" inputProps={{ sx: { p: 1 } }} />
-                          </Grid>
-                          <Grid item xs={4}>
-                            <IconButton
-                              color="primary"
-                              size="small"
-                              sx={{ marginLeft: "2px" }}
-                            >
-                              <FilterAltOutlined />
-                            </IconButton>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    ) : null}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
+            <LPNDateTableHead
+              filtersLengthRef={filtersLengthRef}
+              sort={sort}
+              setSort={setSort}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              filters={filters}
+              setFilters={setFilters}
+              onFilter={handleFilter}
+              onClearFilters={handleClearFilters}
+            />
             <TableBody>
-              {rows
+              {updatedRows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
-                  <LPNDateTableRow key={row.id} row={row} />
+                .map((row, i) => (
+                  <LPNDateTableRow
+                    key={row.id}
+                    unsavedRowsRef={unsavedRowsRef}
+                    row={row}
+                    index={i}
+                    saveAllCounter={saveAllCounter}
+                    onRowUpdate={handleRowUpdate}
+                  />
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[]}
+          rowsPerPageOptions={[10, 25, 50, 100]}
           component="div"
-          count={rows.length}
+          count={updatedRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
-          // onRowsPerPageChange={handleChangeRowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
         <Divider />
         <Grid container justifyContent="flex-end">
-          <Button variant="contained" endIcon={<SaveOutlined />} sx={{ m: 1 }}>
+          <Button
+            variant="contained"
+            endIcon={<SaveOutlined />}
+            sx={{ m: 1 }}
+            onClick={handleSaveAll}
+          >
             Save All
           </Button>
         </Grid>

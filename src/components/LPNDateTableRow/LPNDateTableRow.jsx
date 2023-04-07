@@ -1,31 +1,85 @@
 import { CalculateOutlined, SaveOutlined } from "@mui/icons-material";
-import { Grid, IconButton, TableCell, TableRow, TextField } from "@mui/material";
+import { Grid, IconButton, TableCell, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import columns from "../../constants/columns";
+import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRow";
+import columns from "../../constants/lpn-date-table-columns";
 
-const LPNDateTableRow = ({ row }) => {
+const LPNDateTableRow = ({
+  unsavedRowsRef,
+  row,
+  index,
+  onRowUpdate,
+  saveAllCounter,
+}) => {
   const [manufactureDate, setManufactureDate] = useState(
-    row["manufacturedDate"] || null
+    row.manufacturedDate || null
   );
-  const [expirationDate, setExpirationDate] = useState(
-    row["expirationDate"] || null
+  const [expirationDate, setExpirationDate] = useState(row.expirationDate || null);
+  const [priorityDate, setPriorityDate] = useState(
+    row.consumptionPriorityDate || null
   );
-  const [priorityDate, setPriorityDate] = useState(null);
+  const [isChanged, setIsChanged] = useState(false);
 
-  const handleFormatDate = (date) => {
-    const newDate = date.split("-");
+  const handleUnsavedRow = (property, value) => {
+    const temp = { ...(unsavedRowsRef.current[index] || row) };
+    temp[property] = value;
+    unsavedRowsRef.current[index] = temp;
+  };
 
-    return `${newDate[1]}/${newDate[2]}/${newDate[0]}`;
+  const getDate = (value) => `${value["$y"]}-${value["$M"] + 1}-${value["$D"]}`;
+
+  const handleManufactureDateChange = (value) => {
+    const date = getDate(value);
+
+    if (date != manufactureDate) {
+      setIsChanged(true);
+      setManufactureDate(getDate(date));
+      handleUnsavedRow("manufacturedDate", date);
+    }
+  };
+
+  const handleExpirationDateChange = (value) => {
+    const date = getDate(value);
+
+    if (date != expirationDate) {
+      setIsChanged(true);
+      setExpirationDate(date);
+      handleUnsavedRow("expirationDate", date);
+    }
+  };
+
+  const handlePriortyDateChange = (value) => {
+    const date = typeof value === "string" ? value : getDate(value);
+
+    if (date != priorityDate) {
+      setIsChanged(true);
+      setPriorityDate(date);
+      handleUnsavedRow("consumptionPriorityDate", date);
+    }
   };
 
   const handleDateCalculation = () => {
-    if (expirationDate) {
-      setPriorityDate(handleFormatDate(expirationDate));
-    } else if (manufactureDate) {
-      setPriorityDate(handleFormatDate(manufactureDate));
+    if (expirationDate && row.expiryDate) {
+      if (priorityDate != expirationDate) {
+        handlePriortyDateChange(expirationDate);
+      }
+    } else if (manufactureDate && row.manufacturingDate) {
+      if (priorityDate != manufactureDate) {
+        handlePriortyDateChange(manufactureDate);
+      }
+    }
+  };
+
+  const handleSave = () => {
+    if (isChanged) {
+      setIsChanged(false);
+      row.expirationDate = expirationDate;
+      row.manufactureDate = manufactureDate;
+      row.consumptionPriorityDate = priorityDate;
+      onRowUpdate(row, index);
     }
   };
 
@@ -45,7 +99,7 @@ const LPNDateTableRow = ({ row }) => {
               <DatePicker
                 value={manufactureDate}
                 inputFormat="MM/DD/YYYY"
-                onChange={(value) => setManufactureDate(value)}
+                onChange={handleManufactureDateChange}
                 renderInput={(params) => <TextField size="small" {...params} />}
               />
             );
@@ -57,7 +111,7 @@ const LPNDateTableRow = ({ row }) => {
               <DatePicker
                 value={expirationDate}
                 inputFormat="MM/DD/YYYY"
-                onChange={(value) => setExpirationDate(value)}
+                onChange={handleExpirationDateChange}
                 renderInput={(params) => <TextField size="small" {...params} />}
               />
             );
@@ -73,7 +127,7 @@ const LPNDateTableRow = ({ row }) => {
                   <DatePicker
                     value={priorityDate}
                     inputFormat="MM/DD/YYYY"
-                    onChange={(value) => setPriorityDate(value)}
+                    onChange={handlePriortyDateChange}
                     renderInput={(params) => <TextField size="small" {...params} />}
                   />
                 </Grid>
@@ -81,7 +135,7 @@ const LPNDateTableRow = ({ row }) => {
             );
           case column.isSave:
             return (
-              <IconButton color="primary">
+              <IconButton color="primary" onClick={handleSave}>
                 <SaveOutlined />
               </IconButton>
             );
@@ -101,15 +155,29 @@ const LPNDateTableRow = ({ row }) => {
       );
     });
 
+  useEffect(() => {
+    setIsChanged(false);
+  }, [saveAllCounter]);
+
   return (
-    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+    <StyledTableRow
+      hover={!isChanged}
+      change={isChanged}
+      role="checkbox"
+      tabIndex={-1}
+      key={row.code}
+    >
       {renderColumns()}
-    </TableRow>
+    </StyledTableRow>
   );
 };
 
 LPNDateTableRow.propTypes = {
   row: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onRowUpdate: PropTypes.func.isRequired,
+  unsavedRowsRef: PropTypes.object.isRequired,
+  saveAllCounter: PropTypes.number.isRequired,
 };
 
 export default LPNDateTableRow;

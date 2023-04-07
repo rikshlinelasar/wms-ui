@@ -14,7 +14,6 @@ const WarehousePicker = () => {
   const handleSecondChange = (event) => {
     setSecondSelect(event.target.value);
   };
-
   return (
     <Grid container alignItems="center" pl={1} mb={1}>
       <Typography fontWeight="500" color="primary">

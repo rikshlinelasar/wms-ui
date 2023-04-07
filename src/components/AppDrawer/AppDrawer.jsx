@@ -1,5 +1,5 @@
 import { ChevronLeft, DateRangeOutlined, TaskOutlined } from "@mui/icons-material";
-import { Divider, Drawer, IconButton } from "@mui/material";
+import { Divider, Drawer, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import List from "@mui/material/List";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,13 +13,15 @@ import DrawerItem from "../DrawerItem/DrawerItem";
 
 const AppDrawer = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isBigScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const { isDrawerOpen } = useSelector(settingsState);
 
   const handleClose = () => dispatch(closeDrawer());
 
   return (
     <Drawer
-      variant="persistent"
+      variant={isBigScreen ? "persistent" : undefined}
       anchor="left"
       open={isDrawerOpen}
       onClose={handleClose}

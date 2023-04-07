@@ -48,7 +48,7 @@ const DrawerItem = ({ to, label, icon }) => {
 DrawerItem.propTypes = {
   to: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  icon: PropTypes.func,
+  icon: PropTypes.object,
 };
 
 export default DrawerItem;

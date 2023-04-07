@@ -10,6 +10,7 @@ import AppBar from "../../components-styled/AppBar/AppBar";
 import { logoutUser } from "../../redux/reducers/authSlice";
 import { toggleDrawer } from "../../redux/reducers/settingsSlice";
 import { authState, settingsState } from "../../redux/store";
+import { appBarHeight } from "../../styles/styles";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const NavBar = () => {
   const handleLogout = () => dispatch(logoutUser());
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, height: appBarHeight }}>
       <AppBar position="static" open={isDrawerOpen}>
         <Toolbar>
           <IconButton
