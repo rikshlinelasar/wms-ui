@@ -2,8 +2,8 @@ import React from "react";
 
 import PageLayout from "../../components/PageLayout/PageLayout";
 
-const TaskGroup = () => {
+const TaskGroupPage = () => {
   return <PageLayout></PageLayout>;
 };
 
-export default TaskGroup;
+export default TaskGroupPage;

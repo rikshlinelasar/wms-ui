@@ -8,9 +8,9 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import LoginForm from "./components/LoginForm/LoginForm";
 import { LPN_DATE_CHECK_ROUTE, TASK_GROUP_ROUTE } from "./constants/routes";
-import Home from "./pages/Home/Home";
-import LPNDateCheck from "./pages/LPNDateCheck/LPNDateCheck";
-import TaskGroup from "./pages/TaskGroup/TaskGroup";
+import HomePage from "./pages/HomePage/HomePage";
+import LPNDateCheckPage from "./pages/LPNDateCheckPage/LPNDateCheckPage";
+import TaskGroupPage from "./pages/TaskGroupPage/TaskGroupPage";
 import { persistor, store } from "./redux/store";
 import theme from "./styles/theme";
 
@@ -22,10 +22,10 @@ const App = () => (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Router>
             <Routes>
-              <Route exact path="/" Component={Home} />
+              <Route exact path="/" Component={HomePage} />
               <Route path="/login" Component={LoginForm} />
-              <Route path={LPN_DATE_CHECK_ROUTE} Component={LPNDateCheck} />
-              <Route path={TASK_GROUP_ROUTE} Component={TaskGroup} />
+              <Route path={LPN_DATE_CHECK_ROUTE} Component={LPNDateCheckPage} />
+              <Route path={TASK_GROUP_ROUTE} Component={TaskGroupPage} />
             </Routes>
           </Router>
         </LocalizationProvider>

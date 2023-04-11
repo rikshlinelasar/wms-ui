@@ -14,7 +14,7 @@ import { SortOrders } from "../../constants/sort";
 import { getComparator } from "../../functions/sort";
 import { appBarHeight } from "../../styles/styles";
 
-const LPNDateCheck = () => {
+const LPNDateCheckPage = () => {
   const filtersLengthRef = useRef(0);
   const unsavedRowsRef = useRef({});
   const filteredRowsRef = useRef([...rows]);
@@ -173,4 +173,4 @@ const LPNDateCheck = () => {
   );
 };
 
-export default LPNDateCheck;
+export default LPNDateCheckPage;
