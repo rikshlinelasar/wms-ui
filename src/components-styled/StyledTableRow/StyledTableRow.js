@@ -1,8 +1,10 @@
-import { colors, styled, TableRow } from "@mui/material";
+import { styled, TableRow } from "@mui/material";
+
+import { selectColor } from "../../styles/styles";
 
 const StyledTableRow = styled(TableRow)(({ theme, change }) => ({
   ...(change
-    ? { backgroundColor: colors.orange[100] }
+    ? { backgroundColor: selectColor }
     : {
         "&:nth-of-type(odd)": {
           backgroundColor: theme.palette.action.hover,

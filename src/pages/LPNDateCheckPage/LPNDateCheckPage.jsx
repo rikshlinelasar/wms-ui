@@ -117,8 +117,8 @@ const LPNDateCheckPage = () => {
 
   return (
     <PageLayout>
-      <Grid pt={2}>
-        <WarehousePicker />
+      <Grid container direction="column" pt={2}>
+        <WarehousePicker pl={1} mb={1} />
         <TableContainer sx={{ height: tableHeight }}>
           <Table stickyHeader aria-label="sticky table">
             <LPNDateTableHead

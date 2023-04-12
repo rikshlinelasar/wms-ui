@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import StyledSelect from "../../components-styled/StyledSelect/StyledSelect";
 
-const WarehousePicker = () => {
+const WarehousePicker = (props) => {
   const [firstSelect, setFirstSelect] = useState("ATL");
   const [secondSelect, setSecondSelect] = useState("TGE UI");
 
@@ -15,7 +15,7 @@ const WarehousePicker = () => {
     setSecondSelect(event.target.value);
   };
   return (
-    <Grid container alignItems="center" pl={1} mb={1}>
+    <Grid container alignItems="center" {...props}>
       <Typography fontWeight="500" color="primary">
         Choose the Warehouse:
       </Typography>
