@@ -35,7 +35,7 @@ const LPNDateTableHead = ({
   };
 
   const handleSort = (id) => {
-    if (sort != id) {
+    if (sort !== id) {
       setSort(id);
       setSortOrder(SortOrders.asc);
     } else if (sortOrder === SortOrders.asc) {
@@ -103,10 +103,11 @@ const LPNDateTableHead = ({
                     <IconButton
                       color={sort === column.id ? "primary" : undefined}
                       size="small"
-                      sx={{ marginLeft: "2px" }}
+                      sx={{ marginLeft: "2px", width: 24, height: 24 }}
                       onClick={() => handleSort(column.id)}
                     >
                       <RotatableArrowUpward
+                        fontSize="small"
                         open={sort === column.id && sortOrder === SortOrders.desc}
                       />
                     </IconButton>
@@ -116,7 +117,7 @@ const LPNDateTableHead = ({
                   <Grid item xs={8}>
                     <TextField
                       size="small"
-                      inputProps={{ sx: { p: 1 } }}
+                      inputProps={{ sx: { p: 0.2, pl: 0.5, pr: 0.5 } }}
                       value={filters[column.id] || ""}
                       onChange={(e) => handleFilterChange(e, column.id)}
                     />
@@ -125,10 +126,10 @@ const LPNDateTableHead = ({
                     <IconButton
                       color={activeFilters[column.id] ? "primary" : undefined}
                       size="small"
-                      sx={{ marginLeft: "2px" }}
+                      sx={{ marginLeft: "2px", width: 24, height: 24 }}
                       onClick={() => handleFilter(column.id)}
                     >
-                      <FilterAltOutlined />
+                      <FilterAltOutlined fontSize="small" />
                     </IconButton>
                   </Grid>
                 </Grid>

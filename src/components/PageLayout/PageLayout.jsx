@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import Main from "../../components-styled/Main/Main";
 import { authState, settingsState } from "../../redux/store";
 import AppDrawer from "../AppDrawer/AppDrawer";
+import AppSnackBar from "../AppSnackBar/AppSnackBar";
 import NavBar from "../NavBar/NavBar";
 
 const PageLayout = (props) => {
@@ -22,6 +23,7 @@ const PageLayout = (props) => {
   return (
     <div>
       <NavBar />
+      <AppSnackBar />
       <AppDrawer />
       <Main open={isDrawerOpen} {...props} />
     </div>

@@ -8,7 +8,7 @@ import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
 const TaskGroupPage = () => {
   return (
     <PageLayout>
-      <Grid container direction="column" pt={2} pl={1} pb={2}>
+      <Grid container direction="column" pt={2} pl={3} pb={2}>
         <WarehousePicker mb={2} />
         <Typography fontWeight="500" color="primary" mb={2}>
           Choose the User:

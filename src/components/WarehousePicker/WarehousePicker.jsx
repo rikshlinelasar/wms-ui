@@ -1,19 +1,15 @@
-import { Button, FormControl, Grid, MenuItem, Typography } from "@mui/material";
+import { FormControl, Grid, MenuItem, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 import StyledSelect from "../../components-styled/StyledSelect/StyledSelect";
 
 const WarehousePicker = (props) => {
-  const [firstSelect, setFirstSelect] = useState("ATL");
-  const [secondSelect, setSecondSelect] = useState("TGE UI");
+  const [select, setSelect] = useState("ATL");
 
-  const handleFirstChange = (event) => {
-    setFirstSelect(event.target.value);
+  const handleChange = (event) => {
+    setSelect(event.target.value);
   };
 
-  const handleSecondChange = (event) => {
-    setSecondSelect(event.target.value);
-  };
   return (
     <Grid container alignItems="center" {...props}>
       <Typography fontWeight="500" color="primary">
@@ -23,24 +19,12 @@ const WarehousePicker = (props) => {
         <StyledSelect
           color="primary"
           size="small"
-          value={firstSelect}
-          onChange={handleFirstChange}
+          value={select}
+          onChange={handleChange}
         >
           <MenuItem value="ATL">ATL</MenuItem>
         </StyledSelect>
       </FormControl>
-      <FormControl>
-        <StyledSelect
-          size="small"
-          value={secondSelect}
-          onChange={handleSecondChange}
-        >
-          <MenuItem value="TGE UI">TGE UI</MenuItem>
-        </StyledSelect>
-      </FormControl>
-      <Button variant="contained" sx={{ ml: 2 }}>
-        Submit
-      </Button>
     </Grid>
   );
 };

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import axios from "../../constants/axios";
 
+import axios from "../../constants/axios";
 import { TOKEN_COOKIE } from "./../../constants/cookies";
 
 const initialState = {
@@ -9,8 +9,8 @@ const initialState = {
 };
 
 export const authSlice = createSlice({
-  name: "settings",
-  initialState: initialState,
+  name: "auth",
+  initialState,
   reducers: {
     loginUser(state, { payload }) {
       Cookies.set(TOKEN_COOKIE, payload.token, { expires: 10 });

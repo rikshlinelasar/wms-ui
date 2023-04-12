@@ -4,6 +4,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import LPNDateTableHead from "../../components/LPNDateTableHead/LPNDateTableHead";
 import LPNDateTableRow from "../../components/LPNDateTableRow/LPNDateTableRow";
@@ -12,9 +13,11 @@ import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
 import rows from "../../constants/rows";
 import { SortOrders } from "../../constants/sort";
 import { getComparator } from "../../functions/sort";
+import { openSnackBar } from "../../redux/reducers/settingsSlice";
 import { appBarHeight } from "../../styles/styles";
 
 const LPNDateCheckPage = () => {
+  const dispatch = useDispatch();
   const filtersLengthRef = useRef(0);
   const unsavedRowsRef = useRef({});
   const filteredRowsRef = useRef([...rows]);
@@ -40,11 +43,15 @@ const LPNDateCheckPage = () => {
   };
 
   const handleSaveAll = () => {
-    for (const rowKey in unsavedRowsRef.current) {
-      originalRowsRef.current[rowKey] = unsavedRowsRef.current[rowKey];
+    if (unsavedRowsRef.current.length !== 0) {
+      for (const rowKey in unsavedRowsRef.current) {
+        originalRowsRef.current[rowKey] = unsavedRowsRef.current[rowKey];
+      }
+      unsavedRowsRef.current = [];
+      dispatch(openSnackBar({ message: "Saved all successfully!" }));
+      setSaveAllCounter(saveAllCounter + 1);
+      handleFilter();
     }
-    setSaveAllCounter(saveAllCounter + 1);
-    handleFilter();
   };
 
   const handleRowUpdate = (row, i) => {
@@ -109,7 +116,7 @@ const LPNDateCheckPage = () => {
   useEffect(() => {
     const length = Object.keys(filters).length;
 
-    if (length != filtersLengthRef.current && length < filtersLengthRef.current) {
+    if (length !== filtersLengthRef.current && length < filtersLengthRef.current) {
       filtersLengthRef.current = length;
       handleFilter();
     }
@@ -118,8 +125,8 @@ const LPNDateCheckPage = () => {
   return (
     <PageLayout>
       <Grid container direction="column" pt={2}>
-        <WarehousePicker pl={1} mb={1} />
-        <TableContainer sx={{ height: tableHeight }}>
+        <WarehousePicker pl={3} mb={1} />
+        <TableContainer sx={{ height: tableHeight, pl: 2 }}>
           <Table stickyHeader aria-label="sticky table">
             <LPNDateTableHead
               filtersLengthRef={filtersLengthRef}
