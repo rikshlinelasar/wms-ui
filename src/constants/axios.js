@@ -1,16 +1,16 @@
 import axiosInstance from "axios";
 import Cookies from "js-cookie";
 
-import { DEVELOPMENT_API } from "./api";
+import { BASE_URL } from "./api";
 import { TOKEN_COOKIE } from "./cookies";
 
 const axios = axiosInstance.create({
-  baseURL: DEVELOPMENT_API,
+  baseURL: BASE_URL,
   timeout: 5000,
 });
 
-(async () => {
-  axios.defaults.baseURL = DEVELOPMENT_API;
+(() => {
+  axios.defaults.baseURL = BASE_URL;
   const token = Cookies.get(TOKEN_COOKIE);
 
   if (token) {

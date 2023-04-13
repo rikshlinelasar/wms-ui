@@ -8,7 +8,8 @@ const initialState = {
     message: null,
     duration: 3000,
   },
-  warehouse: null,
+  selectedWarehouse: null,
+  warehouses: [],
 };
 
 export const settingsSlice = createSlice({
@@ -33,14 +34,24 @@ export const settingsSlice = createSlice({
     closeSnackBar(state) {
       state.snackBar.isOpen = false;
     },
-    setWarehouse(state, { payload }) {
+    setSelectedWarehouse(state, { payload }) {
+      state.warehouse = payload;
+    },
+    setWarehouses(state, { payload }) {
       state.warehouse = payload;
     },
   },
 });
 
-export const { openDrawer, closeDrawer, toggleDrawer, openSnackBar, closeSnackBar } =
-  settingsSlice.actions;
+export const {
+  openDrawer,
+  closeDrawer,
+  toggleDrawer,
+  openSnackBar,
+  closeSnackBar,
+  setSelectedWarehouse,
+  setWarehouses,
+} = settingsSlice.actions;
 
 export const settingsReducer = settingsSlice.reducer;
 
