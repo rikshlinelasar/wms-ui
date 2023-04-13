@@ -15,9 +15,11 @@ import { SortOrders } from "../../constants/sort";
 import { getComparator } from "../../functions/sort";
 import { openSnackBar } from "../../redux/reducers/settingsSlice";
 import { appBarHeight } from "../../styles/styles";
+import useGetLPNDateCheck from '../../hooks/useGetLPNDateCheck'
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
+  const { getLpnData }  = useGetLPNDateCheck();
   const filtersLengthRef = useRef(0);
   const unsavedRowsRef = useRef({});
   const filteredRowsRef = useRef([...rows]);
@@ -95,7 +97,7 @@ const LPNDateCheckPage = () => {
     const resizeListener = () => {
       setTableHeight(window.innerHeight - appBarHeight - 40 - 135);
     };
-
+    getLpnData();
     window.addEventListener("resize", resizeListener);
 
     return () => {
