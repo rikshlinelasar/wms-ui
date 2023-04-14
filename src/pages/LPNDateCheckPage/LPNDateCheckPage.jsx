@@ -43,7 +43,10 @@ const LPNDateCheckPage = () => {
     setUpdatedRows
   );
 
-  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    unsavedRowsRef.current = {};
+  };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(event.target.value);

@@ -117,6 +117,7 @@ const LPNDateTableRow = ({
             if (!row.trackExpiryDate) {
               break;
             }
+
             return (
               <DatePicker
                 value={expirationDate}
