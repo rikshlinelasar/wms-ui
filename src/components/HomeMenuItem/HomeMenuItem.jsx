@@ -13,7 +13,14 @@ const HomeMenuItem = ({ to, label, description, ...props }) => {
 
   return (
     <Grid item {...props}>
-      <Card sx={{ p: 2 }}>
+      <Card
+        sx={(theme) => ({
+          p: 2,
+          ["&:hover"]: {
+            boxShadow: `0 0 4px ${theme.palette.primary.main}`,
+          },
+        })}
+      >
         <Typography variant="h4" fontWeight="600">
           {label}
         </Typography>
