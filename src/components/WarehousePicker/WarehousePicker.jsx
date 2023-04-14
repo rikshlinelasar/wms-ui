@@ -1,31 +1,41 @@
-import { FormControl, Grid, MenuItem, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { FormControl, MenuItem, Select } from "@mui/material";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import StyledSelect from "../../components-styled/StyledSelect/StyledSelect";
+import { setSelectedWarehouse } from "../../redux/reducers/settingsSlice";
+import { settingsState } from "../../redux/store";
 
 const WarehousePicker = (props) => {
-  const [select, setSelect] = useState("ATL");
+  const dispatch = useDispatch();
+  const { selectedWarehouse, warehouses } = useSelector(settingsState);
 
   const handleChange = (event) => {
-    setSelect(event.target.value);
+    dispatch(setSelectedWarehouse(event.target.value));
   };
 
+  const renderWarehouses = () =>
+    warehouses.length > 0 ? (
+      warehouses.map((warehouse) => (
+        <MenuItem key={warehouse} value="ATL">
+          ATL
+        </MenuItem>
+      ))
+    ) : (
+      <MenuItem value="Choose Warehouse">Choose Warehouse</MenuItem>
+    );
+
   return (
-    <Grid container alignItems="center" {...props}>
-      <Typography fontWeight="500" color="primary">
-        Choose the Warehouse:
-      </Typography>
-      <FormControl sx={{ ml: 1, mr: 1 }}>
-        <StyledSelect
-          color="primary"
-          size="small"
-          value={select}
-          onChange={handleChange}
-        >
-          <MenuItem value="ATL">ATL</MenuItem>
-        </StyledSelect>
-      </FormControl>
-    </Grid>
+    <FormControl {...props}>
+      <Select
+        color="primary"
+        size="small"
+        value={selectedWarehouse}
+        onChange={handleChange}
+        sx={{ minWidth: 200 }}
+      >
+        {renderWarehouses()}
+      </Select>
+    </FormControl>
   );
 };
 

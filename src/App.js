@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
-import LoginForm from "./components/LoginForm/LoginForm";
 import { LPN_DATE_CHECK_ROUTE, TASK_GROUP_ROUTE } from "./constants/routes";
 import HomePage from "./pages/HomePage/HomePage";
 import LPNDateCheckPage from "./pages/LPNDateCheckPage/LPNDateCheckPage";
@@ -23,7 +22,6 @@ const App = () => (
           <Router>
             <Routes>
               <Route exact path="/" Component={HomePage} />
-              <Route path="/login" Component={LoginForm} />
               <Route path={LPN_DATE_CHECK_ROUTE} Component={LPNDateCheckPage} />
               <Route path={TASK_GROUP_ROUTE} Component={TaskGroupPage} />
             </Routes>

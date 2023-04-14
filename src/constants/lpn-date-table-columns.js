@@ -1,15 +1,15 @@
 const columns = [
-  { id: "item", label: "Item", minWidth: 90 },
+  { id: "itemId", label: "Item", minWidth: 90 },
   { id: "itemDescription", label: "Item Description", minWidth: 140 },
-  { id: "lpnId", label: "LPN ID", minWidth: 110 },
+  { id: "ilpnId", label: "LPN ID", minWidth: 110 },
   {
-    id: "lpnStatusDescription",
+    id: "lpnStatus",
     label: "LPN Status Description",
     minWidth: 145,
   },
-  { id: "displayLocation", label: "Display Location", minWidth: 95 },
+  { id: "locationId", label: "Display Location", minWidth: 95 },
   {
-    id: "lpnQuantity",
+    id: "lpnQuantityInCases",
     label: "LPN Quantity In Cases",
     minWidth: 160,
     format: (value) => value.toFixed(2),
@@ -35,13 +35,13 @@ const columns = [
   { id: "reason", label: "Reason", minWidth: 150 },
   { id: "dateCode", label: "Date Code", minWidth: 90 },
   {
-    id: "manufacturingDate",
+    id: "trackManufacturingDate",
     label: "Item Track Manufacturing Date",
     minWidth: 175,
   },
-  { id: "expiryDate", label: "Item Track Expiry Date", minWidth: 140 },
-  { id: "manufactureDateDiff", label: "Manufacture Date Diff", minWidth: 160 },
-  { id: "expirationDateDiff", label: "Expiration Date Diff", minWidth: 130 },
+  { id: "trackExpiryDate", label: "Item Track Expiry Date", minWidth: 140 },
+  { id: "mfgDateDiff", label: "Manufacture Date Diff", minWidth: 160 },
+  { id: "expDateDiff", label: "Expiration Date Diff", minWidth: 130 },
   {
     id: "save",
     isSave: true,

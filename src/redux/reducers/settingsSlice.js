@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isDrawerOpen: false,
-  snackBar: {
+  notification: {
     isOpen: false,
     severity: "success",
     message: null,
-    duration: 3000,
   },
-  selectedWarehouse: null,
+  isAppLoading: false,
+  selectedWarehouse: "Choose Warehouse",
   warehouses: [],
 };
 
@@ -16,23 +15,19 @@ export const settingsSlice = createSlice({
   name: "settings",
   initialState,
   reducers: {
-    openDrawer(state) {
-      state.isDrawerOpen = true;
+    openNotification(state, { payload }) {
+      state.notification.isOpen = true;
+      state.notification.severity = payload.severity || "success";
+      state.notification.message = payload.message;
     },
-    closeDrawer(state) {
-      state.isDrawerOpen = false;
+    closeNotification(state) {
+      state.notification.isOpen = false;
     },
-    toggleDrawer(state) {
-      state.isDrawerOpen = !state.isDrawerOpen;
+    turnOnAppLoader(state) {
+      state.isAppLoading = true;
     },
-    openSnackBar(state, { payload }) {
-      state.snackBar.isOpen = true;
-      state.snackBar.severity = payload.severity || "success";
-      state.snackBar.message = payload.message;
-      state.snackBar.duration = payload.duration || 3000;
-    },
-    closeSnackBar(state) {
-      state.snackBar.isOpen = false;
+    turnOffAppLoader(state) {
+      state.isAppLoading = false;
     },
     setSelectedWarehouse(state, { payload }) {
       state.warehouse = payload;
@@ -44,11 +39,10 @@ export const settingsSlice = createSlice({
 });
 
 export const {
-  openDrawer,
-  closeDrawer,
-  toggleDrawer,
-  openSnackBar,
-  closeSnackBar,
+  openNotification,
+  closeNotification,
+  turnOnAppLoader,
+  turnOffAppLoader,
   setSelectedWarehouse,
   setWarehouses,
 } = settingsSlice.actions;

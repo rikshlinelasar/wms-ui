@@ -1,0 +1,19 @@
+import { Chip } from "@mui/material";
+import PropTypes from "prop-types";
+import React, { createElement } from "react";
+
+const RouteChip = ({ label, icon, ...props }) => (
+  <Chip
+    color="primary"
+    icon={createElement(icon, { fontSize: "small" })}
+    label={label}
+    {...props}
+  />
+);
+
+RouteChip.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.object.isRequired,
+};
+
+export default RouteChip;

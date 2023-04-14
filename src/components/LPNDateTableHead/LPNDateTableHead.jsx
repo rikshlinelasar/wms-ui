@@ -74,7 +74,13 @@ const LPNDateTableHead = ({
     <TableHead>
       <Fade
         in={filtersLengthRef.current || sort}
-        sx={{ position: "fixed", right: 0, zIndex: 3, mr: 2, mt: 2 }}
+        sx={{
+          position: "fixed",
+          right: 0,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          mr: 2,
+          mt: 2,
+        }}
       >
         <Button size="small" variant="contained" onClick={handleClearFilters}>
           Clear

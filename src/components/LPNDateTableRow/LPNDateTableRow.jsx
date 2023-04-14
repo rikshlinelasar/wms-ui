@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 import SquareButton from "../../components-styled/SquareButton/SquareButton";
 import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRow";
 import columns from "../../constants/lpn-date-table-columns";
-import { openSnackBar } from "../../redux/reducers/settingsSlice";
+import { getDateFromPicker } from "../../functions/date";
+import { openNotification } from "../../redux/reducers/settingsSlice";
 
 const LPNDateTableRow = ({
   unsavedRowsRef,
@@ -33,11 +34,9 @@ const LPNDateTableRow = ({
     unsavedRowsRef.current[index] = temp;
   };
 
-  const getDate = (value) => `${value["$y"]}-${value["$M"] + 1}-${value["$D"]}`;
-
   const handleManufactureDateChange = (value) => {
-    const date = getDate(value);
-    console.log(date, manufactureDate);
+    const date = getDateFromPicker(value);
+
     if (date !== manufactureDate) {
       setIsChanged(true);
       setManufactureDate(date);
@@ -46,7 +45,7 @@ const LPNDateTableRow = ({
   };
 
   const handleExpirationDateChange = (value) => {
-    const date = getDate(value);
+    const date = getDateFromPicker(value);
 
     if (date !== expirationDate) {
       setIsChanged(true);
@@ -56,7 +55,7 @@ const LPNDateTableRow = ({
   };
 
   const handlePriortyDateChange = (value) => {
-    const date = typeof value === "string" ? value : getDate(value);
+    const date = typeof value === "string" ? value : getDateFromPicker(value);
 
     if (date !== priorityDate) {
       setIsChanged(true);
@@ -66,11 +65,17 @@ const LPNDateTableRow = ({
   };
 
   const handleDateCalculation = () => {
-    if (expirationDate && row.expiryDate) {
+    if (row.vintageTier === 3 || row.vintageTier == 2) {
+      const vintageDate = `${row.vintageYear}-1-1`;
+
+      if (priorityDate !== vintageDate) {
+        handlePriortyDateChange(vintageDate);
+      }
+    } else if (expirationDate && row.expirationDate) {
       if (priorityDate !== expirationDate) {
         handlePriortyDateChange(expirationDate);
       }
-    } else if (manufactureDate && row.manufacturingDate) {
+    } else if (manufactureDate && row.manufacturedDate) {
       if (priorityDate !== manufactureDate) {
         handlePriortyDateChange(manufactureDate);
       }
@@ -80,7 +85,7 @@ const LPNDateTableRow = ({
   const handleSave = () => {
     if (isChanged) {
       setIsChanged(false);
-      dispatch(openSnackBar({ message: "Saved successfully!" }));
+      dispatch(openNotification({ message: "Saved successfully!" }));
       row.expirationDate = expirationDate;
       row.manufactureDate = manufactureDate;
       row.consumptionPriorityDate = priorityDate;
@@ -96,7 +101,7 @@ const LPNDateTableRow = ({
           case column.format && typeof value === "number":
             return column.format(value);
           case column.isManufactureDate:
-            if (!row.manufacturingDate) {
+            if (!row.trackManufacturingDate) {
               break;
             }
 
@@ -109,7 +114,7 @@ const LPNDateTableRow = ({
               />
             );
           case column.isExpirationDate:
-            if (!row.expiryDate) {
+            if (!row.trackExpiryDate) {
               break;
             }
             return (
