@@ -16,8 +16,8 @@ const WarehousePicker = (props) => {
   const renderWarehouses = () =>
     warehouses.length > 0 ? (
       warehouses.map((warehouse) => (
-        <MenuItem key={warehouse} value="ATL">
-          ATL
+        <MenuItem key={warehouse} value={warehouse.warehouseShortName}>
+          {warehouse.warehouseShortName}
         </MenuItem>
       ))
     ) : (

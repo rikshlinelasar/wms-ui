@@ -12,7 +12,7 @@ const rows = [
     trackManufacturingDate: 1,
     trackExpiryDate: 1,
     mfgDateDiff: 8,
-    manufacturedDate: "2021-06-17",
+    manufacturedDate: "2021-06-17T",
     consumptionPriorityDate: "2022-06-17",
   },
   {
@@ -28,7 +28,7 @@ const rows = [
     trackManufacturingDate: 1,
     trackExpiryDate: 1,
     mfgDateDiff: 8,
-    manufacturedDate: "2023-06-17",
+    manufacturedDate: "2023-06-17T",
     expirationDate: "2022-04-12",
   },
   {

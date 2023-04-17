@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#550016",
+      main: "#69001a",
     },
     secondary: {
       main: "#1C0076",
@@ -43,6 +43,27 @@ const theme = createTheme({
         },
         h4: {
           fontSize: "1.25rem",
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Open Sans",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Open Sans",
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Open Sans",
         },
       },
     },

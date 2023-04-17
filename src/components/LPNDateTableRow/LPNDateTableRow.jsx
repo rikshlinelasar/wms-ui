@@ -3,13 +3,16 @@ import { Grid, IconButton, TableCell, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import SquareButton from "../../components-styled/SquareButton/SquareButton";
 import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRow";
 import columns from "../../constants/lpn-date-table-columns";
 import { getDateFromPicker } from "../../functions/date";
 import { openNotification } from "../../redux/reducers/settingsSlice";
+import usePostAdjustOne from "../../hooks/usePostAdjustOne";
+import { formatRow } from "../../functions/format";
+import { settingsState } from "../../redux/store";
 
 const LPNDateTableRow = ({
   unsavedRowsRef,
@@ -19,28 +22,27 @@ const LPNDateTableRow = ({
   saveAllCounter,
 }) => {
   const dispatch = useDispatch();
+  const { selectedWarehouse } = useSelector(settingsState);
+  const { postAdjustOne } = usePostAdjustOne();
   const [manufactureDate, setManufactureDate] = useState(
     row.manufacturedDate || null
   );
   const [expirationDate, setExpirationDate] = useState(row.expirationDate || null);
-  const [priorityDate, setPriorityDate] = useState(
+  const [consumptionPriorityDate, setConsumptionPriorityDate] = useState(
     row.consumptionPriorityDate || null
   );
+  const [isMftdDateChanged, setIsMftdDateChanged] = useState(false);
+  const [isExpiredDateChanged, setIsExpiredDateChanged] = useState(false);
+  const [isCPDChanged, setIsCPDChanged] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
-
-  const handleUnsavedRow = (property, value) => {
-    const temp = { ...(unsavedRowsRef.current[index] || row) };
-    temp[property] = value;
-    unsavedRowsRef.current[index] = temp;
-  };
 
   const handleManufactureDateChange = (value) => {
     const date = getDateFromPicker(value);
 
     if (date !== manufactureDate) {
+      setIsMftdDateChanged(true);
       setIsChanged(true);
       setManufactureDate(date);
-      handleUnsavedRow("manufacturedDate", date);
     }
   };
 
@@ -48,19 +50,19 @@ const LPNDateTableRow = ({
     const date = getDateFromPicker(value);
 
     if (date !== expirationDate) {
+      setIsExpiredDateChanged(true);
       setIsChanged(true);
       setExpirationDate(date);
-      handleUnsavedRow("expirationDate", date);
     }
   };
 
   const handlePriortyDateChange = (value) => {
     const date = typeof value === "string" ? value : getDateFromPicker(value);
 
-    if (date !== priorityDate) {
+    if (date !== consumptionPriorityDate) {
+      setIsCPDChanged(true);
       setIsChanged(true);
-      setPriorityDate(date);
-      handleUnsavedRow("consumptionPriorityDate", date);
+      setConsumptionPriorityDate(date);
     }
   };
 
@@ -68,28 +70,41 @@ const LPNDateTableRow = ({
     if (row.vintageTier === 3 || row.vintageTier == 2) {
       const vintageDate = `${row.vintageYear}-1-1`;
 
-      if (priorityDate !== vintageDate) {
+      if (consumptionPriorityDate !== vintageDate) {
         handlePriortyDateChange(vintageDate);
       }
     } else if (expirationDate && row.expirationDate) {
-      if (priorityDate !== expirationDate) {
+      if (consumptionPriorityDate !== expirationDate) {
         handlePriortyDateChange(expirationDate);
       }
     } else if (manufactureDate && row.manufacturedDate) {
-      if (priorityDate !== manufactureDate) {
+      if (consumptionPriorityDate !== manufactureDate) {
         handlePriortyDateChange(manufactureDate);
       }
     }
+  };
+
+  const handlePostSave = () => {
+    postAdjustOne(
+      formatRow(
+        row,
+        isMftdDateChanged,
+        isExpiredDateChanged,
+        isCPDChanged,
+        manufactureDate,
+        expirationDate,
+        consumptionPriorityDate,
+        selectedWarehouse
+      )
+    );
   };
 
   const handleSave = () => {
     if (isChanged) {
       setIsChanged(false);
       dispatch(openNotification({ message: "Saved successfully!" }));
-      row.expirationDate = expirationDate;
-      row.manufactureDate = manufactureDate;
-      row.consumptionPriorityDate = priorityDate;
-      onRowUpdate(row, index);
+      onRowUpdate(index);
+      handlePostSave();
     }
   };
 
@@ -136,7 +151,7 @@ const LPNDateTableRow = ({
                 </Grid>
                 <Grid item xs={10}>
                   <DatePicker
-                    value={priorityDate}
+                    value={consumptionPriorityDate}
                     inputFormat="MM/DD/YYYY"
                     onChange={handlePriortyDateChange}
                     renderInput={(params) => <TextField size="small" {...params} />}
@@ -146,8 +161,23 @@ const LPNDateTableRow = ({
             );
           case column.isSave:
             return (
-              <SquareButton variant="contained" color="primary" onClick={handleSave}>
-                <SaveOutlined />
+              <SquareButton
+                variant="contained"
+                color="primary"
+                onClick={handleSave}
+                sx={{
+                  mr: 1,
+                  backgroundColor: "#fff",
+                  ["&:hover"]: {
+                    backgroundColor: "primary.main",
+                    color: "#fff",
+                    [".MuiSvgIcon-root"]: {
+                      color: "#fff",
+                    },
+                  },
+                }}
+              >
+                <SaveOutlined color="primary" />
               </SquareButton>
             );
           default:
@@ -169,6 +199,29 @@ const LPNDateTableRow = ({
   useEffect(() => {
     setIsChanged(false);
   }, [saveAllCounter]);
+
+  useEffect(() => {
+    if (isChanged) {
+      unsavedRowsRef.current[index] = formatRow(
+        row,
+        isMftdDateChanged,
+        isExpiredDateChanged,
+        isCPDChanged,
+        manufactureDate,
+        expirationDate,
+        consumptionPriorityDate,
+        selectedWarehouse
+      );
+    }
+  }, [
+    expirationDate,
+    manufactureDate,
+    consumptionPriorityDate,
+    isCPDChanged,
+    isMftdDateChanged,
+    isExpiredDateChanged,
+    isChanged,
+  ]);
 
   return (
     <StyledTableRow

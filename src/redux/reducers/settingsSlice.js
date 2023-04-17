@@ -30,10 +30,10 @@ export const settingsSlice = createSlice({
       state.isAppLoading = false;
     },
     setSelectedWarehouse(state, { payload }) {
-      state.warehouse = payload;
+      state.selectedWarehouse = payload;
     },
     setWarehouses(state, { payload }) {
-      state.warehouse = payload;
+      state.warehouses = payload;
     },
   },
 });

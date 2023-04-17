@@ -13,10 +13,10 @@ const useGetLPNData = (filteredRowsRef, originalRowsRef, setRows) => {
     dispatch(turnOnAppLoader());
     axios
       .get(`${LPN_DATE_CHECK_API}/${selectedWarehouse}`)
-      .then((lpnData) => {
-        filteredRowsRef.current = lpnData;
-        originalRowsRef.current = lpnData;
-        setRows(lpnData);
+      .then((res) => {
+        filteredRowsRef.current = res.data;
+        originalRowsRef.current = res.data;
+        setRows(res.data);
       })
       .catch((e) => console.log(e))
       .finally(() => dispatch(turnOffAppLoader()));

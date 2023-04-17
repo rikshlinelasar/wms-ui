@@ -1,7 +1,4 @@
-import { FilterAltOutlined } from "@mui/icons-material";
 import {
-  Button,
-  Fade,
   Grid,
   IconButton,
   TableCell,
@@ -10,14 +7,13 @@ import {
   TextField,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React from "react";
 
 import RotatableArrowUpward from "../../components-styled/RotatableArrowUpward/RotatableArrowUpward";
 import columns from "../../constants/lpn-date-table-columns";
 import { SortOrders } from "../../constants/sort";
 
 const LPNDateTableHead = ({
-  filtersLengthRef,
   sort,
   setSort,
   sortOrder,
@@ -25,10 +21,7 @@ const LPNDateTableHead = ({
   filters,
   setFilters,
   onFilter,
-  onClearFilters,
 }) => {
-  const [activeFilters, setActiveFilters] = useState({});
-
   const handleResetSort = () => {
     setSort(null);
     setSortOrder(SortOrders.asc);
@@ -47,45 +40,17 @@ const LPNDateTableHead = ({
 
   const handleFilterChange = (e, id) => {
     if (!e.target.value) {
-      setActiveFilters({ ...activeFilters, [id]: false });
       delete filters[id];
       setFilters({ ...filters });
     } else {
-      if (!filters[id]) {
-        filtersLengthRef.current += 1;
-      }
-      setFilters({ ...filters, [id]: e.target.value });
+      filters = { ...filters, [id]: e.target.value };
+      setFilters(filters);
     }
-  };
-
-  const handleFilter = (id) => {
-    if (filters[id]) {
-      setActiveFilters({ ...activeFilters, [id]: true });
-      onFilter(id);
-    }
-  };
-
-  const handleClearFilters = () => {
-    onClearFilters();
-    setActiveFilters({});
+    onFilter(filters);
   };
 
   return (
     <TableHead>
-      <Fade
-        in={filtersLengthRef.current || sort}
-        sx={{
-          position: "fixed",
-          right: 0,
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          mr: 2,
-          mt: 2,
-        }}
-      >
-        <Button size="small" variant="contained" onClick={handleClearFilters}>
-          Clear
-        </Button>
-      </Fade>
       <TableRow>
         {columns.map((column) => (
           <TableCell
@@ -119,26 +84,12 @@ const LPNDateTableHead = ({
                     </IconButton>
                   </Grid>
                 </Grid>
-                <Grid container flexDirection="row" alignItems="center">
-                  <Grid item xs={8}>
-                    <TextField
-                      size="small"
-                      inputProps={{ sx: { p: 0.2, pl: 0.5, pr: 0.5 } }}
-                      value={filters[column.id] || ""}
-                      onChange={(e) => handleFilterChange(e, column.id)}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <IconButton
-                      color={activeFilters[column.id] ? "primary" : undefined}
-                      size="small"
-                      sx={{ marginLeft: "2px", width: 24, height: 24 }}
-                      onClick={() => handleFilter(column.id)}
-                    >
-                      <FilterAltOutlined fontSize="small" />
-                    </IconButton>
-                  </Grid>
-                </Grid>
+                <TextField
+                  size="small"
+                  inputProps={{ sx: { p: 0.2, pl: 0.5, pr: 0.5 } }}
+                  value={filters[column.id] || ""}
+                  onChange={(e) => handleFilterChange(e, column.id)}
+                />
               </Grid>
             ) : null}
           </TableCell>
@@ -156,8 +107,6 @@ LPNDateTableHead.propTypes = {
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
-  filtersLengthRef: PropTypes.object.isRequired,
-  onClearFilters: PropTypes.func.isRequired,
 };
 
 export default LPNDateTableHead;
