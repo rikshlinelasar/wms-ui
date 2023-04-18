@@ -1,11 +1,10 @@
-import { Menu } from "@mui/icons-material";
 import { AppBar, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import logo from "../../assets/images/logo.png";
 import { appBarHeight } from "../../styles/styles";
 
 const NavBar = () => (
@@ -25,21 +24,15 @@ const NavBar = () => (
       }}
     >
       <Link to="/">
-        <IconButton
-          size="large"
-          edge="start"
-          color="black"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <Menu />
-        </IconButton>
+        <img src={logo} style={{ width: 50, height: 50 }} />
       </Link>
       <Link to="/">
         <Typography
           variant="h2"
           color="primary"
           sx={(theme) => ({
+            ml: 1,
+            mb: 1,
             [theme.breakpoints.down("sm")]: {
               fontSize: "18px",
             },

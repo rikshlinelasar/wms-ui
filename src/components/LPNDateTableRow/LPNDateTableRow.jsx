@@ -84,28 +84,46 @@ const LPNDateTableRow = ({
     }
   };
 
-  const handlePostSave = () => {
-    postAdjustOne({
-      lpnSingleAdjustRequest: formatRow(
-        row,
-        isMftdDateChanged,
-        isExpiredDateChanged,
-        isCPDChanged,
-        manufactureDate,
-        expirationDate,
-        consumptionPriorityDate,
-        selectedWarehouse
-      ),
-      location: selectedWarehouse,
-    });
+  const handlePostAdjustOne = () => {
+    postAdjustOne(
+      {
+        lpnSingleAdjustRequest: formatRow(
+          row,
+          isMftdDateChanged,
+          isExpiredDateChanged,
+          isCPDChanged,
+          manufactureDate,
+          expirationDate,
+          consumptionPriorityDate,
+          selectedWarehouse
+        ),
+        location: selectedWarehouse,
+      },
+      ({ isSuccess, sourceContainerId, message }) => {
+        dispatch(
+          openNotification({
+            message: [
+              {
+                message: `${sourceContainerId} ${
+                  isSuccess ? "Saved successfully!" : message
+                }`,
+                isSuccess,
+                status: isSuccess ? "Success" : "Error",
+              },
+            ],
+          })
+        );
+
+        if (isSuccess) {
+          onRowUpdate(index);
+        }
+      }
+    );
   };
 
   const handleSave = () => {
     if (isChanged) {
-      setIsChanged(false);
-      dispatch(openNotification({ message: "Saved successfully!" }));
-      onRowUpdate(index);
-      handlePostSave();
+      handlePostAdjustOne();
     } else {
       dispatch(
         openNotification({ title: "Error", message: "There is nothing to save!" })

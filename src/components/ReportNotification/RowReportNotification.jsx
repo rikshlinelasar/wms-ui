@@ -3,7 +3,12 @@ import { Divider, Grid, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 
-const RowReportNotification = ({ isSuccess, status, message }) => {
+const RowReportNotification = ({
+  isSuccess,
+  status,
+  message,
+  disableBorderBottom,
+}) => {
   return (
     <Grid container direction="column" mt={1}>
       <Grid container alignItems="center" gap={2}>
@@ -22,7 +27,7 @@ const RowReportNotification = ({ isSuccess, status, message }) => {
       <Typography mt={1} ml={1}>
         {message}
       </Typography>
-      <Divider />
+      {disableBorderBottom ? null : <Divider />}
     </Grid>
   );
 };
@@ -31,6 +36,7 @@ RowReportNotification.propTypes = {
   isSuccess: PropTypes.bool,
   status: PropTypes.string.isRequired,
   message: PropTypes.string,
+  disableBorderBottom: PropTypes.boolean,
 };
 
 export default RowReportNotification;

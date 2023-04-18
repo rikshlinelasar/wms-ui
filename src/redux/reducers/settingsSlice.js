@@ -17,7 +17,7 @@ export const settingsSlice = createSlice({
   reducers: {
     openNotification(state, { payload }) {
       state.notification.isOpen = true;
-      state.notification.severity = payload.title || "";
+      state.notification.title = payload.title || "";
       state.notification.message = payload.message || "";
     },
     closeNotification(state) {

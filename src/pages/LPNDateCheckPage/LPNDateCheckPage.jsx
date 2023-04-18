@@ -61,18 +61,46 @@ const LPNDateCheckPage = () => {
 
   const handleSaveAll = () => {
     if (Object.keys(unsavedRowsRef.current).length !== 0) {
-      for (const rowKey in unsavedRowsRef.current) {
-        originalRowsRef.current.splice(Number(rowKey), 1);
-      }
-      postAdjustAll({
-        lpnMultiAdjustRequest: formatObjectToArray(unsavedRowsRef.current),
-        location: selectedWarehouse,
-      });
-      unsavedRowsRef.current = {};
-      setPage(0);
-      dispatch(openNotification({ message: "Saved all successfully!" }));
-      setSaveAllCounter(saveAllCounter + 1);
-      handleFilter();
+      // for (const rowKey in unsavedRowsRef.current) {
+      //   originalRowsRef.current.splice(Number(rowKey), 1);
+      // }
+      postAdjustAll(
+        {
+          lpnMultiAdjustRequest: formatObjectToArray(unsavedRowsRef.current),
+          location: selectedWarehouse,
+        },
+        (data) => {
+          const report = [];
+          const successRowsIds = [];
+
+          data.forEach(({ sourceContainerId, isSuccess, message }) => {
+            report.push({
+              message: `${sourceContainerId} ${
+                isSuccess ? "Saved successfully!" : message
+              }`,
+              isSuccess,
+              status: isSuccess ? "Success" : "Error",
+            });
+
+            if (isSuccess) {
+              successRowsIds.push(sourceContainerId);
+            }
+          });
+          unsavedRowsRef.current = {};
+          successRowsIds.forEach((id) => {
+            const index = originalRowsRef.current.findIndex(
+              ({ ilpnId }) => ilpnId === id
+            );
+            if (index > 0) {
+              originalRowsRef.current.splice(index, 1);
+            }
+          });
+          setSaveAllCounter(saveAllCounter + 1);
+          dispatch(openNotification({ title: "Report", message: report }));
+          setPage(0);
+          handleFilter();
+        }
+      );
     } else {
       dispatch(
         openNotification({ title: "Error", message: "There is nothing to save!" })
@@ -215,7 +243,7 @@ const LPNDateCheckPage = () => {
         <Grid container justifyContent="flex-end">
           <Fade in={Object.keys(filters).length || sort}>
             <Button variant="contained" sx={{ m: 1 }} onClick={handleClearFilters}>
-              Clear Filter/Sort
+              Clear Sort/Filter
             </Button>
           </Fade>
           <Button

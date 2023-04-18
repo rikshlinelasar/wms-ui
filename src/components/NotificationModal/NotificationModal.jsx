@@ -49,6 +49,7 @@ const NotificationModal = () => {
               isSuccess={report.isSuccess}
               status={report.status}
               message={report.message}
+              disableBorderBottom={i === message.length - 1 || message.length === 1}
             />
           ))
         )}
