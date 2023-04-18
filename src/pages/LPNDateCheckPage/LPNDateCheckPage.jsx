@@ -20,9 +20,11 @@ import { openNotification } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
 import { appBarHeight } from "../../styles/styles";
 import { formatObjectToArray } from "../../functions/format";
+import usePostAdjustAll from "../../hooks/usePostAdjustAll";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
+  const { postAdjustAll } = usePostAdjustAll();
   const { selectedWarehouse } = useSelector(settingsState);
   const unsavedRowsRef = useRef({});
   const filteredRowsRef = useRef([...rows]);
@@ -58,6 +60,7 @@ const LPNDateCheckPage = () => {
       for (const rowKey in unsavedRowsRef.current) {
         originalRowsRef.current.splice(Number(rowKey), 1);
       }
+      postAdjustAll(formatObjectToArray(unsavedRowsRef.current));
       unsavedRowsRef.current = {};
       setPage(0);
       dispatch(openNotification({ message: "Saved all successfully!" }));

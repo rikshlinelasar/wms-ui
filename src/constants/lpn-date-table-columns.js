@@ -1,6 +1,6 @@
 const columns = [
   { id: "itemId", label: "Item", minWidth: 90 },
-  { id: "itemDescription", label: "Item Description", minWidth: 140 },
+  { id: "itemDescription", label: "Item Description", minWidth: 220 },
   { id: "ilpnId", label: "LPN ID", minWidth: 110 },
   {
     id: "lpnStatus",

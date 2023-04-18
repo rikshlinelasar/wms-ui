@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { ADJUST_ALL_API } from "../constants/api";
+import { ADJUST_ONE_API } from "../constants/api";
 import axios from "../constants/axios";
 import { turnOffAppLoader, turnOnAppLoader } from "../redux/reducers/settingsSlice";
 
@@ -10,7 +10,7 @@ const usePostAdjustOne = () => {
   const postAdjustOne = (row, onSuccess) => {
     dispatch(turnOnAppLoader());
     axios
-      .post(ADJUST_ALL_API, row)
+      .post(ADJUST_ONE_API, row)
       .then((res) => {
         console.log(res.data);
         if (onSuccess) {
