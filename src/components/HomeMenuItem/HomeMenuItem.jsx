@@ -12,10 +12,13 @@ const HomeMenuItem = ({ to, label, description, ...props }) => {
   };
 
   return (
-    <Grid item {...props}>
+    <Grid item {...props} sx={{ height: "100%" }}>
       <Card
         sx={(theme) => ({
           p: 2,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
           ["&:hover"]: {
             boxShadow: `0 0 4px ${theme.palette.primary.main}`,
           },
@@ -25,7 +28,7 @@ const HomeMenuItem = ({ to, label, description, ...props }) => {
           {label}
         </Typography>
         <Grid item p={1} />
-        <Typography variant="p" fontWeight="400">
+        <Typography variant="p" fontWeight="400" flex={1}>
           {description}
         </Typography>
         <Grid item p={1} />

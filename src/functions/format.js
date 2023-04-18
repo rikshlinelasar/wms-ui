@@ -5,22 +5,18 @@ export const formatRow = (
   isCPDChanged,
   manufacturedDate,
   expirationDate,
-  consumptionPriorityDate,
-  location
+  consumptionPriorityDate
 ) => ({
-  lpnSingleAdjustRequest: {
-    sourceContainerId: row.ilpnId,
-    sourceLocationId: row.locationId,
-    itemId: row.itemId,
-    quantity: row.lpnQuantityInCases,
-    manufacturedDate,
-    expirationDate,
-    consumptionPriorityDate,
-    isMftdDateChanged,
-    isExpiredDateChanged,
-    isCPDChanged,
-  },
-  location,
+  sourceContainerId: row.ilpnId,
+  sourceLocationId: row.locationId,
+  itemId: row.itemId,
+  quantity: row.lpnQuantityInCases,
+  manufacturedDate,
+  expirationDate,
+  consumptionPriorityDate,
+  isMftdDateChanged,
+  isExpiredDateChanged,
+  isCPDChanged,
 });
 
 export const formatObjectToArray = (obj) => Object.keys(obj).map((key) => obj[key]);

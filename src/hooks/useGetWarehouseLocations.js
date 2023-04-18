@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { WAREHOUSE_LOCATIONS_API } from "../constants/api";
 import axios from "../constants/axios";
@@ -8,11 +8,16 @@ import {
   turnOffAppLoader,
   turnOnAppLoader,
 } from "../redux/reducers/settingsSlice";
+import { settingsState } from "../redux/store";
 
 const useGetWarehouseLocations = () => {
   const dispatch = useDispatch();
+  const { isAppLoading } = useSelector(settingsState);
 
   const getWarehouseLocations = () => {
+    if (isAppLoading) {
+      return;
+    }
     dispatch(turnOnAppLoader());
     axios
       .get(WAREHOUSE_LOCATIONS_API)

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   notification: {
     isOpen: false,
-    severity: "success",
+    title: "",
     message: null,
   },
   isAppLoading: false,
@@ -17,8 +17,8 @@ export const settingsSlice = createSlice({
   reducers: {
     openNotification(state, { payload }) {
       state.notification.isOpen = true;
-      state.notification.severity = payload.severity || "success";
-      state.notification.message = payload.message;
+      state.notification.severity = payload.title || "";
+      state.notification.message = payload.message || "";
     },
     closeNotification(state) {
       state.notification.isOpen = false;

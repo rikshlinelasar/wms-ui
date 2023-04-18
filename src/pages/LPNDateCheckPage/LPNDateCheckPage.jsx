@@ -24,6 +24,7 @@ import usePostAdjustAll from "../../hooks/usePostAdjustAll";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
+  const tableContainerRef = useRef();
   const { postAdjustAll } = usePostAdjustAll();
   const { selectedWarehouse } = useSelector(settingsState);
   const unsavedRowsRef = useRef({});
@@ -48,6 +49,9 @@ const LPNDateCheckPage = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     unsavedRowsRef.current = {};
+    tableContainerRef.current.scrollTo({
+      top: 0,
+    });
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -60,12 +64,19 @@ const LPNDateCheckPage = () => {
       for (const rowKey in unsavedRowsRef.current) {
         originalRowsRef.current.splice(Number(rowKey), 1);
       }
-      postAdjustAll(formatObjectToArray(unsavedRowsRef.current));
+      postAdjustAll({
+        lpnMultiAdjustRequest: formatObjectToArray(unsavedRowsRef.current),
+        location: selectedWarehouse,
+      });
       unsavedRowsRef.current = {};
       setPage(0);
       dispatch(openNotification({ message: "Saved all successfully!" }));
       setSaveAllCounter(saveAllCounter + 1);
       handleFilter();
+    } else {
+      dispatch(
+        openNotification({ title: "Error", message: "There is nothing to save!" })
+      );
     }
   };
 
@@ -80,7 +91,8 @@ const LPNDateCheckPage = () => {
     filteredRowsRef.current = [...originalRowsRef.current];
     setSort(null);
     setSortOrder(SortOrders.asc);
-    setFilters([]);
+    setFilters({});
+    setUpdatedRows(originalRowsRef.current);
   };
 
   const handleFilter = (currentFilters = filters) => {
@@ -150,8 +162,7 @@ const LPNDateCheckPage = () => {
       );
     }
   }, [sort, sortOrder]);
-  console.log(unsavedRowsRef.current);
-  console.log(formatObjectToArray(unsavedRowsRef.current));
+
   return (
     <PageLayout>
       <Grid container direction="column" pt={2} pl={5}>
@@ -164,7 +175,7 @@ const LPNDateCheckPage = () => {
           />
           <BackButton sx={{ ml: 2 }} />
         </Grid>
-        <TableContainer sx={{ height: tableHeight }}>
+        <TableContainer ref={tableContainerRef} sx={{ height: tableHeight }}>
           <Table stickyHeader aria-label="sticky table">
             <LPNDateTableHead
               sort={sort}
@@ -204,7 +215,7 @@ const LPNDateCheckPage = () => {
         <Grid container justifyContent="flex-end">
           <Fade in={Object.keys(filters).length || sort}>
             <Button variant="contained" sx={{ m: 1 }} onClick={handleClearFilters}>
-              Clear Changes
+              Clear Filter/Sort
             </Button>
           </Fade>
           <Button

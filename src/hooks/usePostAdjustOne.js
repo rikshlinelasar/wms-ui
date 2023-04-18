@@ -14,7 +14,7 @@ const usePostAdjustOne = () => {
       .then((res) => {
         console.log(res.data);
         if (onSuccess) {
-          onSuccess();
+          onSuccess(res.data);
         }
       })
       .catch((e) => console.log(e))

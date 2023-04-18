@@ -48,7 +48,10 @@ const NavBar = () => (
           Warehouse Management
         </Typography>
       </Link>
-      <Button color="primary" sx={{ marginLeft: "auto", textTransform: "none" }}>
+      <Button
+        color="primary"
+        sx={{ marginLeft: "auto", textTransform: "none", fontWeight: "600" }}
+      >
         Sign Out
       </Button>
     </AppBar>

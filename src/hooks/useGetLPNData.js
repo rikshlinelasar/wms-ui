@@ -7,9 +7,12 @@ import { settingsState } from "../redux/store";
 
 const useGetLPNData = (filteredRowsRef, originalRowsRef, setRows) => {
   const dispatch = useDispatch();
-  const { selectedWarehouse } = useSelector(settingsState);
+  const { selectedWarehouse, isAppLoading } = useSelector(settingsState);
 
   const getLPNData = () => {
+    if (isAppLoading) {
+      return;
+    }
     dispatch(turnOnAppLoader());
     axios
       .get(`${LPN_DATE_CHECK_API}/${selectedWarehouse}`)

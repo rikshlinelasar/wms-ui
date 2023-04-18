@@ -30,7 +30,7 @@ const HomePage = () => {
             <HomeMenuItem
               to={TASK_GROUP_ROUTE}
               label="Task Group"
-              description="Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem."
+              description="Lorem ipsum dolor."
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>

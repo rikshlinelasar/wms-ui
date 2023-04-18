@@ -7,12 +7,15 @@ import { turnOffAppLoader, turnOnAppLoader } from "../redux/reducers/settingsSli
 const usePostAdjustAll = () => {
   const dispatch = useDispatch();
 
-  const postAdjustAll = (row) => {
+  const postAdjustAll = (row, onSuccess) => {
     dispatch(turnOnAppLoader());
     axios
       .post(ADJUST_ALL_API, row)
       .then((res) => {
         console.log(res.data);
+        if (onSuccess) {
+          onSuccess(res.data);
+        }
       })
       .catch((e) => console.log(e))
       .finally(() => dispatch(turnOffAppLoader()));

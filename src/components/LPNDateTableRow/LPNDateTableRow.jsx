@@ -85,8 +85,8 @@ const LPNDateTableRow = ({
   };
 
   const handlePostSave = () => {
-    postAdjustOne(
-      formatRow(
+    postAdjustOne({
+      lpnSingleAdjustRequest: formatRow(
         row,
         isMftdDateChanged,
         isExpiredDateChanged,
@@ -95,8 +95,9 @@ const LPNDateTableRow = ({
         expirationDate,
         consumptionPriorityDate,
         selectedWarehouse
-      )
-    );
+      ),
+      location: selectedWarehouse,
+    });
   };
 
   const handleSave = () => {
@@ -105,6 +106,10 @@ const LPNDateTableRow = ({
       dispatch(openNotification({ message: "Saved successfully!" }));
       onRowUpdate(index);
       handlePostSave();
+    } else {
+      dispatch(
+        openNotification({ title: "Error", message: "There is nothing to save!" })
+      );
     }
   };
 
