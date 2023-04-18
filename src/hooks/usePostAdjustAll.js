@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
 
-import { ADJUST_ONE_API } from "../constants/api";
+import { ADJUST_ALL_API } from "../constants/api";
 import axios from "../constants/axios";
 import { turnOffAppLoader, turnOnAppLoader } from "../redux/reducers/settingsSlice";
 
 const usePostAdjustAll = () => {
   const dispatch = useDispatch();
 
-  const postAdjustOne = (row) => {
+  const postAdjustAll = (row) => {
     dispatch(turnOnAppLoader());
     axios
-      .post(ADJUST_ONE_API, row)
+      .post(ADJUST_ALL_API, row)
       .then((res) => {
         console.log(res.data);
       })
@@ -18,7 +18,7 @@ const usePostAdjustAll = () => {
       .finally(() => dispatch(turnOffAppLoader()));
   };
 
-  return { postAdjustOne };
+  return { postAdjustAll };
 };
 
 export default usePostAdjustAll;
