@@ -37,6 +37,15 @@ const LPNDateTableRow = ({
   const [isChanged, setIsChanged] = useState(false);
 
   const handleManufactureDateChange = (value) => {
+    if (!value) {
+      setManufactureDate(null);
+      if (row.manufacturedDate) {
+        setIsChanged(true);
+        setIsMftdDateChanged(true);
+      }
+      return;
+    }
+
     const date = getDateFromPicker(value);
 
     if (date !== manufactureDate) {
@@ -47,6 +56,15 @@ const LPNDateTableRow = ({
   };
 
   const handleExpirationDateChange = (value) => {
+    if (!value) {
+      setExpirationDate(null);
+      if (row.expirationDate) {
+        setIsChanged(true);
+        setIsExpiredDateChanged(true);
+      }
+      return;
+    }
+
     const date = getDateFromPicker(value);
 
     if (date !== expirationDate) {
@@ -57,6 +75,15 @@ const LPNDateTableRow = ({
   };
 
   const handlePriortyDateChange = (value) => {
+    if (!value) {
+      setConsumptionPriorityDate(null);
+      if (row.consumptionPriorityDate) {
+        setIsChanged(true);
+        setIsCPDChanged(true);
+      }
+      return;
+    }
+
     const date = typeof value === "string" ? value : getDateFromPicker(value);
 
     if (date !== consumptionPriorityDate) {
