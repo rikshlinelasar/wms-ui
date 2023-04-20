@@ -23,28 +23,28 @@ const HomePage = () => {
             <HomeMenuItem
               to={LPN_DATE_CHECK_ROUTE}
               label="LPN Date Check"
-              description="Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem."
+              description="User can updat the iLPN Date."
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
             <HomeMenuItem
               to={TASK_GROUP_ROUTE}
               label="Task Group"
-              description="Lorem ipsum dolor."
+              description="Task Group Eligibility."
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
             <HomeMenuItem
               to={LPN_DATE_CHECK_ROUTE}
-              label="LPN Date Check"
-              description="Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem."
+              label="ORDER TYPE UI"
+              description="Order Type 1 to Order Type 2 (Demand Order Type to Standard Order Type)."
             />
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
             <HomeMenuItem
               to={LPN_DATE_CHECK_ROUTE}
-              label="LPN Date Check"
-              description="Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem ipsum dolor init Lorem."
+              label="ITEM ATTRIB UI"
+              description="Items Missing Attributes - Capture Item Attributes UI"
             />
           </Grid>
         </Grid>
