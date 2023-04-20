@@ -95,19 +95,23 @@ const LPNDateTableRow = ({
 
   const handleDateCalculation = () => {
     if (row.vintageTier === 3 || row.vintageTier == 2) {
-      const vintageDate = `${row.vintageYear}-1-1`;
+      const vintageDate = `${row.vintageYear}-01-01`;
 
       if (consumptionPriorityDate !== vintageDate) {
         handlePriortyDateChange(vintageDate);
       }
-    } else if (expirationDate && row.expirationDate) {
+    } else if (expirationDate && row.trackExpiryDate) {
       if (consumptionPriorityDate !== expirationDate) {
         handlePriortyDateChange(expirationDate);
       }
-    } else if (manufactureDate && row.manufacturedDate) {
+    } else if (manufactureDate && row.trackManufacturingDate) {
       if (consumptionPriorityDate !== manufactureDate) {
         handlePriortyDateChange(manufactureDate);
       }
+    } else {
+      dispatch(
+        openNotification({ title: "Error", message: "No Manufacturing or Expiration date to calculate Consumption Priority Date!" })
+      );
     }
   };
 
@@ -127,8 +131,10 @@ const LPNDateTableRow = ({
         location: selectedWarehouse,
       },
       ({ isSuccess, sourceContainerId, message }) => {
+        setIsChanged(false);
         dispatch(
           openNotification({
+            title: "Details",
             message: [
               {
                 message: `${sourceContainerId} ${

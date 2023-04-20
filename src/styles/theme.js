@@ -20,6 +20,15 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Open Sans",
+          textTransform: "uppercase",
+          fontWeight: "600",
+        }
+      }
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

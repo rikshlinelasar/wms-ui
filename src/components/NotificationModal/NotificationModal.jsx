@@ -24,7 +24,7 @@ const NotificationModal = () => {
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="notification-modal" open={isOpen}>
-      <DialogTitle sx={{ m: 0, p: 2, textTransform: "capitalize", minHeight: 50 }}>
+      <DialogTitle sx={{ m: 0, p: 2, minHeight: 50, color: "primary.main" }}>
         {title}
         <IconButton
           aria-label="close"

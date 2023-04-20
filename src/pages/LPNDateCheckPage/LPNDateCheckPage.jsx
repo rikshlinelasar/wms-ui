@@ -73,10 +73,10 @@ const LPNDateCheckPage = () => {
           const report = [];
           const successRowsIds = [];
 
-          data.forEach(({ sourceContainerId, isSuccess, message }) => {
+          data.lpnSingleAdjustResponse.forEach(({ sourceContainerId, isSuccess, statusMessage }) => {
             report.push({
               message: `${sourceContainerId} ${
-                isSuccess ? "Saved successfully!" : message
+                isSuccess ? "Saved successfully!" : statusMessage
               }`,
               isSuccess,
               status: isSuccess ? "Success" : "Error",
@@ -179,6 +179,7 @@ const LPNDateCheckPage = () => {
 
   useEffect(() => {
     getLPNData();
+    setSaveAllCounter(saveAllCounter + 1);
   }, [selectedWarehouse]);
 
   useEffect(() => {
