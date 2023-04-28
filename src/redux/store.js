@@ -13,5 +13,8 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export const settingsState = (state) => state.settingsReducer;
 export const authState = (state) => state.authReducer;
+
+export const booleanState = (state) => state.booleanReducer;
+
+export const settingsState = (state) => state.settingsReducer;

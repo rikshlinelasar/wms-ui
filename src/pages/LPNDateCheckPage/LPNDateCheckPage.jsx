@@ -1,26 +1,25 @@
 import { CheckCircleOutline, SaveOutlined } from "@mui/icons-material";
-import { Button, Divider, Fade, Grid, TableContainer } from "@mui/material";
+import { Button, Fade, Grid, TableContainer, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import BackButton from "../../components/BackButton/BackButton";
+import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import LPNDateTableHead from "../../components/LPNDateTableHead/LPNDateTableHead";
 import LPNDateTableRow from "../../components/LPNDateTableRow/LPNDateTableRow";
 import PageLayout from "../../components/PageLayout/PageLayout";
-import RouteChip from "../../components/RouteChip/RouteChip";
 import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
 import rows from "../../constants/rows";
 import { SortOrders } from "../../constants/sort";
+import { formatObjectToArray } from "../../functions/format";
 import { getComparator } from "../../functions/sort";
 import useGetLPNData from "../../hooks/useGetLPNData";
+import usePostAdjustAll from "../../hooks/usePostAdjustAll";
 import { openNotification } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
 import { appBarHeight } from "../../styles/styles";
-import { formatObjectToArray } from "../../functions/format";
-import usePostAdjustAll from "../../hooks/usePostAdjustAll";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
@@ -61,9 +60,6 @@ const LPNDateCheckPage = () => {
 
   const handleSaveAll = () => {
     if (Object.keys(unsavedRowsRef.current).length !== 0) {
-      // for (const rowKey in unsavedRowsRef.current) {
-      //   originalRowsRef.current.splice(Number(rowKey), 1);
-      // }
       postAdjustAll(
         {
           lpnMultiAdjustRequest: formatObjectToArray(unsavedRowsRef.current),
@@ -73,19 +69,21 @@ const LPNDateCheckPage = () => {
           const report = [];
           const successRowsIds = [];
 
-          data.lpnSingleAdjustResponse.forEach(({ sourceContainerId, isSuccess, statusMessage }) => {
-            report.push({
-              message: `${sourceContainerId} ${
-                isSuccess ? "Saved successfully!" : statusMessage
-              }`,
-              isSuccess,
-              status: isSuccess ? "Success" : "Error",
-            });
+          data.lpnSingleAdjustResponse.forEach(
+            ({ sourceContainerId, isSuccess, statusMessage }) => {
+              report.push({
+                message: `${sourceContainerId} ${
+                  isSuccess ? "Saved successfully!" : statusMessage
+                }`,
+                isSuccess,
+                status: isSuccess ? "Success" : "Error",
+              });
 
-            if (isSuccess) {
-              successRowsIds.push(sourceContainerId);
+              if (isSuccess) {
+                successRowsIds.push(sourceContainerId);
+              }
             }
-          });
+          );
           unsavedRowsRef.current = {};
           successRowsIds.forEach((id) => {
             const index = originalRowsRef.current.findIndex(
@@ -196,13 +194,12 @@ const LPNDateCheckPage = () => {
     <PageLayout>
       <Grid container direction="column" pt={2} pl={5}>
         <Grid container alignItems="center">
-          <WarehousePicker mb={1} />
-          <RouteChip
+          <WarehousePicker sx={{ mb: 0.5, mt: 0.5 }} />
+          <Breadcrumbs
             icon={CheckCircleOutline}
-            label="LPN Date Check"
+            label="iLPN Date Check"
             sx={{ ml: 2 }}
           />
-          <BackButton sx={{ ml: 2 }} />
         </Grid>
         <TableContainer ref={tableContainerRef} sx={{ height: tableHeight }}>
           <Table stickyHeader aria-label="sticky table">
@@ -216,18 +213,40 @@ const LPNDateCheckPage = () => {
               onFilter={handleFilter}
             />
             <TableBody>
-              {updatedRows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, i) => (
-                  <LPNDateTableRow
-                    key={row.id}
-                    unsavedRowsRef={unsavedRowsRef}
-                    row={row}
-                    index={i}
-                    saveAllCounter={saveAllCounter}
-                    onRowUpdate={handleRowUpdate}
-                  />
-                ))}
+              {(() => {
+                const paginatedRows = updatedRows.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                );
+
+                return paginatedRows.length === 0 ? (
+                  <Grid
+                    container
+                    sx={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      marginTop: 5,
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      width: 220,
+                    }}
+                  >
+                    <Typography variant="h4">No records to display</Typography>
+                  </Grid>
+                ) : (
+                  paginatedRows.map((row, i) => (
+                    <LPNDateTableRow
+                      key={row.id}
+                      unsavedRowsRef={unsavedRowsRef}
+                      row={row}
+                      index={i}
+                      saveAllCounter={saveAllCounter}
+                      onRowUpdate={handleRowUpdate}
+                    />
+                  ))
+                );
+              })()}
             </TableBody>
           </Table>
         </TableContainer>
@@ -240,7 +259,6 @@ const LPNDateCheckPage = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-        <Divider />
         <Grid container justifyContent="flex-end">
           <Fade in={Object.keys(filters).length || sort}>
             <Button variant="contained" sx={{ m: 1 }} onClick={handleClearFilters}>

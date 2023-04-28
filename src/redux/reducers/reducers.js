@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import authReducer from "./authSlice";
 import settingsReducer from "./settingsSlice";
+import booleanReducer from "./booleanSlice";
 
 const persistConfig = {
   key: "root",
@@ -14,6 +15,7 @@ const persistConfig = {
 const reducers = combineReducers({
   settingsReducer,
   authReducer,
+  booleanReducer,
 });
 
 export const persistedReducer = persistReducer(persistConfig, reducers);

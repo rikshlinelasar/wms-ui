@@ -94,7 +94,7 @@ const LPNDateTableRow = ({
   };
 
   const handleDateCalculation = () => {
-    if (row.vintageTier === 3 || row.vintageTier == 2) {
+    if (row.vintageTier === 3 || row.vintageTier === 2) {
       const vintageDate = `${row.vintageYear}-01-01`;
 
       if (consumptionPriorityDate !== vintageDate) {
@@ -110,7 +110,11 @@ const LPNDateTableRow = ({
       }
     } else {
       dispatch(
-        openNotification({ title: "Error", message: "No Manufacturing or Expiration date to calculate Consumption Priority Date!" })
+        openNotification({
+          title: "Error",
+          message:
+            "No Manufacturing or Expiration date to calculate Consumption Priority Date!",
+        })
       );
     }
   };

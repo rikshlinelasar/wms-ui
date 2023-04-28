@@ -8,6 +8,9 @@ const theme = createTheme({
     secondary: {
       main: "#1C0076",
     },
+    gray: {
+      main: "#AFA79E",
+    },
   },
   components: {
     MuiTableCell: {
@@ -26,8 +29,8 @@ const theme = createTheme({
           fontFamily: "Open Sans",
           textTransform: "uppercase",
           fontWeight: "600",
-        }
-      }
+        },
+      },
     },
     MuiTypography: {
       styleOverrides: {
@@ -66,6 +69,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: "Open Sans",
+          textTransform: "none",
         },
       },
     },

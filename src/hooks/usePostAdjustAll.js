@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 
 import { ADJUST_ALL_API } from "../constants/api";
 import axios from "../constants/axios";
-import { turnOffAppLoader, turnOnAppLoader } from "../redux/reducers/settingsSlice";
+import { turnOffAppLoader, turnOnAppLoader } from "../redux/reducers/booleanSlice";
 
 const usePostAdjustAll = () => {
   const dispatch = useDispatch();

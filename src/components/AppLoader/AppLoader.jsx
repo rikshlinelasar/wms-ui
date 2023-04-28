@@ -4,14 +4,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import * as React from "react";
 import { useSelector } from "react-redux";
 
-import { settingsState } from "../../redux/store";
+import { booleanState } from "../../redux/store";
 
 const AppLoader = () => {
-  const { isAppLoading } = useSelector(settingsState);
+  const { isAppLoading, isLoading } = useSelector(booleanState);
 
   return (
     <Fade
-      in={isAppLoading}
+      in={isAppLoading || isLoading}
       style={{ position: "fixed", width: "100%", height: "100%" }}
     >
       <Backdrop

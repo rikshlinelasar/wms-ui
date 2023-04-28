@@ -6,7 +6,6 @@ const initialState = {
     title: "",
     message: null,
   },
-  isAppLoading: false,
   selectedWarehouse: "Choose Warehouse",
   warehouses: [],
 };
@@ -23,12 +22,6 @@ export const settingsSlice = createSlice({
     closeNotification(state) {
       state.notification.isOpen = false;
     },
-    turnOnAppLoader(state) {
-      state.isAppLoading = true;
-    },
-    turnOffAppLoader(state) {
-      state.isAppLoading = false;
-    },
     setSelectedWarehouse(state, { payload }) {
       state.selectedWarehouse = payload;
     },
@@ -41,10 +34,9 @@ export const settingsSlice = createSlice({
 export const {
   openNotification,
   closeNotification,
-  turnOnAppLoader,
-  turnOffAppLoader,
   setSelectedWarehouse,
   setWarehouses,
+  setApplications,
 } = settingsSlice.actions;
 
 export const settingsReducer = settingsSlice.reducer;

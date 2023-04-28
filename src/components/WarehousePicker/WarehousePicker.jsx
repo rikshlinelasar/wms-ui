@@ -9,9 +9,7 @@ const WarehousePicker = (props) => {
   const dispatch = useDispatch();
   const { selectedWarehouse, warehouses } = useSelector(settingsState);
 
-  const handleChange = (event) => {
-    dispatch(setSelectedWarehouse(event.target.value));
-  };
+  const handleChange = (event) => dispatch(setSelectedWarehouse(event.target.value));
 
   const renderWarehouses = () =>
     warehouses.length > 0 ? (
