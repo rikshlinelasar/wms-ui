@@ -11,10 +11,10 @@ import LPNDateTableHead from "../../components/LPNDateTableHead/LPNDateTableHead
 import LPNDateTableRow from "../../components/LPNDateTableRow/LPNDateTableRow";
 import PageLayout from "../../components/PageLayout/PageLayout";
 import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
-import rows from "../../constants/rows";
-import { SortOrders } from "../../constants/sort";
-import { formatObjectToArray } from "../../functions/format";
-import { getComparator } from "../../functions/sort";
+import rows from "../../utilities/constants/rows";
+import { SortOrders } from "../../utilities/constants/sort";
+import { formatObjectToArray } from "../../utilities/functions/format";
+import { getComparator } from "../../utilities/functions/sort";
 import useGetLPNData from "../../hooks/useGetLPNData";
 import usePostAdjustAll from "../../hooks/usePostAdjustAll";
 import { openNotification } from "../../redux/reducers/settingsSlice";
@@ -237,7 +237,7 @@ const LPNDateCheckPage = () => {
                 ) : (
                   paginatedRows.map((row, i) => (
                     <LPNDateTableRow
-                      key={row.id}
+                      key={row.ilpnId}
                       unsavedRowsRef={unsavedRowsRef}
                       row={row}
                       index={i}

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { LPN_DATE_CHECK_API } from "../constants/api";
-import axios from "../constants/axios";
+import { LPN_DATE_CHECK_API } from "../utilities/constants/api";
+import axios from "../utilities/constants/axios";
 import { turnOffAppLoader, turnOnAppLoader } from "../redux/reducers/booleanSlice";
 import { settingsState } from "../redux/store";
 

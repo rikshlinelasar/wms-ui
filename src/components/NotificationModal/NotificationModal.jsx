@@ -33,7 +33,12 @@ const NotificationModal = () => {
       : null;
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="notification-modal" open={isOpen}>
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="notification-modal"
+      data-testid="notification-modal"
+      open={isOpen}
+    >
       <ModalTitle title={title} onClose={handleClose} />
       <DialogContent dividers sx={{ maxHeight: 300, minWidth: 300 }}>
         {typeof message === "string" ? (

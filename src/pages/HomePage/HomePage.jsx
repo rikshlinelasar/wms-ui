@@ -4,17 +4,15 @@ import React, { useEffect, useRef, useState } from "react";
 import HomeMenuItem from "../../components/HomeMenuItem/HomeMenuItem";
 import PageLayout from "../../components/PageLayout/PageLayout";
 import WarhousePicker from "../../components/WarehousePicker/WarehousePicker";
-import applications from "../../constants/applications";
 import useGetApplications from "../../hooks/useGetApplications";
-import useGetWarehouseLocations from "../../hooks/useGetWarehouseLocations";
-import { SortOrders } from "../../constants/sort";
-import { getComparator } from "../../functions/sort";
+import applications from "../../utilities/constants/applications";
+import { SortOrders } from "../../utilities/constants/sort";
+import { getComparator } from "../../utilities/functions/sort";
 
 const HomePage = () => {
   const originalAppsRef = useRef(applications);
   const [apps, setApps] = useState([...applications]);
   const [sort, setSort] = useState(SortOrders.sort);
-  const { getWarehouseLocations } = useGetWarehouseLocations();
   const { getApplications } = useGetApplications(originalAppsRef, setApps);
 
   const handleChange = (event) => setSort(event.target.value);
@@ -41,7 +39,6 @@ const HomePage = () => {
   }, [sort]);
 
   useEffect(() => {
-    getWarehouseLocations();
     getApplications();
   }, []);
 

@@ -17,7 +17,8 @@ const Modal = ({
 }) => (
   <Dialog
     onClose={onClose}
-    aria-labelledby="notification-modal"
+    aria-labelledby="modal"
+    data-testid="modal"
     open={isOpen}
     {...props}
   >

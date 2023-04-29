@@ -12,7 +12,7 @@ const HomeMenuItem = ({ to, label, description, ...props }) => {
   };
 
   return (
-    <Grid item {...props} sx={{ height: "100%" }}>
+    <Grid item data-testid="home-menu-item" {...props} sx={{ height: "100%" }}>
       <Card
         sx={(theme) => ({
           p: 2,

@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import SquareButton from "../../components-styled/SquareButton/SquareButton";
 import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRow";
-import columns from "../../constants/lpn-date-table-columns";
-import { getDateFromPicker } from "../../functions/date";
+import columns from "../../utilities/constants/lpn-date-table-columns";
+import { getDateFromPicker } from "../../utilities/functions/date";
 import { openNotification } from "../../redux/reducers/settingsSlice";
 import usePostAdjustOne from "../../hooks/usePostAdjustOne";
-import { formatRow } from "../../functions/format";
+import { formatRow } from "../../utilities/functions/format";
 import { settingsState } from "../../redux/store";
 
 const LPNDateTableRow = ({

@@ -13,9 +13,9 @@ const WarehousePicker = (props) => {
 
   const renderWarehouses = () =>
     warehouses.length > 0 ? (
-      warehouses.map((warehouse) => (
-        <MenuItem key={warehouse} value={warehouse.warehouseShortName}>
-          {warehouse.warehouseShortName}
+      warehouses.map(({ warehouseShortName }) => (
+        <MenuItem key={warehouseShortName} value={warehouseShortName}>
+          {warehouseShortName}
         </MenuItem>
       ))
     ) : (
@@ -27,6 +27,7 @@ const WarehousePicker = (props) => {
       <Select
         color="primary"
         size="small"
+        data-testid="warehouse-select"
         value={selectedWarehouse}
         onChange={handleChange}
         sx={{ minWidth: 200 }}

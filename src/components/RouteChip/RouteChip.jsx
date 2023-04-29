@@ -6,6 +6,7 @@ const RouteChip = ({ label, icon, sx, ...props }) => (
   <Chip
     color="primary"
     variant="outlined"
+    data-testid="route-chip"
     icon={createElement(icon, { fontSize: "small" })}
     label={label}
     sx={{ fontWeight: "500", ...sx }}

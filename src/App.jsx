@@ -6,7 +6,10 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { LPN_DATE_CHECK_ROUTE, TASK_GROUP_ROUTE } from "./constants/routes";
+import {
+  LPN_DATE_CHECK_ROUTE,
+  TASK_GROUP_ROUTE,
+} from "./utilities/constants/routes";
 import HomePage from "./pages/HomePage/HomePage";
 import LPNDateCheckPage from "./pages/LPNDateCheckPage/LPNDateCheckPage";
 import TaskGroupPage from "./pages/TaskGroupPage/TaskGroupPage";

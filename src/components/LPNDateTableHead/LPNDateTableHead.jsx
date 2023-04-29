@@ -10,8 +10,8 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import RotatableArrowUpward from "../../components-styled/RotatableArrowUpward/RotatableArrowUpward";
-import columns from "../../constants/lpn-date-table-columns";
-import { SortOrders } from "../../constants/sort";
+import columns from "../../utilities/constants/lpn-date-table-columns";
+import { SortOrders } from "../../utilities/constants/sort";
 
 const LPNDateTableHead = ({
   sort,

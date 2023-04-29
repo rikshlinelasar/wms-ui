@@ -5,7 +5,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const BackButton = ({ sx, ...props }) => (
-  <Link to="/">
+  <Link to="/" data-testid="navigate-home">
     <Chip
       icon={<ArrowBackIosNew fontSize="inherit" />}
       label="Go back to Main List"
@@ -16,7 +16,7 @@ const BackButton = ({ sx, ...props }) => (
 );
 
 BackButton.propTypes = {
-  sx: PropTypes.object.isRequired,
+  sx: PropTypes.object,
 };
 
 export default BackButton;

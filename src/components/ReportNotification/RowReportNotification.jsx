@@ -36,7 +36,7 @@ RowReportNotification.propTypes = {
   isSuccess: PropTypes.bool,
   status: PropTypes.string.isRequired,
   message: PropTypes.string,
-  disableBorderBottom: PropTypes.boolean,
+  disableBorderBottom: PropTypes.bool,
 };
 
 export default RowReportNotification;

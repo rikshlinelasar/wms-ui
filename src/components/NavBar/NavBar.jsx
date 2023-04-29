@@ -24,9 +24,9 @@ const NavBar = () => (
       }}
     >
       <Link to="/">
-        <img src={logo} style={{ width: 50, height: 50 }} />
+        <img src={logo} alt="logo" style={{ width: 50, height: 50 }} />
       </Link>
-      <Link to="/">
+      <Link to="/" data-testid="logo-text-link">
         <Typography
           variant="h2"
           color="primary"
