@@ -19,7 +19,7 @@ import useGetLPNData from "../../hooks/useGetLPNData";
 import usePostAdjustAll from "../../hooks/usePostAdjustAll";
 import { openNotification } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
-import { appBarHeight } from "../../styles/styles";
+import { APP_BAR_HEIGHT } from "../../styles/styles";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const LPNDateCheckPage = () => {
   const [saveAllCounter, setSaveAllCounter] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [tableHeight, setTableHeight] = useState(
-    window.innerHeight - appBarHeight - 40 - 135
+    window.innerHeight - APP_BAR_HEIGHT - 40 - 135
   );
   const [filters, setFilters] = useState({});
   const [updatedRows, setUpdatedRows] = useState(originalRowsRef.current);
@@ -166,7 +166,7 @@ const LPNDateCheckPage = () => {
 
   useEffect(() => {
     const resizeListener = () =>
-      setTableHeight(window.innerHeight - appBarHeight - 40 - 135);
+      setTableHeight(window.innerHeight - APP_BAR_HEIGHT - 40 - 135);
 
     window.addEventListener("resize", resizeListener);
 

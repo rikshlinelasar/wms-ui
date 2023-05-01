@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackButton Component BackButton snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "basename": "/",
+      "navigator": undefined,
+      "static": false,
+    }
+  }
+>
+  <Context.Provider
+    value={
+      Object {
+        "location": Object {
+          "hash": "",
+          "key": "1",
+          "pathname": "/lpn-date-check",
+          "search": "",
+          "state": null,
+        },
+        "navigationType": "POP",
+      }
+    }
+  >
+    <BackButton />
+  </Context.Provider>
+</Context.Provider>
+`;
+
+exports[`BackButton snapshot BackButton snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "basename": "/",
+      "navigator": undefined,
+      "static": false,
+    }
+  }
+>
+  <Context.Provider
+    value={
+      Object {
+        "location": Object {
+          "hash": "",
+          "key": "1",
+          "pathname": "/lpn-date-check",
+          "search": "",
+          "state": null,
+        },
+        "navigationType": "POP",
+      }
+    }
+  >
+    <BackButton />
+  </Context.Provider>
+</Context.Provider>
+`;

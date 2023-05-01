@@ -1,5 +1,1 @@
-export const drawerWidth = 240;
-
-export const appBarHeight = 65;
-
-export const selectColor = "#BFB7B0";
+export const APP_BAR_HEIGHT = 65;

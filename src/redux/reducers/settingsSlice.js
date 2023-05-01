@@ -8,6 +8,8 @@ const initialState = {
   },
   selectedWarehouse: "Choose Warehouse",
   warehouses: [],
+  isAppLoading: false,
+  isLoading: false,
 };
 
 export const settingsSlice = createSlice({
@@ -28,6 +30,12 @@ export const settingsSlice = createSlice({
     setWarehouses(state, { payload }) {
       state.warehouses = payload;
     },
+    turnOnLoader(state, { payload }) {
+      state[payload] = true;
+    },
+    turnOffLoader(state, { payload }) {
+      state[payload] = false;
+    },
   },
 });
 
@@ -37,6 +45,8 @@ export const {
   setSelectedWarehouse,
   setWarehouses,
   setApplications,
+  turnOnLoader,
+  turnOffLoader,
 } = settingsSlice.actions;
 
 export const settingsReducer = settingsSlice.reducer;

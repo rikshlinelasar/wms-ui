@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar Component NavBar snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "basename": "/",
+      "navigator": undefined,
+      "static": false,
+    }
+  }
+>
+  <Context.Provider
+    value={
+      Object {
+        "location": Object {
+          "hash": "",
+          "key": "1",
+          "pathname": "/lpn-date-check",
+          "search": "",
+          "state": null,
+        },
+        "navigationType": "POP",
+      }
+    }
+  >
+    <NavBar />
+  </Context.Provider>
+</Context.Provider>
+`;
+
+exports[`NavBar snapshot NavBar snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "basename": "/",
+      "navigator": undefined,
+      "static": false,
+    }
+  }
+>
+  <Context.Provider
+    value={
+      Object {
+        "location": Object {
+          "hash": "",
+          "key": "1",
+          "pathname": "/lpn-date-check",
+          "search": "",
+          "state": null,
+        },
+        "navigationType": "POP",
+      }
+    }
+  >
+    <NavBar />
+  </Context.Provider>
+</Context.Provider>
+`;

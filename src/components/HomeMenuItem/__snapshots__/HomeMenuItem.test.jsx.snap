@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeMenuItem Component HomeMenuItem snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "basename": "/",
+      "navigator": undefined,
+      "static": false,
+    }
+  }
+>
+  <Context.Provider
+    value={
+      Object {
+        "location": Object {
+          "hash": "",
+          "key": "1",
+          "pathname": "/lpn-date-check",
+          "search": "",
+          "state": null,
+        },
+        "navigationType": "POP",
+      }
+    }
+  >
+    <HomeMenuItem
+      description="test"
+      label="test"
+      to="/lpn-date-check"
+    />
+  </Context.Provider>
+</Context.Provider>
+`;
+
+exports[`HomeMenuItem snapshot HomeMenuItem snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "basename": "/",
+      "navigator": undefined,
+      "static": false,
+    }
+  }
+>
+  <Context.Provider
+    value={
+      Object {
+        "location": Object {
+          "hash": "",
+          "key": "1",
+          "pathname": "/lpn-date-check",
+          "search": "",
+          "state": null,
+        },
+        "navigationType": "POP",
+      }
+    }
+  >
+    <HomeMenuItem
+      description="test"
+      label="test"
+      to="/lpn-date-check"
+    />
+  </Context.Provider>
+</Context.Provider>
+`;

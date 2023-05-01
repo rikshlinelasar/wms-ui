@@ -3,8 +3,9 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { render } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
+import ShallowRenderer from "react-shallow-renderer";
 
-import booleanReducer from "../../redux/reducers/booleanSlice";
+import settingsReducer from "../../redux/reducers/settingsSlice";
 import { store } from "../../redux/store";
 import AppLoader from "./AppLoader";
 
@@ -25,10 +26,10 @@ describe("AppLoader Component", () =>
       <Provider
         store={configureStore({
           reducer: combineReducers({
-            booleanReducer: booleanReducer,
+            settingsReducer: settingsReducer,
           }),
           preloadedState: {
-            booleanReducer: {
+            settingsReducer: {
               isAppLoading: true,
               isLoading: false,
             },
@@ -48,10 +49,10 @@ describe("AppLoader Component", () =>
       <Provider
         store={configureStore({
           reducer: combineReducers({
-            booleanReducer: booleanReducer,
+            settingsReducer: settingsReducer,
           }),
           preloadedState: {
-            booleanReducer: {
+            settingsReducer: {
               isAppLoading: false,
               isLoading: true,
             },
@@ -63,4 +64,15 @@ describe("AppLoader Component", () =>
     );
     const loader = getByTestId("application-loader");
     expect(loader).toBeInTheDocument();
+  }));
+
+describe("AppLoader Component", () =>
+  test("AppLoader snapshot", () => {
+    const renderer = new ShallowRenderer();
+    renderer.render(
+      <Provider store={store}>
+        <AppLoader />
+      </Provider>
+    );
+    expect(renderer.getRenderOutput()).toMatchSnapshot();
   }));

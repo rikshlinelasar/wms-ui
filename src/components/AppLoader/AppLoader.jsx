@@ -3,10 +3,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { booleanState } from "../../redux/store";
+import { settingsState } from "../../redux/store";
 
 const AppLoader = () => {
-  const { isAppLoading, isLoading } = useSelector(booleanState);
+  const { isAppLoading, isLoading } = useSelector(settingsState);
 
   return (
     <Backdrop

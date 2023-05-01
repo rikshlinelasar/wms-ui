@@ -1,9 +1,10 @@
 import { useDispatch } from "react-redux";
 
-import { turnOffLoader, turnOnLoader } from "../redux/reducers/booleanSlice";
 import {
   setSelectedWarehouse,
   setWarehouses,
+  turnOffLoader,
+  turnOnLoader,
 } from "../redux/reducers/settingsSlice";
 import { WAREHOUSE_LOCATIONS_API } from "../utilities/constants/api";
 import axios from "../utilities/constants/axios";
@@ -12,7 +13,7 @@ const useGetWarehouseLocations = () => {
   const dispatch = useDispatch();
 
   const getWarehouseLocations = () => {
-    dispatch(turnOnLoader());
+    dispatch(turnOnLoader("isLoading"));
     axios
       .get(WAREHOUSE_LOCATIONS_API)
       .then((res) => {
@@ -20,7 +21,7 @@ const useGetWarehouseLocations = () => {
         dispatch(setSelectedWarehouse(res.data[0].warehouseShortName));
       })
       .catch((e) => console.log(e))
-      .finally(() => dispatch(turnOffLoader()));
+      .finally(() => dispatch(turnOffLoader("isLoading")));
   };
 
   return { getWarehouseLocations };

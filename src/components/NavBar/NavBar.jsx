@@ -5,10 +5,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import logo from "../../assets/images/logo.png";
-import { appBarHeight } from "../../styles/styles";
+import { APP_BAR_HEIGHT } from "../../styles/styles";
 
 const NavBar = () => (
-  <Box sx={{ flexGrow: 1, height: appBarHeight }}>
+  <Box sx={{ flexGrow: 1, height: APP_BAR_HEIGHT }}>
     <AppBar
       position="static"
       color="transparent"

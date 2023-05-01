@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { render } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
+import ShallowRenderer from "react-shallow-renderer";
 
 import settingsReducer from "../../redux/reducers/settingsSlice";
 import { store } from "../../redux/store";
@@ -43,4 +44,15 @@ describe("NotificationModal Component", () =>
     );
     const loader = getByTestId("notification-modal");
     expect(loader).toBeInTheDocument();
+  }));
+
+describe("NotificationModal Component", () =>
+  test("NotificationModal snapshot", () => {
+    const renderer = new ShallowRenderer();
+    renderer.render(
+      <Provider store={store}>
+        <NotificationModal />
+      </Provider>
+    );
+    expect(renderer.getRenderOutput()).toMatchSnapshot();
   }));

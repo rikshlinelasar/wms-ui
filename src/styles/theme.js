@@ -11,6 +11,9 @@ const theme = createTheme({
     gray: {
       main: "#AFA79E",
     },
+    select: {
+      main: "#BFB7B0",
+    },
   },
   components: {
     MuiTableCell: {

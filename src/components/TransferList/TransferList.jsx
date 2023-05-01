@@ -21,6 +21,8 @@ const TransferList = ({
   selected,
   onSelect,
   onSelectAll,
+  renderBy,
+  valueBy,
   ...props
 }) => {
   const [filter, setFilter] = useState("");
@@ -30,21 +32,32 @@ const TransferList = ({
   const renderItems = () =>
     items
       .filter((item) => item.toLowerCase().includes(filter.toLowerCase()))
-      .map((value, i) => (
-        <Fragment key={value}>
-          <Divider />
-          <ListItemButton role="listitem" onClick={() => onSelect(i)}>
-            <Grid container alignItems="center">
-              <Grid item xs={2}>
-                <Checkbox checked={selected.indexOf(value) !== -1} />
+      .map((item, i) => {
+        let [value, text] = [item, item];
+
+        if (renderBy) {
+          text = item[renderBy];
+        }
+        if (valueBy) {
+          value = item[valueBy];
+        }
+
+        return (
+          <Fragment key={value}>
+            <Divider />
+            <ListItemButton role="listitem" onClick={() => onSelect(i)}>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <Checkbox checked={selected.indexOf(value) !== -1} />
+                </Grid>
+                <Grid item>
+                  <ListItemText primary={text} />
+                </Grid>
               </Grid>
-              <Grid item>
-                <ListItemText primary={value} />
-              </Grid>
-            </Grid>
-          </ListItemButton>
-        </Fragment>
-      ));
+            </ListItemButton>
+          </Fragment>
+        );
+      });
 
   return (
     <Grid container direction="column" {...props}>
@@ -107,6 +120,8 @@ TransferList.propTypes = {
   selected: PropTypes.array.isRequired,
   onSelect: PropTypes.func.isRequired,
   onSelectAll: PropTypes.func.isRequired,
+  renderBy: PropTypes.string,
+  valueBy: PropTypes.string,
 };
 
 export default TransferList;

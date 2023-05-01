@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LPNDateTableRow Component LPNDateTableRow snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "getServerState": undefined,
+      "store": Object {
+        "@@observable": [Function],
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Object {
+        "addNestedSub": [Function],
+        "getListeners": [Function],
+        "handleChangeWrapper": [Function],
+        "isSubscribed": [Function],
+        "notifyNestedSubs": [Function],
+        "trySubscribe": [Function],
+        "tryUnsubscribe": [Function],
+      },
+    }
+  }
+>
+  <LocalizationProvider
+    dateAdapter={[Function]}
+  >
+    <LPNDateTableRow
+      index={0}
+      onRowUpdate={[MockFunction]}
+      row={Object {}}
+      saveAllCounter={0}
+      unsavedRowsRef={Object {}}
+    />
+  </LocalizationProvider>
+</Context.Provider>
+`;
+
+exports[`LPNDateTableRow snapshot LPNDateTableRow snapshot 1`] = `
+<Context.Provider
+  value={
+    Object {
+      "getServerState": undefined,
+      "store": Object {
+        "@@observable": [Function],
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Object {
+        "addNestedSub": [Function],
+        "getListeners": [Function],
+        "handleChangeWrapper": [Function],
+        "isSubscribed": [Function],
+        "notifyNestedSubs": [Function],
+        "trySubscribe": [Function],
+        "tryUnsubscribe": [Function],
+      },
+    }
+  }
+>
+  <LocalizationProvider
+    dateAdapter={[Function]}
+  >
+    <LPNDateTableRow
+      index={0}
+      onRowUpdate={[MockFunction]}
+      row={Object {}}
+      saveAllCounter={0}
+      unsavedRowsRef={Object {}}
+    />
+  </LocalizationProvider>
+</Context.Provider>
+`;

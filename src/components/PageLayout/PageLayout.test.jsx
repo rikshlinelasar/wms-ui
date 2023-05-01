@@ -4,6 +4,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Provider } from "react-redux";
 import { Router } from "react-router";
+import ShallowRenderer from "react-shallow-renderer";
 
 import { store } from "../../redux/store";
 import PageLayout from "./PageLayout";
@@ -26,4 +27,17 @@ describe("PageLayout Component", () =>
     expect(logo).toBeInTheDocument();
     expect(loader).toBeInTheDocument();
     expect(modal).toBeNull();
+  }));
+
+describe("PageLayout Component", () =>
+  test("PageLayout snapshot", () => {
+    const renderer = new ShallowRenderer();
+    renderer.render(
+      <Provider store={store}>
+        <Router location={{ ...history.location, key: "1" }}>
+          <PageLayout />
+        </Router>
+      </Provider>
+    );
+    expect(renderer.getRenderOutput()).toMatchSnapshot();
   }));

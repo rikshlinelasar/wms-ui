@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { turnOffAppLoader, turnOnAppLoader } from "../redux/reducers/booleanSlice";
+import { turnOffLoader, turnOnLoader } from "../redux/reducers/settingsSlice";
 import { APPLICATIONS_API } from "../utilities/constants/api";
 import axios from "../utilities/constants/axios";
 
@@ -8,7 +8,7 @@ const useGetApplications = (originalAppsRef, setApps) => {
   const dispatch = useDispatch();
 
   const getApplications = () => {
-    dispatch(turnOnAppLoader());
+    dispatch(turnOnLoader("isAppLoading"));
     axios
       .get(APPLICATIONS_API)
       .then((res) => {
@@ -16,7 +16,7 @@ const useGetApplications = (originalAppsRef, setApps) => {
         setApps(res.data);
       })
       .catch((e) => console.log(e))
-      .finally(() => dispatch(turnOffAppLoader()));
+      .finally(() => dispatch(turnOffLoader("isAppLoading")));
   };
 
   return { getApplications };
