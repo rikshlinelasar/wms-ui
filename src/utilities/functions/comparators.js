@@ -1,10 +1,14 @@
 import { SortOrders } from "../constants/sort";
 
 export const descendingComparator = (a, b, orderBy) => {
-  if (b[orderBy] < a[orderBy] || (!b[orderBy] && a[orderBy])) {
+  const x = typeof a[orderBy] === "string" ? a[orderBy].toLowerCase() : a[orderBy];
+  const y = typeof b[orderBy] === "string" ? b[orderBy].toLowerCase() : b[orderBy];
+  // console.log(x, y);
+
+  if (y < x || (!y && x)) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy] || (!a[orderBy] && b[orderBy])) {
+  if (y > x || (!x && y)) {
     return 1;
   }
   return 0;

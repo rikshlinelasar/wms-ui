@@ -4,6 +4,7 @@ const initialState = {
   notification: {
     isOpen: false,
     title: "",
+    mainMessage: null,
     message: null,
   },
   selectedWarehouse: "Choose Warehouse",
@@ -20,6 +21,7 @@ export const settingsSlice = createSlice({
       state.notification.isOpen = true;
       state.notification.title = payload.title || "";
       state.notification.message = payload.message || "";
+      state.notification.mainMessage = payload.mainMessage || "";
     },
     closeNotification(state) {
       state.notification.isOpen = false;

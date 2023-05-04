@@ -32,6 +32,17 @@ const columns = [
     minWidth: 210,
     isPriorityDate: true,
   },
+  {
+    id: "suggestedCPD",
+    label: "Suggested CPD",
+    minWidth: 180,
+    isSuggestedCPD: true,
+  },
+  {
+    id: "productLifeInDays",
+    label: "Product Life In Days",
+    minWidth: 110,
+  },
   { id: "reason", label: "Reason", minWidth: 150 },
   { id: "dateCode", label: "Date Code", minWidth: 90 },
   {

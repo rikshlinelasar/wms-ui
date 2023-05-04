@@ -31,7 +31,15 @@ const TransferList = ({
 
   const renderItems = () =>
     items
-      .filter((item) => item.toLowerCase().includes(filter.toLowerCase()))
+      .filter((item) => {
+        let value = item;
+
+        if (renderBy) {
+          value = item[renderBy];
+        }
+
+        return value.toLowerCase().includes(filter.toLowerCase());
+      })
       .map((item, i) => {
         let [value, text] = [item, item];
 
@@ -60,11 +68,19 @@ const TransferList = ({
       });
 
   return (
-    <Grid container direction="column" {...props}>
+    <Grid container {...props}>
       <Typography color="primary" fontWeight="500" mb={1}>
         {title}
       </Typography>
-      <Grid item sx={{ height: 330, pt: 3, backgroundColor: colors.grey[100] }}>
+      <Grid
+        item
+        sx={{
+          height: "100%",
+          width: "100%",
+          pt: 3,
+          backgroundColor: colors.grey[100],
+        }}
+      >
         <Grid item>
           <Grid container>
             <Grid item xs={2} />

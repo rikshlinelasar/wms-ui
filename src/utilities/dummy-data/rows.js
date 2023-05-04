@@ -1,4 +1,4 @@
-const rows = [
+const dummyRows = [
   {
     id: "1",
     itemId: "532432",
@@ -14,6 +14,8 @@ const rows = [
     mfgDateDiff: 8,
     manufacturedDate: "2021-06-17T",
     consumptionPriorityDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "2",
@@ -30,6 +32,8 @@ const rows = [
     mfgDateDiff: 8,
     manufacturedDate: "2023-06-17T",
     expirationDate: "2022-04-12",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "3",
@@ -45,6 +49,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "4",
@@ -59,6 +65,7 @@ const rows = [
     trackManufacturingDate: 1,
     trackExpiryDate: 0,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
   },
   {
     id: "5",
@@ -74,6 +81,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "6",
@@ -89,6 +98,8 @@ const rows = [
     trackExpiryDate: 1,
     manufacturedDate: "2022-06-17",
     expirationDate: "2022-03-27",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "7",
@@ -104,6 +115,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "8",
@@ -119,6 +132,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "9",
@@ -134,6 +149,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "10",
@@ -149,6 +166,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "11",
@@ -164,6 +183,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "12",
@@ -179,6 +200,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "13",
@@ -195,6 +218,8 @@ const rows = [
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
     expirationDate: "2022-04-12",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "14",
@@ -210,6 +235,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "15",
@@ -224,6 +251,8 @@ const rows = [
     trackManufacturingDate: 1,
     trackExpiryDate: 0,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "16",
@@ -239,6 +268,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "17",
@@ -254,6 +285,8 @@ const rows = [
     trackExpiryDate: 1,
     manufacturedDate: "2022-06-17",
     expirationDate: "2022-03-27",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "18",
@@ -269,6 +302,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "19",
@@ -284,6 +319,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-11",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "20",
@@ -299,6 +336,8 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
   {
     id: "21",
@@ -314,6 +353,7 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
   },
   {
     id: "22",
@@ -329,7 +369,9 @@ const rows = [
     trackExpiryDate: 1,
     mfgDateDiff: 8,
     manufacturedDate: "2022-06-17",
+    productLifeInDays: 365,
+    suggestedCPD: "2022-08-13",
   },
 ];
 
-export default rows;
+export default dummyRows;

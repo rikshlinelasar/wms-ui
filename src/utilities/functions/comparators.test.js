@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { SortOrders } from "../constants/sort";
-import { descendingComparator, getComparator } from "./sort";
+import { descendingComparator, getComparator } from "./comparators";
 
 describe("descendingComparator", () =>
   test("descendingComparator order", () => {

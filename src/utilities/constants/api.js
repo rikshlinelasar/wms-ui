@@ -9,3 +9,11 @@ export const ADJUST_ONE_API = "/lpndatecheck/save-single-item";
 export const ADJUST_ALL_API = "/lpndatecheck/save-all";
 
 export const APPLICATIONS_API = "/lookup/applications";
+
+export const USERS_API = "/taskgroup/get-users";
+
+export const TASK_GROUP_API = "/taskgroup/get-task-groups";
+
+export const ADD_TASK_GROUPS_API = "/taskgroup/add-task-groups";
+
+export const REMOVE_TASK_GROUPS_API = "/taskgroup/remove-task-groups";

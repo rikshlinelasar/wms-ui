@@ -43,7 +43,12 @@ const NavBar = () => (
       </Link>
       <Button
         color="primary"
-        sx={{ marginLeft: "auto", textTransform: "none", fontWeight: "600" }}
+        sx={{
+          marginLeft: "auto",
+          textTransform: "none",
+          fontWeight: "600",
+          minWidth: 95,
+        }}
       >
         Sign Out
       </Button>

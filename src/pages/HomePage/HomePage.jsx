@@ -7,7 +7,7 @@ import WarhousePicker from "../../components/WarehousePicker/WarehousePicker";
 import useGetApplications from "../../hooks/useGetApplications";
 import applications from "../../utilities/constants/applications";
 import { SortOrders } from "../../utilities/constants/sort";
-import { getComparator } from "../../utilities/functions/sort";
+import { getComparator } from "../../utilities/functions/comparators";
 
 const HomePage = () => {
   const originalAppsRef = useRef(applications);
@@ -32,12 +32,15 @@ const HomePage = () => {
 
   useEffect(() => {
     if (sort !== SortOrders.sort) {
-      setApps(originalAppsRef.current.sort(getComparator(sort, "applicationName")));
+      setApps(
+        [...originalAppsRef.current].sort(getComparator(sort, "applicationName"))
+      );
     } else {
       setApps(originalAppsRef.current);
     }
   }, [sort]);
-
+  console.log(apps);
+  console.log(originalAppsRef.current);
   useEffect(() => {
     getApplications();
   }, []);

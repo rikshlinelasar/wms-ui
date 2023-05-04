@@ -9,20 +9,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeNotification } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
 import ModalTitle from "../ModalTitle/ModalTitle";
-import RowReportNotification from "../ReportNotification/RowReportNotification";
+import ReportNotification from "../ReportNotification/ReportNotification";
 
 const NotificationModal = () => {
   const dispatch = useDispatch();
   const {
-    notification: { isOpen, title, message },
+    notification: { isOpen, title, mainMessage, message },
   } = useSelector(settingsState);
 
   const handleClose = () => dispatch(closeNotification());
 
+  const renderMainMessage = () =>
+    typeof mainMessage === "string" ? (
+      mainMessage
+    ) : (
+      <ReportNotification
+        isSuccess={mainMessage.isSuccess}
+        status={mainMessage.status}
+        message={mainMessage.message}
+        disableBorderBottom={!message || !message.length}
+      />
+    );
+
   const renderMessages = () =>
     message
       ? message.map((report, i) => (
-          <RowReportNotification
+          <ReportNotification
             key={i}
             isSuccess={report.isSuccess}
             status={report.status}
@@ -41,6 +53,7 @@ const NotificationModal = () => {
     >
       <ModalTitle title={title} onClose={handleClose} />
       <DialogContent dividers sx={{ maxHeight: 300, minWidth: 300 }}>
+        {mainMessage ? renderMainMessage() : null}
         {typeof message === "string" ? (
           <Typography gutterBottom>{message}</Typography>
         ) : (

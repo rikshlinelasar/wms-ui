@@ -1,18 +1,18 @@
-import { CalculateOutlined, SaveOutlined } from "@mui/icons-material";
-import { Grid, IconButton, TableCell, TextField } from "@mui/material";
+import { CheckOutlined, SaveOutlined } from "@mui/icons-material";
+import { Fade, Grid, IconButton, TableCell, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import SquareButton from "../../components-styled/SquareButton/SquareButton";
 import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRow";
+import usePostAdjustOne from "../../hooks/usePostAdjustOne";
+import { openNotification } from "../../redux/reducers/settingsSlice";
+import { settingsState } from "../../redux/store";
 import columns from "../../utilities/constants/lpn-date-table-columns";
 import { getDateFromPicker } from "../../utilities/functions/date";
-import { openNotification } from "../../redux/reducers/settingsSlice";
-import usePostAdjustOne from "../../hooks/usePostAdjustOne";
 import { formatRow } from "../../utilities/functions/format";
-import { settingsState } from "../../redux/store";
 
 const LPNDateTableRow = ({
   unsavedRowsRef,
@@ -20,8 +20,12 @@ const LPNDateTableRow = ({
   index,
   onRowUpdate,
   saveAllCounter,
+  setIsPageUpdated,
 }) => {
   const dispatch = useDispatch();
+  const isMftdDateChangedRef = useRef(false);
+  const isExpiredDateChangedRef = useRef(false);
+  const isCPDChangedRef = useRef(false);
   const { selectedWarehouse } = useSelector(settingsState);
   const { postAdjustOne } = usePostAdjustOne();
   const [manufactureDate, setManufactureDate] = useState(
@@ -31,17 +35,14 @@ const LPNDateTableRow = ({
   const [consumptionPriorityDate, setConsumptionPriorityDate] = useState(
     row.consumptionPriorityDate || null
   );
-  const [isMftdDateChanged, setIsMftdDateChanged] = useState(false);
-  const [isExpiredDateChanged, setIsExpiredDateChanged] = useState(false);
-  const [isCPDChanged, setIsCPDChanged] = useState(false);
-  const [isChanged, setIsChanged] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const handleManufactureDateChange = (value) => {
     if (!value) {
       setManufactureDate(null);
       if (row.manufacturedDate) {
-        setIsChanged(true);
-        setIsMftdDateChanged(true);
+        setIsUpdated(true);
+        isMftdDateChangedRef.current = true;
       }
       return;
     }
@@ -49,8 +50,8 @@ const LPNDateTableRow = ({
     const date = getDateFromPicker(value);
 
     if (date !== manufactureDate) {
-      setIsMftdDateChanged(true);
-      setIsChanged(true);
+      isMftdDateChangedRef.current = true;
+      setIsUpdated(true);
       setManufactureDate(date);
     }
   };
@@ -59,8 +60,8 @@ const LPNDateTableRow = ({
     if (!value) {
       setExpirationDate(null);
       if (row.expirationDate) {
-        setIsChanged(true);
-        setIsExpiredDateChanged(true);
+        setIsUpdated(true);
+        isExpiredDateChangedRef.current = true;
       }
       return;
     }
@@ -68,8 +69,8 @@ const LPNDateTableRow = ({
     const date = getDateFromPicker(value);
 
     if (date !== expirationDate) {
-      setIsExpiredDateChanged(true);
-      setIsChanged(true);
+      isExpiredDateChangedRef.current = true;
+      setIsUpdated(true);
       setExpirationDate(date);
     }
   };
@@ -78,8 +79,8 @@ const LPNDateTableRow = ({
     if (!value) {
       setConsumptionPriorityDate(null);
       if (row.consumptionPriorityDate) {
-        setIsChanged(true);
-        setIsCPDChanged(true);
+        setIsUpdated(true);
+        isCPDChangedRef.current = true;
       }
       return;
     }
@@ -87,46 +88,22 @@ const LPNDateTableRow = ({
     const date = typeof value === "string" ? value : getDateFromPicker(value);
 
     if (date !== consumptionPriorityDate) {
-      setIsCPDChanged(true);
-      setIsChanged(true);
+      isCPDChangedRef.current = true;
+      setIsUpdated(true);
       setConsumptionPriorityDate(date);
     }
   };
 
-  const handleDateCalculation = () => {
-    if (row.vintageTier === 3 || row.vintageTier === 2) {
-      const vintageDate = `${row.vintageYear}-01-01`;
-
-      if (consumptionPriorityDate !== vintageDate) {
-        handlePriortyDateChange(vintageDate);
-      }
-    } else if (expirationDate && row.trackExpiryDate) {
-      if (consumptionPriorityDate !== expirationDate) {
-        handlePriortyDateChange(expirationDate);
-      }
-    } else if (manufactureDate && row.trackManufacturingDate) {
-      if (consumptionPriorityDate !== manufactureDate) {
-        handlePriortyDateChange(manufactureDate);
-      }
-    } else {
-      dispatch(
-        openNotification({
-          title: "Error",
-          message:
-            "No Manufacturing or Expiration date to calculate Consumption Priority Date!",
-        })
-      );
-    }
-  };
+  const handleSuggestedCPD = () => handlePriortyDateChange(row.suggestedCPD);
 
   const handlePostAdjustOne = () => {
     postAdjustOne(
       {
         lpnSingleAdjustRequest: formatRow(
           row,
-          isMftdDateChanged,
-          isExpiredDateChanged,
-          isCPDChanged,
+          isMftdDateChangedRef.current,
+          isExpiredDateChangedRef.current,
+          isCPDChangedRef.current,
           manufactureDate,
           expirationDate,
           consumptionPriorityDate,
@@ -135,7 +112,7 @@ const LPNDateTableRow = ({
         location: selectedWarehouse,
       },
       ({ isSuccess, sourceContainerId, message }) => {
-        setIsChanged(false);
+        setIsUpdated(false);
         dispatch(
           openNotification({
             title: "Details",
@@ -158,8 +135,18 @@ const LPNDateTableRow = ({
     );
   };
 
+  const handleReset = () => {
+    setIsUpdated(false);
+    setManufactureDate(row.manufacturedDate || null);
+    setExpirationDate(row.expirationDate || null);
+    setConsumptionPriorityDate(row.consumptionPriorityDate || null);
+    isMftdDateChangedRef.current = false;
+    isExpiredDateChangedRef.current = false;
+    isCPDChangedRef.current = false;
+  };
+
   const handleSave = () => {
-    if (isChanged) {
+    if (isUpdated) {
       handlePostAdjustOne();
     } else {
       dispatch(
@@ -205,9 +192,13 @@ const LPNDateTableRow = ({
             return (
               <Grid container alignItems="center">
                 <Grid item xs={2}>
-                  <IconButton sx={{ p: 0 }} onClick={handleDateCalculation}>
-                    <CalculateOutlined />
-                  </IconButton>
+                  {row.suggestedCPD ? (
+                    <Fade in={consumptionPriorityDate !== row.suggestedCPD}>
+                      <IconButton sx={{ p: 0 }} onClick={handleSuggestedCPD}>
+                        <CheckOutlined />
+                      </IconButton>
+                    </Fade>
+                  ) : null}
                 </Grid>
                 <Grid item xs={10}>
                   <DatePicker
@@ -218,6 +209,19 @@ const LPNDateTableRow = ({
                   />
                 </Grid>
               </Grid>
+            );
+          case column.isSuggestedCPD:
+            if (!value) {
+              break;
+            }
+
+            return (
+              <DatePicker
+                readOnly
+                value={value}
+                inputFormat="MM/DD/YYYY"
+                renderInput={(params) => <TextField size="small" {...params} />}
+              />
             );
           case column.isSave:
             return (
@@ -257,36 +261,29 @@ const LPNDateTableRow = ({
     });
 
   useEffect(() => {
-    setIsChanged(false);
+    handleReset();
   }, [saveAllCounter]);
 
   useEffect(() => {
-    if (isChanged) {
+    if (isUpdated) {
       unsavedRowsRef.current[index] = formatRow(
         row,
-        isMftdDateChanged,
-        isExpiredDateChanged,
-        isCPDChanged,
+        isMftdDateChangedRef.current,
+        isExpiredDateChangedRef.current,
+        isCPDChangedRef.current,
         manufactureDate,
         expirationDate,
         consumptionPriorityDate,
         selectedWarehouse
       );
+      setIsPageUpdated(true);
     }
-  }, [
-    expirationDate,
-    manufactureDate,
-    consumptionPriorityDate,
-    isCPDChanged,
-    isMftdDateChanged,
-    isExpiredDateChanged,
-    isChanged,
-  ]);
+  }, [expirationDate, manufactureDate, consumptionPriorityDate, isUpdated]);
 
   return (
     <StyledTableRow
-      hover={!isChanged}
-      change={isChanged}
+      hover={!isUpdated}
+      change={isUpdated}
       role="checkbox"
       tabIndex={-1}
       key={row.code}
@@ -301,6 +298,7 @@ LPNDateTableRow.propTypes = {
   index: PropTypes.number.isRequired,
   onRowUpdate: PropTypes.func.isRequired,
   unsavedRowsRef: PropTypes.object.isRequired,
+  setIsPageUpdated: PropTypes.func.isRequired,
   saveAllCounter: PropTypes.number.isRequired,
 };
 

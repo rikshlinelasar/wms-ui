@@ -11,10 +11,10 @@ import LPNDateTableHead from "../../components/LPNDateTableHead/LPNDateTableHead
 import LPNDateTableRow from "../../components/LPNDateTableRow/LPNDateTableRow";
 import PageLayout from "../../components/PageLayout/PageLayout";
 import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
-import rows from "../../utilities/constants/rows";
+import dummyRows from "../../utilities/dummy-data/rows";
 import { SortOrders } from "../../utilities/constants/sort";
 import { formatObjectToArray } from "../../utilities/functions/format";
-import { getComparator } from "../../utilities/functions/sort";
+import { getComparator } from "../../utilities/functions/comparators";
 import useGetLPNData from "../../hooks/useGetLPNData";
 import usePostAdjustAll from "../../hooks/usePostAdjustAll";
 import { openNotification } from "../../redux/reducers/settingsSlice";
@@ -27,8 +27,8 @@ const LPNDateCheckPage = () => {
   const { postAdjustAll } = usePostAdjustAll();
   const { selectedWarehouse } = useSelector(settingsState);
   const unsavedRowsRef = useRef({});
-  const filteredRowsRef = useRef([...rows]);
-  const originalRowsRef = useRef([...rows]);
+  const filteredRowsRef = useRef([...dummyRows]);
+  const originalRowsRef = useRef([...dummyRows]);
   const [sort, setSort] = useState(null);
   const [sortOrder, setSortOrder] = useState(SortOrders.asc);
   const [page, setPage] = useState(0);
@@ -38,16 +38,14 @@ const LPNDateCheckPage = () => {
     window.innerHeight - APP_BAR_HEIGHT - 40 - 135
   );
   const [filters, setFilters] = useState({});
-  const [updatedRows, setUpdatedRows] = useState(originalRowsRef.current);
-  const { getLPNData } = useGetLPNData(
-    filteredRowsRef,
-    originalRowsRef,
-    setUpdatedRows
-  );
+  const [rows, setRows] = useState(originalRowsRef.current);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const { getLPNData } = useGetLPNData(filteredRowsRef, originalRowsRef, setRows);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     unsavedRowsRef.current = {};
+    setIsUpdated(false);
     tableContainerRef.current.scrollTo({
       top: 0,
     });
@@ -109,6 +107,9 @@ const LPNDateCheckPage = () => {
   const handleRowUpdate = (i) => {
     delete unsavedRowsRef.current[i];
     originalRowsRef.current.splice(i, 1);
+    if (Object.keys(originalRowsRef.current).length === 0) {
+      setIsUpdated(false);
+    }
     setPage(0);
     handleFilter();
   };
@@ -118,7 +119,7 @@ const LPNDateCheckPage = () => {
     setSort(null);
     setSortOrder(SortOrders.asc);
     setFilters({});
-    setUpdatedRows(originalRowsRef.current);
+    setRows(originalRowsRef.current);
   };
 
   const handleFilter = (currentFilters = filters) => {
@@ -145,11 +146,12 @@ const LPNDateCheckPage = () => {
             }
 
             return row[filterKey]
+              .toString()
               .toLowerCase()
-              .includes(currentFilters[filterKey].toLowerCase());
+              .includes(currentFilters[filterKey].toString().toLowerCase());
           }
 
-          return row[filterKey] === Number(currentFilters[filterKey]);
+          return row[filterKey].toString().includes(currentFilters[filterKey]);
         });
       }
     }
@@ -161,7 +163,15 @@ const LPNDateCheckPage = () => {
       temp = temp.sort(getComparator(sortOrder, sort));
     }
 
-    setUpdatedRows(temp);
+    setSaveAllCounter(saveAllCounter + 1);
+    setIsUpdated(false);
+    setRows(temp);
+  };
+
+  const handleReset = () => {
+    setIsUpdated(false);
+    unsavedRowsRef.current = {};
+    setSaveAllCounter(saveAllCounter + 1);
   };
 
   useEffect(() => {
@@ -182,11 +192,9 @@ const LPNDateCheckPage = () => {
 
   useEffect(() => {
     if (sort === null) {
-      setUpdatedRows(filteredRowsRef.current);
+      setRows(filteredRowsRef.current);
     } else {
-      setUpdatedRows(
-        [...filteredRowsRef.current].sort(getComparator(sortOrder, sort))
-      );
+      setRows([...filteredRowsRef.current].sort(getComparator(sortOrder, sort)));
     }
   }, [sort, sortOrder]);
 
@@ -214,7 +222,7 @@ const LPNDateCheckPage = () => {
             />
             <TableBody>
               {(() => {
-                const paginatedRows = updatedRows.slice(
+                const paginatedRows = rows.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 );
@@ -243,6 +251,7 @@ const LPNDateCheckPage = () => {
                       index={i}
                       saveAllCounter={saveAllCounter}
                       onRowUpdate={handleRowUpdate}
+                      setIsPageUpdated={setIsUpdated}
                     />
                   ))
                 );
@@ -253,14 +262,19 @@ const LPNDateCheckPage = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 50, 100]}
           component="div"
-          count={updatedRows.length}
+          count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
         <Grid container justifyContent="flex-end">
-          <Fade in={Object.keys(filters).length || sort}>
+          <Fade unmountOnExit in={isUpdated}>
+            <Button sx={{ m: 1 }} onClick={handleReset}>
+              Clear Changes
+            </Button>
+          </Fade>
+          <Fade unmountOnExit in={Object.keys(filters).length || sort}>
             <Button variant="contained" sx={{ m: 1 }} onClick={handleClearFilters}>
               Clear Sort/Filter
             </Button>
