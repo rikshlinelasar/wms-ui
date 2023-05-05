@@ -11,7 +11,8 @@ import LPNDateTableRow from "./LPNDateTableRow";
 
 describe("LPNDateTableRow Component", () =>
   test("LPNDateTableRow action", () => {
-    const onRowUpdate = jest.fn();
+    const onRowSave = jest.fn();
+    const setIsPageUpdated = jest.fn();
     const { container } = render(
       <Provider store={store}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -19,7 +20,8 @@ describe("LPNDateTableRow Component", () =>
             row={{}}
             index={0}
             unsavedRowsRef={{}}
-            onRowUpdate={onRowUpdate}
+            onRowSave={onRowSave}
+            setIsPageUpdated={setIsPageUpdated}
             saveAllCounter={0}
           />
         </LocalizationProvider>
@@ -27,12 +29,13 @@ describe("LPNDateTableRow Component", () =>
     );
     const saveButton = container.getElementsByTagName("button")[0];
     fireEvent.click(saveButton);
-    expect(onRowUpdate).not.toBeCalled();
+    expect(onRowSave).not.toBeCalled();
   }));
 
 describe("LPNDateTableRow Component", () =>
   test("LPNDateTableRow snapshot", () => {
-    const onRowUpdate = jest.fn();
+    const onRowSave = jest.fn();
+    const setIsPageUpdated = jest.fn();
     const renderer = new ShallowRenderer();
     renderer.render(
       <Provider store={store}>
@@ -41,7 +44,8 @@ describe("LPNDateTableRow Component", () =>
             row={{}}
             index={0}
             unsavedRowsRef={{}}
-            onRowUpdate={onRowUpdate}
+            onRowSave={onRowSave}
+            setIsPageUpdated={setIsPageUpdated}
             saveAllCounter={0}
           />
         </LocalizationProvider>

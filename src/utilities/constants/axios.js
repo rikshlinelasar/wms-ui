@@ -6,7 +6,7 @@ import { TOKEN_COOKIE } from "./cookies";
 
 const axios = axiosInstance.create({
   baseURL: BASE_URL,
-  timeout: 5000,
+  timeout: 60000,
 });
 
 (() => {

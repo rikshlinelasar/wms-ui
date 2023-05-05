@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const INITIAL_SELECTED_WAREHOUSE = "Choose Warehouse";
+
 const initialState = {
   notification: {
     isOpen: false,
@@ -7,7 +9,7 @@ const initialState = {
     mainMessage: null,
     message: null,
   },
-  selectedWarehouse: "Choose Warehouse",
+  selectedWarehouse: INITIAL_SELECTED_WAREHOUSE,
   warehouses: [],
   isAppLoading: false,
   isLoading: false,

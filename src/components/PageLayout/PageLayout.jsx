@@ -7,6 +7,7 @@ import NavBar from "../NavBar/NavBar";
 import { useSelector } from "react-redux";
 import { settingsState } from "../../redux/store";
 import useGetWarehouseLocations from "../../hooks/useGetWarehouseLocations";
+import ErroryBoundary from "../ErrorBoundary/ErroryBoundary";
 
 const PageLayout = (props) => {
   const { warehouses } = useSelector(settingsState);
@@ -17,14 +18,15 @@ const PageLayout = (props) => {
       getWarehouseLocations();
     }
   }, []);
-
   return (
-    <div>
-      <NavBar />
-      <AppLoader />
-      <NotificationModal />
-      <main {...props} />
-    </div>
+    <ErroryBoundary>
+      <div>
+        <NavBar />
+        <AppLoader />
+        <NotificationModal />
+        <main {...props} />
+      </div>
+    </ErroryBoundary>
   );
 };
 

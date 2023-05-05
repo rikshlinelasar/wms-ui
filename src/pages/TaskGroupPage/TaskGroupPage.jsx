@@ -10,6 +10,7 @@ import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
 import useGetTaskGroups from "../../hooks/useGetTaskGroups";
 import useGetUsers from "../../hooks/useGetUsers";
 import usePostUpdateTaskGroups from "../../hooks/usePostUpdateTaskGroups";
+import { INITIAL_SELECTED_WAREHOUSE } from "../../redux/reducers/settingsSlice";
 import { APP_BAR_HEIGHT } from "../../styles/styles";
 
 const TaskGroupPage = () => {
@@ -80,9 +81,11 @@ const TaskGroupPage = () => {
   const handleRemoveTaskGroups = () => postUpdateTaskGroups(users, taskGroups, true);
 
   useEffect(() => {
-    getUsers();
-    getTaskGroups();
-    handleResetAll();
+    if (selectedWarehouse !== INITIAL_SELECTED_WAREHOUSE) {
+      getUsers();
+      getTaskGroups();
+      handleResetAll();
+    }
   }, [selectedWarehouse]);
 
   useEffect(() => {

@@ -77,6 +77,7 @@ const TransferList = ({
         sx={{
           height: "100%",
           width: "100%",
+          overflow: "auto",
           pt: 3,
           backgroundColor: colors.grey[100],
         }}

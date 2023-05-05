@@ -16,7 +16,9 @@ const AlertModal = ({
 }) => {
   const handleAction = () => {
     onAction();
-    onClose();
+    if (onClose) {
+      onClose();
+    }
   };
 
   return (
@@ -33,9 +35,16 @@ const AlertModal = ({
               {actionLabel}
             </Button>
           ) : null}
-          <Button variant="contained" color="gray" sx={{ ml: 2 }} onClick={onClose}>
-            {cancelLabel}
-          </Button>
+          {onClose ? (
+            <Button
+              variant="contained"
+              color="gray"
+              sx={{ ml: 2 }}
+              onClick={onClose}
+            >
+              {cancelLabel}
+            </Button>
+          ) : null}
         </Grid>
       }
       {...props}
@@ -51,7 +60,7 @@ AlertModal.propTypes = {
   actionLabel: PropTypes.string,
   cancelLabel: PropTypes.string,
   children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   onAction: PropTypes.func,
 };
 

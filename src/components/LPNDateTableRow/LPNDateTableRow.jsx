@@ -18,7 +18,7 @@ const LPNDateTableRow = ({
   unsavedRowsRef,
   row,
   index,
-  onRowUpdate,
+  onRowSave,
   saveAllCounter,
   setIsPageUpdated,
 }) => {
@@ -129,7 +129,7 @@ const LPNDateTableRow = ({
         );
 
         if (isSuccess) {
-          onRowUpdate(index);
+          onRowSave(index);
         }
       }
     );
@@ -296,7 +296,7 @@ const LPNDateTableRow = ({
 LPNDateTableRow.propTypes = {
   row: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  onRowUpdate: PropTypes.func.isRequired,
+  onRowSave: PropTypes.func.isRequired,
   unsavedRowsRef: PropTypes.object.isRequired,
   setIsPageUpdated: PropTypes.func.isRequired,
   saveAllCounter: PropTypes.number.isRequired,

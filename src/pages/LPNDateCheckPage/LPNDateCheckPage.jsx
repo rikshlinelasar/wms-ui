@@ -11,15 +11,18 @@ import LPNDateTableHead from "../../components/LPNDateTableHead/LPNDateTableHead
 import LPNDateTableRow from "../../components/LPNDateTableRow/LPNDateTableRow";
 import PageLayout from "../../components/PageLayout/PageLayout";
 import WarehousePicker from "../../components/WarehousePicker/WarehousePicker";
-import dummyRows from "../../utilities/dummy-data/rows";
-import { SortOrders } from "../../utilities/constants/sort";
-import { formatObjectToArray } from "../../utilities/functions/format";
-import { getComparator } from "../../utilities/functions/comparators";
 import useGetLPNData from "../../hooks/useGetLPNData";
 import usePostAdjustAll from "../../hooks/usePostAdjustAll";
-import { openNotification } from "../../redux/reducers/settingsSlice";
+import {
+  INITIAL_SELECTED_WAREHOUSE,
+  openNotification,
+} from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
 import { APP_BAR_HEIGHT } from "../../styles/styles";
+import { SortOrders } from "../../utilities/constants/sort";
+import dummyRows from "../../utilities/dummy-data/rows";
+import { getComparator } from "../../utilities/functions/comparators";
+import { formatObjectToArray } from "../../utilities/functions/format";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
@@ -53,7 +56,7 @@ const LPNDateCheckPage = () => {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(event.target.value);
-    setPage(0);
+    handleChangePage(undefined, 0);
   };
 
   const handleSaveAll = () => {
@@ -93,7 +96,7 @@ const LPNDateCheckPage = () => {
           });
           setSaveAllCounter(saveAllCounter + 1);
           dispatch(openNotification({ title: "Report", message: report }));
-          setPage(0);
+          handleChangePage(undefined, 0);
           handleFilter();
         }
       );
@@ -104,14 +107,16 @@ const LPNDateCheckPage = () => {
     }
   };
 
-  const handleRowUpdate = (i) => {
+  const handleRowSave = (i) => {
     delete unsavedRowsRef.current[i];
     originalRowsRef.current.splice(i, 1);
-    if (Object.keys(originalRowsRef.current).length === 0) {
+    if (Object.keys(unsavedRowsRef.current).length === 0) {
       setIsUpdated(false);
     }
-    setPage(0);
-    handleFilter();
+    if (rows.length / rowsPerPage < page) {
+      handleChangePage(undefined, 0);
+    }
+    handleFilter(filters, true);
   };
 
   const handleClearFilters = () => {
@@ -122,33 +127,50 @@ const LPNDateCheckPage = () => {
     setRows(originalRowsRef.current);
   };
 
-  const handleFilter = (currentFilters = filters) => {
+  const handleFilter = (currentFilters = filters, isSaveFilter) => {
     let temp = [...originalRowsRef.current];
 
     for (const filterKey in currentFilters) {
       if (currentFilters[filterKey]) {
         temp = temp.filter((row) => {
+          if (!row[filterKey]) {
+            return false;
+          }
+
           if (typeof row[filterKey] === "string") {
             if (
               filterKey === "manufacturedDate" ||
               filterKey === "expirationDate" ||
-              filterKey === "consumptionPriorityDate"
+              filterKey === "consumptionPriorityDate" ||
+              filterKey === "suggestedCPD"
             ) {
-              if (!row[filterKey]) {
-                return false;
+              const dateArray = row[filterKey].split("T")[0].split("-");
+              const date = `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`;
+              const filterArray = currentFilters[filterKey].split("/");
+
+              if (filterArray.length === 2) {
+                return date.includes(
+                  `${filterArray[0]}/${filterArray[1].padStart(2, "0")}`
+                );
+              } else if (filterArray.length === 3) {
+                return date.includes(
+                  `${filterArray[0]}/${filterArray[1].padStart(2, "0")}/${
+                    filterArray[2]
+                  }`
+                );
               }
 
-              const date = row[filterKey].split("T")[0].split("-");
-
-              return `${date[1]}/${date[2]}/${date[0]}`.includes(
-                currentFilters[filterKey].toLowerCase()
-              );
+              return date.includes(currentFilters[filterKey].toLowerCase());
             }
 
             return row[filterKey]
               .toString()
               .toLowerCase()
               .includes(currentFilters[filterKey].toString().toLowerCase());
+          }
+
+          if (filterKey === "lpnQuantityInCases") {
+            return row[filterKey].toFixed(2).includes(currentFilters[filterKey]);
           }
 
           return row[filterKey].toString().includes(currentFilters[filterKey]);
@@ -163,11 +185,14 @@ const LPNDateCheckPage = () => {
       temp = temp.sort(getComparator(sortOrder, sort));
     }
 
-    setSaveAllCounter(saveAllCounter + 1);
-    setIsUpdated(false);
+    if (!isSaveFilter) {
+      unsavedRowsRef.current = {};
+      setSaveAllCounter(saveAllCounter + 1);
+      setIsUpdated(false);
+    }
+
     setRows(temp);
   };
-
   const handleReset = () => {
     setIsUpdated(false);
     unsavedRowsRef.current = {};
@@ -186,8 +211,10 @@ const LPNDateCheckPage = () => {
   }, []);
 
   useEffect(() => {
-    getLPNData();
-    setSaveAllCounter(saveAllCounter + 1);
+    if (selectedWarehouse !== INITIAL_SELECTED_WAREHOUSE) {
+      getLPNData();
+      setSaveAllCounter(saveAllCounter + 1);
+    }
   }, [selectedWarehouse]);
 
   useEffect(() => {
@@ -250,7 +277,7 @@ const LPNDateCheckPage = () => {
                       row={row}
                       index={i}
                       saveAllCounter={saveAllCounter}
-                      onRowUpdate={handleRowUpdate}
+                      onRowSave={handleRowSave}
                       setIsPageUpdated={setIsUpdated}
                     />
                   ))

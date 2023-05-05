@@ -35,39 +35,3 @@ exports[`PageLayout Component PageLayout snapshot 1`] = `
   </Router>
 </Context.Provider>
 `;
-
-exports[`PageLayout snapshot PageLayout snapshot 1`] = `
-<Context.Provider
-  value={
-    Object {
-      "getServerState": undefined,
-      "store": Object {
-        "@@observable": [Function],
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
-        "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
-      },
-    }
-  }
->
-  <Router
-    location={
-      Object {
-        "key": "1",
-      }
-    }
-  >
-    <PageLayout />
-  </Router>
-</Context.Provider>
-`;

@@ -15,7 +15,7 @@ const dummyRows = [
     manufacturedDate: "2021-06-17T",
     consumptionPriorityDate: "2022-06-17",
     productLifeInDays: 365,
-    suggestedCPD: "2022-08-13",
+    suggestedCPD: "2022-08-01",
   },
   {
     id: "2",
