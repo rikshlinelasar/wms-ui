@@ -15,12 +15,14 @@ import { SortOrders } from "../../utilities/constants/sort";
 
 const LPNDateTableHead = ({
   sort,
+  unsavedRowsRef,
   setSort,
   sortOrder,
   setSortOrder,
   filters,
   setFilters,
   onFilter,
+  onChangesModalOpen,
 }) => {
   const handleResetSort = () => {
     setSort(null);
@@ -28,6 +30,11 @@ const LPNDateTableHead = ({
   };
 
   const handleSort = (id) => {
+    if (Object.keys(unsavedRowsRef.current).length !== 0) {
+      onChangesModalOpen();
+      return;
+    }
+
     if (sort !== id) {
       setSort(id);
       setSortOrder(SortOrders.asc);
@@ -39,6 +46,11 @@ const LPNDateTableHead = ({
   };
 
   const handleFilterChange = (e, id) => {
+    if (Object.keys(unsavedRowsRef.current).length !== 0) {
+      onChangesModalOpen();
+      return;
+    }
+
     if (!e.target.value) {
       delete filters[id];
       setFilters({ ...filters });
@@ -101,12 +113,14 @@ const LPNDateTableHead = ({
 
 LPNDateTableHead.propTypes = {
   sort: PropTypes.string,
+  unsavedRowsRef: PropTypes.object.isRequired,
   setSort: PropTypes.func.isRequired,
   sortOrder: PropTypes.string.isRequired,
   setSortOrder: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
+  onChangesModalOpen: PropTypes.func.isRequired,
 };
 
 export default LPNDateTableHead;

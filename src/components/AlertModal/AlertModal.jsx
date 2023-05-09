@@ -7,6 +7,7 @@ import Modal from "../Modal/Modal";
 const AlertModal = ({
   actionLabel = "Ok",
   cancelLabel = "Cancel",
+  removeCancelButton,
   isOpen,
   title,
   children,
@@ -35,7 +36,7 @@ const AlertModal = ({
               {actionLabel}
             </Button>
           ) : null}
-          {onClose ? (
+          {onClose && !removeCancelButton ? (
             <Button
               variant="contained"
               color="gray"
@@ -56,6 +57,7 @@ const AlertModal = ({
 
 AlertModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  removeCancelButton: PropTypes.bool,
   title: PropTypes.string,
   actionLabel: PropTypes.string,
   cancelLabel: PropTypes.string,

@@ -3,7 +3,6 @@ import {
   Checkbox,
   colors,
   Divider,
-  IconButton,
   ListItemButton,
   TextField,
   Typography,
@@ -104,18 +103,14 @@ const TransferList = ({
                 <Grid item xs={9}>
                   <TextField
                     size="small"
-                    inputProps={{ sx: { p: 0.2, pl: 0.5, pr: 0.5 } }}
+                    inputProps={{
+                      sx: { p: 0.5 },
+                    }}
+                    InputProps={{
+                      endAdornment: <FilterAltOutlined color="primary" />,
+                    }}
                     onChange={handleFilterChange}
                   />
-                </Grid>
-                <Grid item>
-                  <IconButton
-                    color="primary"
-                    size="small"
-                    sx={{ ml: 1, width: 24, height: 24 }}
-                  >
-                    <FilterAltOutlined />
-                  </IconButton>
                 </Grid>
               </Grid>
             </Grid>

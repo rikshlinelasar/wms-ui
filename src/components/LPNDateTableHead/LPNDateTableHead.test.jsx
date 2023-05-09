@@ -12,6 +12,7 @@ describe("LPNDateTableHead Component", () =>
     const setSortOrder = jest.fn();
     const setFilters = jest.fn();
     const onFilter = jest.fn();
+    const onChangesModalOpen = jest.fn();
     const { container } = render(
       <table>
         <LPNDateTableHead
@@ -19,8 +20,10 @@ describe("LPNDateTableHead Component", () =>
           sortOrder={SortOrders.asc}
           setSortOrder={setSortOrder}
           filters={{}}
+          unsavedRowsRef={{ current: {} }}
           setFilters={setFilters}
           onFilter={onFilter}
+          onChangesModalOpen={onChangesModalOpen}
         />
       </table>
     );
@@ -40,6 +43,7 @@ describe("LPNDateTableHead Component", () =>
     const setSortOrder = jest.fn();
     const setFilters = jest.fn();
     const onFilter = jest.fn();
+    const onChangesModalOpen = jest.fn();
     const renderer = new ShallowRenderer();
     renderer.render(
       <LPNDateTableHead
@@ -47,8 +51,10 @@ describe("LPNDateTableHead Component", () =>
         sortOrder={SortOrders.asc}
         setSortOrder={setSortOrder}
         filters={{}}
+        unsavedRowsRef={{ current: {} }}
         setFilters={setFilters}
         onFilter={onFilter}
+        onChangesModalOpen={onChangesModalOpen}
       />
     );
     expect(renderer.getRenderOutput()).toMatchSnapshot();

@@ -1,18 +1,18 @@
-import { CheckOutlined, SaveOutlined } from "@mui/icons-material";
-import { Fade, Grid, IconButton, TableCell, TextField, Tooltip } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import PropTypes from "prop-types";
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { CheckOutlined, SaveOutlined } from '@mui/icons-material';
+import { Fade, Grid, IconButton, TableCell, TextField, Tooltip } from '@mui/material';
+import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import SquareButton from "../../components-styled/SquareButton/SquareButton";
-import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRow";
-import usePostAdjustOne from "../../hooks/usePostAdjustOne";
-import { openNotification } from "../../redux/reducers/settingsSlice";
-import { settingsState } from "../../redux/store";
-import columns from "../../utilities/constants/lpn-date-table-columns";
-import { getDateFromPicker } from "../../utilities/functions/date";
-import { formatRow } from "../../utilities/functions/format";
+import SquareButton from '../../components-styled/SquareButton/SquareButton';
+import StyledTableRow from '../../components-styled/StyledTableRow/StyledTableRow';
+import usePostAdjustOne from '../../hooks/usePostAdjustOne';
+import { openNotification } from '../../redux/reducers/settingsSlice';
+import { settingsState } from '../../redux/store';
+import columns from '../../utilities/constants/lpn-date-table-columns';
+import { getDateFromPicker } from '../../utilities/functions/date';
+import { formatRow } from '../../utilities/functions/format';
 
 const LPNDateTableRow = ({
   unsavedRowsRef,
@@ -218,7 +218,7 @@ const LPNDateTableRow = ({
             }
 
             return (
-              <DatePicker
+              <MobileDatePicker
                 readOnly
                 value={value}
                 inputFormat="MM/DD/YYYY"

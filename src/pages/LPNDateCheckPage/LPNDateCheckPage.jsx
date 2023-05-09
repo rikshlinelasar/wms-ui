@@ -23,6 +23,7 @@ import { SortOrders } from "../../utilities/constants/sort";
 import dummyRows from "../../utilities/dummy-data/rows";
 import { getComparator } from "../../utilities/functions/comparators";
 import { formatObjectToArray } from "../../utilities/functions/format";
+import AlertModal from "../../components/AlertModal/AlertModal";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
@@ -43,9 +44,18 @@ const LPNDateCheckPage = () => {
   const [filters, setFilters] = useState({});
   const [rows, setRows] = useState(originalRowsRef.current);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [isChangesModalOpen, setIsChangesModalOpen] = useState(false);
   const { getLPNData } = useGetLPNData(filteredRowsRef, originalRowsRef, setRows);
 
+  const handleChangesModalOpen = () => setIsChangesModalOpen(true);
+
+  const handleChangesModalClose = () => setIsChangesModalOpen(false);
+
   const handleChangePage = (event, newPage) => {
+    if (Object.keys(unsavedRowsRef.current).length !== 0) {
+      handleChangesModalOpen();
+      return;
+    }
     setPage(newPage);
     unsavedRowsRef.current = {};
     setIsUpdated(false);
@@ -55,6 +65,10 @@ const LPNDateCheckPage = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
+    if (Object.keys(unsavedRowsRef.current).length !== 0) {
+      handleChangesModalOpen();
+      return;
+    }
     setRowsPerPage(event.target.value);
     handleChangePage(undefined, 0);
   };
@@ -148,15 +162,22 @@ const LPNDateCheckPage = () => {
               const date = `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`;
               const filterArray = currentFilters[filterKey].split("/");
 
-              if (filterArray.length === 2) {
-                return date.includes(
-                  `${filterArray[0]}/${filterArray[1].padStart(2, "0")}`
+              if (filterArray.length === 2 && filterArray[1] !== "") {
+                return (
+                  date.includes(
+                    `${filterArray[0]}/${filterArray[1].padStart(2, "0")}`
+                  ) || date.includes(`${filterArray[0]}/${filterArray[1]}`)
                 );
-              } else if (filterArray.length === 3) {
-                return date.includes(
-                  `${filterArray[0]}/${filterArray[1].padStart(2, "0")}/${
-                    filterArray[2]
-                  }`
+              } else if (filterArray.length === 3 && filterArray[2] !== "") {
+                return (
+                  date.includes(
+                    `${filterArray[0]}/${filterArray[1].padStart(2, "0")}/${
+                      filterArray[2]
+                    }`
+                  ) ||
+                  date.includes(
+                    `${filterArray[0]}/${filterArray[1]}/${filterArray[2]}`
+                  )
                 );
               }
 
@@ -240,12 +261,14 @@ const LPNDateCheckPage = () => {
           <Table stickyHeader aria-label="sticky table">
             <LPNDateTableHead
               sort={sort}
+              unsavedRowsRef={unsavedRowsRef}
               setSort={setSort}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
               filters={filters}
               setFilters={setFilters}
               onFilter={handleFilter}
+              onChangesModalOpen={handleChangesModalOpen}
             />
             <TableBody>
               {(() => {
@@ -315,6 +338,17 @@ const LPNDateCheckPage = () => {
             Save All
           </Button>
         </Grid>
+        <AlertModal
+          removeCancelButton
+          isOpen={isChangesModalOpen}
+          title="ALERT"
+          actionLabel="OK"
+          onClose={handleChangesModalClose}
+          onAction={handleChangesModalClose}
+        >
+          Please save or clear the changes before filtering, sorting or changing the
+          page!
+        </AlertModal>
       </Grid>
     </PageLayout>
   );
