@@ -1,5 +1,5 @@
 import { CheckOutlined, SaveOutlined } from "@mui/icons-material";
-import { Fade, Grid, IconButton, TableCell, TextField } from "@mui/material";
+import { Fade, Grid, IconButton, TableCell, TextField, Tooltip } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
@@ -194,9 +194,11 @@ const LPNDateTableRow = ({
                 <Grid item xs={2}>
                   {row.suggestedCPD ? (
                     <Fade in={consumptionPriorityDate !== row.suggestedCPD}>
-                      <IconButton sx={{ p: 0 }} onClick={handleSuggestedCPD}>
-                        <CheckOutlined />
-                      </IconButton>
+                      <Tooltip title="Accept suggested Consumption Priority Date">
+                        <IconButton sx={{ p: 0 }} onClick={handleSuggestedCPD}>
+                          <CheckOutlined color="success" />
+                        </IconButton>
+                      </Tooltip>
                     </Fade>
                   ) : null}
                 </Grid>

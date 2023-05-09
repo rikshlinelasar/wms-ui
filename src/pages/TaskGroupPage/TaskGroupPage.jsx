@@ -76,9 +76,9 @@ const TaskGroupPage = () => {
     setSelectedGroups([]);
   };
 
-  const handleAddTaskGroups = () => postUpdateTaskGroups(users, taskGroups);
+  const handleAddTaskGroups = () => postUpdateTaskGroups(selectedUsers, selectedGroups);
 
-  const handleRemoveTaskGroups = () => postUpdateTaskGroups(users, taskGroups, true);
+  const handleRemoveTaskGroups = () => postUpdateTaskGroups(selectedUsers, selectedGroups, true);
 
   useEffect(() => {
     if (selectedWarehouse !== INITIAL_SELECTED_WAREHOUSE) {
@@ -166,7 +166,7 @@ const TaskGroupPage = () => {
       <AlertModal
         isOpen={isAddModalOpen}
         title="PLEASE CONFIRM"
-        actionLabel="Yes, I confirm to remove"
+        actionLabel="Yes, I confirm to add"
         onClose={handleAddModalClose}
         onAction={handleAddTaskGroups}
       >
