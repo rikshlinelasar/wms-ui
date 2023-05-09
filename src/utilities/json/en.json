@@ -22,6 +22,7 @@
   "saveAll": "Save All",
   "clearWarningMessage": "Please save or clear the changes before filtering, sorting or changing the page!",
   "alert": "Alert",
+  "taskGroup": "Task Group",
   "usersListTitle": "Select the user(s) you wish to manage task groups for",
   "users": "Users",
   "taskGroupsListTitle": "Select the task groups you wish to assign for selected users",

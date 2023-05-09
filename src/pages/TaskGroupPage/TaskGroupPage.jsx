@@ -107,7 +107,11 @@ const TaskGroupPage = () => {
       <Grid container direction="column" pt={2} pl={5} pb={2} pr={3}>
         <Grid container alignItems="center" pb={3}>
           <WarehousePicker sx={{ mb: 0.5, mt: 0.5 }} />
-          <Breadcrumbs icon={DateRangeOutlined} label="Task Group" sx={{ ml: 2 }} />
+          <Breadcrumbs
+            icon={DateRangeOutlined}
+            label={en.taskGroup}
+            sx={{ ml: 2 }}
+          />
         </Grid>
         <Grid
           container
