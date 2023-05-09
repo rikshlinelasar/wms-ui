@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import { useNavigate } from "react-router";
 
+import en from "../../utilities/json/en.json";
+
 const HomeMenuItem = ({ to, label, description, ...props }) => {
   const navigate = useNavigate();
 
@@ -35,7 +37,7 @@ const HomeMenuItem = ({ to, label, description, ...props }) => {
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Button variant="contained" onClick={handleNavigate}>
-              View and Manage
+              {en.viewAndManage}
             </Button>
           </Grid>
           <Grid item>

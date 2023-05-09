@@ -1,18 +1,26 @@
-import { CheckOutlined, SaveOutlined } from '@mui/icons-material';
-import { Fade, Grid, IconButton, TableCell, TextField, Tooltip } from '@mui/material';
-import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
-import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { CheckOutlined, SaveOutlined } from "@mui/icons-material";
+import {
+  Fade,
+  Grid,
+  IconButton,
+  TableCell,
+  TextField,
+  Tooltip,
+} from "@mui/material";
+import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
+import PropTypes from "prop-types";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import SquareButton from '../../components-styled/SquareButton/SquareButton';
-import StyledTableRow from '../../components-styled/StyledTableRow/StyledTableRow';
-import usePostAdjustOne from '../../hooks/usePostAdjustOne';
-import { openNotification } from '../../redux/reducers/settingsSlice';
-import { settingsState } from '../../redux/store';
-import columns from '../../utilities/constants/lpn-date-table-columns';
-import { getDateFromPicker } from '../../utilities/functions/date';
-import { formatRow } from '../../utilities/functions/format';
+import SquareButton from "../../components-styled/SquareButton/SquareButton";
+import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRow";
+import usePostAdjustOne from "../../hooks/usePostAdjustOne";
+import { openNotification } from "../../redux/reducers/settingsSlice";
+import { settingsState } from "../../redux/store";
+import columns from "../../utilities/constants/lpn-date-table-columns";
+import { getDateFromPicker } from "../../utilities/functions/date";
+import { formatRow } from "../../utilities/functions/format";
+import en from "../../utilities/json/en.json";
 
 const LPNDateTableRow = ({
   unsavedRowsRef,
@@ -115,14 +123,14 @@ const LPNDateTableRow = ({
         setIsUpdated(false);
         dispatch(
           openNotification({
-            title: "Details",
+            title: en.details,
             message: [
               {
                 message: `${sourceContainerId} ${
-                  isSuccess ? "Saved successfully!" : message
+                  isSuccess ? en.saveSuccessMessage : message
                 }`,
                 isSuccess,
-                status: isSuccess ? "Success" : "Error",
+                status: isSuccess ? en.success : en.error,
               },
             ],
           })
@@ -149,9 +157,7 @@ const LPNDateTableRow = ({
     if (isUpdated) {
       handlePostAdjustOne();
     } else {
-      dispatch(
-        openNotification({ title: "Error", message: "There is nothing to save!" })
-      );
+      dispatch(openNotification({ title: en.error, message: en.saveErrorMessage }));
     }
   };
 
@@ -194,7 +200,7 @@ const LPNDateTableRow = ({
                 <Grid item xs={2}>
                   {row.suggestedCPD ? (
                     <Fade in={consumptionPriorityDate !== row.suggestedCPD}>
-                      <Tooltip title="Accept suggested Consumption Priority Date">
+                      <Tooltip title={en.suggestedCpdTooltip}>
                         <IconButton sx={{ p: 0 }} onClick={handleSuggestedCPD}>
                           <CheckOutlined color="success" />
                         </IconButton>

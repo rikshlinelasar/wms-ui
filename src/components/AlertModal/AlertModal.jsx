@@ -2,11 +2,12 @@ import { Button, Grid, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 
+import en from "../../utilities/json/en.json";
 import Modal from "../Modal/Modal";
 
 const AlertModal = ({
-  actionLabel = "Ok",
-  cancelLabel = "Cancel",
+  actionLabel = en.ok,
+  cancelLabel = en.cancel,
   removeCancelButton,
   isOpen,
   title,

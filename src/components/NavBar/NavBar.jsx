@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import logo from "../../assets/images/logo.png";
 import { APP_BAR_HEIGHT } from "../../styles/styles";
+import en from "../../utilities/json/en.json";
 
 const NavBar = () => (
   <Box sx={{ flexGrow: 1, height: APP_BAR_HEIGHT }}>
@@ -38,7 +39,7 @@ const NavBar = () => (
             },
           })}
         >
-          Warehouse Management
+          {en.title}
         </Typography>
       </Link>
       <Button
@@ -50,7 +51,7 @@ const NavBar = () => (
           minWidth: 95,
         }}
       >
-        Sign Out
+        {en.signOut}
       </Button>
     </AppBar>
   </Box>

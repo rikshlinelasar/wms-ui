@@ -18,6 +18,7 @@ const PageLayout = (props) => {
       getWarehouseLocations();
     }
   }, []);
+
   return (
     <ErroryBoundary>
       <div>

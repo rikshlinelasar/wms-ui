@@ -8,6 +8,7 @@ import useGetApplications from "../../hooks/useGetApplications";
 import applications from "../../utilities/constants/applications";
 import { SortOrders } from "../../utilities/constants/sort";
 import { getComparator } from "../../utilities/functions/comparators";
+import en from "../../utilities/json/en.json";
 
 const HomePage = () => {
   const originalAppsRef = useRef(applications);
@@ -39,8 +40,7 @@ const HomePage = () => {
       setApps(originalAppsRef.current);
     }
   }, [sort]);
-  console.log(apps);
-  console.log(originalAppsRef.current);
+
   useEffect(() => {
     getApplications();
   }, []);
@@ -58,9 +58,9 @@ const HomePage = () => {
               onChange={handleChange}
               sx={{ minWidth: 200 }}
             >
-              <MenuItem value={SortOrders.sort}>Sort</MenuItem>
-              <MenuItem value={SortOrders.asc}>Sort by name ascending</MenuItem>
-              <MenuItem value={SortOrders.desc}>Sort by name descending</MenuItem>
+              <MenuItem value={SortOrders.sort}>{en.sort}</MenuItem>
+              <MenuItem value={SortOrders.asc}>{en.sortNameAsc}</MenuItem>
+              <MenuItem value={SortOrders.desc}>{en.sortNameDesc}</MenuItem>
             </Select>
           </FormControl>
         </Grid>

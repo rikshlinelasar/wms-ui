@@ -11,6 +11,7 @@ import {
   REMOVE_TASK_GROUPS_API,
 } from "../utilities/constants/api";
 import axios from "../utilities/constants/axios";
+import en from "../utilities/json/en.json";
 
 const usePostUpdateTaskGroups = () => {
   const dispatch = useDispatch();
@@ -40,11 +41,11 @@ const usePostUpdateTaskGroups = () => {
         const mainMessage = {
           isSuccess: data.isSuccess,
           message: data.statusMessage,
-          status: data.isSuccess ? "Success" : "Error",
+          status: data.isSuccess ? en.success : en.error,
         };
 
         dispatch(
-          openNotification({ title: "Report", message: report, mainMessage })
+          openNotification({ title: en.report, message: report, mainMessage })
         );
       })
       .catch((e) => console.log(e))

@@ -12,6 +12,7 @@ import useGetUsers from "../../hooks/useGetUsers";
 import usePostUpdateTaskGroups from "../../hooks/usePostUpdateTaskGroups";
 import { INITIAL_SELECTED_WAREHOUSE } from "../../redux/reducers/settingsSlice";
 import { APP_BAR_HEIGHT } from "../../styles/styles";
+import en from "../../utilities/json/en.json";
 
 const TaskGroupPage = () => {
   const { postUpdateTaskGroups } = usePostUpdateTaskGroups();
@@ -76,9 +77,11 @@ const TaskGroupPage = () => {
     setSelectedGroups([]);
   };
 
-  const handleAddTaskGroups = () => postUpdateTaskGroups(selectedUsers, selectedGroups);
+  const handleAddTaskGroups = () =>
+    postUpdateTaskGroups(selectedUsers, selectedGroups);
 
-  const handleRemoveTaskGroups = () => postUpdateTaskGroups(selectedUsers, selectedGroups, true);
+  const handleRemoveTaskGroups = () =>
+    postUpdateTaskGroups(selectedUsers, selectedGroups, true);
 
   useEffect(() => {
     if (selectedWarehouse !== INITIAL_SELECTED_WAREHOUSE) {
@@ -119,8 +122,8 @@ const TaskGroupPage = () => {
         >
           <Grid item xs={12} sm={6} sx={{ height: listHeight }}>
             <TransferList
-              title="Select the user(s) you wish to manage task groups for"
-              label="Users"
+              title={en.usersListTitle}
+              label={en.users}
               renderBy="userId"
               valueBy="userId"
               height="90%"
@@ -132,8 +135,8 @@ const TaskGroupPage = () => {
           </Grid>
           <Grid item xs={12} sm={6} sx={{ height: listHeight }}>
             <TransferList
-              title="Select the task groups you wish to assign for selected users"
-              label="Assigned Task Groups"
+              title={en.taskGroupsListTitle}
+              label={en.assignedTaskGroups}
               renderBy="description"
               valueBy="taskGroupId"
               height="90%"
@@ -151,7 +154,7 @@ const TaskGroupPage = () => {
             startIcon={<Remove />}
             onClick={handleRemoveModalOpen}
           >
-            Remove Task Group
+            {en.removeTaskGroup}
           </Button>
           <Button
             variant="contained"
@@ -159,29 +162,27 @@ const TaskGroupPage = () => {
             startIcon={<Add />}
             onClick={handleAddModalOpen}
           >
-            Add Task Group
+            {en.addTaskGroup}
           </Button>
         </Grid>
       </Grid>
       <AlertModal
         isOpen={isAddModalOpen}
-        title="PLEASE CONFIRM"
-        actionLabel="Yes, I confirm to add"
+        title={en.pleaseConfirm.toUpperCase()}
+        actionLabel={en.confirmToAdd}
         onClose={handleAddModalClose}
         onAction={handleAddTaskGroups}
       >
-        Please confirm if you wish to add the selected users to the selected task
-        groups?
+        {en.addUsersConfirmMessage}
       </AlertModal>
       <AlertModal
         isOpen={isRemoveModalOpen}
-        title="PLEASE CONFIRM"
-        actionLabel="Yes, I confirm to remove"
+        title={en.pleaseConfirm.toUpperCase()}
+        actionLabel={en.confirmToRemove}
         onClose={handleRemoveModalClose}
         onAction={handleRemoveTaskGroups}
       >
-        Please confirm if you wish to remove the selected users from the selected
-        task groups?
+        {en.removeUsersConfirmMessage}
       </AlertModal>
     </PageLayout>
   );

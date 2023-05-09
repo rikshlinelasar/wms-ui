@@ -2,7 +2,10 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSelectedWarehouse } from "../../redux/reducers/settingsSlice";
+import {
+  INITIAL_SELECTED_WAREHOUSE,
+  setSelectedWarehouse,
+} from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
 
 const WarehousePicker = (props) => {
@@ -19,7 +22,9 @@ const WarehousePicker = (props) => {
         </MenuItem>
       ))
     ) : (
-      <MenuItem value="Choose Warehouse">Choose Warehouse</MenuItem>
+      <MenuItem value={INITIAL_SELECTED_WAREHOUSE}>
+        {INITIAL_SELECTED_WAREHOUSE}
+      </MenuItem>
     );
 
   return (

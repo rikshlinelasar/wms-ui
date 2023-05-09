@@ -6,6 +6,7 @@ import TablePagination from "@mui/material/TablePagination";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import AlertModal from "../../components/AlertModal/AlertModal";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import LPNDateTableHead from "../../components/LPNDateTableHead/LPNDateTableHead";
 import LPNDateTableRow from "../../components/LPNDateTableRow/LPNDateTableRow";
@@ -23,7 +24,7 @@ import { SortOrders } from "../../utilities/constants/sort";
 import dummyRows from "../../utilities/dummy-data/rows";
 import { getComparator } from "../../utilities/functions/comparators";
 import { formatObjectToArray } from "../../utilities/functions/format";
-import AlertModal from "../../components/AlertModal/AlertModal";
+import en from "../../utilities/json/en.json";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
@@ -88,10 +89,10 @@ const LPNDateCheckPage = () => {
             ({ sourceContainerId, isSuccess, statusMessage }) => {
               report.push({
                 message: `${sourceContainerId} ${
-                  isSuccess ? "Saved successfully!" : statusMessage
+                  isSuccess ? en.saveSuccessMessage : statusMessage
                 }`,
                 isSuccess,
-                status: isSuccess ? "Success" : "Error",
+                status: isSuccess ? en.success : en.error,
               });
 
               if (isSuccess) {
@@ -109,15 +110,13 @@ const LPNDateCheckPage = () => {
             }
           });
           setSaveAllCounter(saveAllCounter + 1);
-          dispatch(openNotification({ title: "Report", message: report }));
+          dispatch(openNotification({ title: en.report, message: report }));
           handleChangePage(undefined, 0);
           handleFilter();
         }
       );
     } else {
-      dispatch(
-        openNotification({ title: "Error", message: "There is nothing to save!" })
-      );
+      dispatch(openNotification({ title: en.error, message: en.saveErrorMessage }));
     }
   };
 
@@ -253,7 +252,7 @@ const LPNDateCheckPage = () => {
           <WarehousePicker sx={{ mb: 0.5, mt: 0.5 }} />
           <Breadcrumbs
             icon={CheckCircleOutline}
-            label="iLPN Date Check"
+            label={en.ilpnDateCheck}
             sx={{ ml: 2 }}
           />
         </Grid>
@@ -290,7 +289,7 @@ const LPNDateCheckPage = () => {
                       width: 220,
                     }}
                   >
-                    <Typography variant="h4">No records to display</Typography>
+                    <Typography variant="h4">{en.noRecordsMessage}</Typography>
                   </Grid>
                 ) : (
                   paginatedRows.map((row, i) => (
@@ -321,12 +320,12 @@ const LPNDateCheckPage = () => {
         <Grid container justifyContent="flex-end">
           <Fade unmountOnExit in={isUpdated}>
             <Button sx={{ m: 1 }} onClick={handleReset}>
-              Clear Changes
+              {en.clearChanges}
             </Button>
           </Fade>
           <Fade unmountOnExit in={Object.keys(filters).length || sort}>
             <Button variant="contained" sx={{ m: 1 }} onClick={handleClearFilters}>
-              Clear Sort/Filter
+              {en.clearSortFilter}
             </Button>
           </Fade>
           <Button
@@ -335,19 +334,18 @@ const LPNDateCheckPage = () => {
             sx={{ m: 1, mr: 2 }}
             onClick={handleSaveAll}
           >
-            Save All
+            {en.saveAll}
           </Button>
         </Grid>
         <AlertModal
           removeCancelButton
           isOpen={isChangesModalOpen}
-          title="ALERT"
-          actionLabel="OK"
+          title={en.alert.toUpperCase()}
+          actionLabel={en.ok.toUpperCase()}
           onClose={handleChangesModalClose}
           onAction={handleChangesModalClose}
         >
-          Please save or clear the changes before filtering, sorting or changing the
-          page!
+          {en.clearWarningMessage}
         </AlertModal>
       </Grid>
     </PageLayout>

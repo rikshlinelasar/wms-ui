@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { closeNotification } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
+import en from "../../utilities/json/en.json";
 import ModalTitle from "../ModalTitle/ModalTitle";
 import ReportNotification from "../ReportNotification/ReportNotification";
 
@@ -62,7 +63,7 @@ const NotificationModal = () => {
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} sx={{ fontWeight: 600 }}>
-          Ok
+          {en.ok}
         </Button>
       </DialogActions>
     </Dialog>
