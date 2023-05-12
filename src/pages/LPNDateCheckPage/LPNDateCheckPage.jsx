@@ -199,7 +199,6 @@ const LPNDateCheckPage = () => {
     }
 
     filteredRowsRef.current = temp;
-    unsavedRowsRef.current = {};
 
     if (sort) {
       temp = temp.sort(getComparator(sortOrder, sort));
