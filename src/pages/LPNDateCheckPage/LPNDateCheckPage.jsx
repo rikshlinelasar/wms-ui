@@ -199,7 +199,6 @@ const LPNDateCheckPage = () => {
     }
 
     filteredRowsRef.current = temp;
-    unsavedRowsRef.current = {};
 
     if (sort) {
       temp = temp.sort(getComparator(sortOrder, sort));
@@ -338,12 +337,13 @@ const LPNDateCheckPage = () => {
           </Button>
         </Grid>
         <AlertModal
-          removeCancelButton
           isOpen={isChangesModalOpen}
           title={en.alert.toUpperCase()}
-          actionLabel={en.ok.toUpperCase()}
+          actionLabel={en.clearChanges}
+          onAction={handleReset}
+          secondActionLabel={en.saveAll}
+          onSecondAction={handleSaveAll}
           onClose={handleChangesModalClose}
-          onAction={handleChangesModalClose}
         >
           {en.clearWarningMessage}
         </AlertModal>

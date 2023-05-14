@@ -1,5 +1,7 @@
 import { createTheme } from "@mui/material";
 
+import { primaryFontFamily } from "./styles";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -19,7 +21,7 @@ const theme = createTheme({
     MuiTableCell: {
       styleOverrides: {
         root: {
-          fontFamily: "Open Sans",
+          fontFamily: primaryFontFamily,
           fontWeight: "Regular",
           color: "#1D1D1D",
           fontSize: "14px",
@@ -29,7 +31,7 @@ const theme = createTheme({
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          fontFamily: "Open Sans",
+          fontFamily: primaryFontFamily,
           textTransform: "uppercase",
           fontWeight: "600",
         },
@@ -38,7 +40,7 @@ const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          fontFamily: "Open Sans",
+          fontFamily: primaryFontFamily,
           fontWeight: "Regular",
           color: "#1D1D1D",
         },
@@ -64,14 +66,14 @@ const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          fontFamily: "Open Sans",
+          fontFamily: primaryFontFamily,
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          fontFamily: "Open Sans",
+          fontFamily: primaryFontFamily,
           textTransform: "none",
         },
       },
@@ -79,7 +81,7 @@ const theme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          fontFamily: "Open Sans",
+          fontFamily: primaryFontFamily,
         },
       },
     },

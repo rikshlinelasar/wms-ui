@@ -21,6 +21,7 @@ import columns from "../../utilities/constants/lpn-date-table-columns";
 import { getDateFromPicker } from "../../utilities/functions/date";
 import { formatRow } from "../../utilities/functions/format";
 import en from "../../utilities/json/en.json";
+import { TRACK_DATE } from "../../utilities/constants/enums";
 
 const LPNDateTableRow = ({
   unsavedRowsRef,
@@ -169,7 +170,10 @@ const LPNDateTableRow = ({
           case column.format && typeof value === "number":
             return column.format(value);
           case column.isManufactureDate:
-            if (!row.trackManufacturingDate) {
+            if (
+              !row.trackManufacturingDate ||
+              row.trackManufacturingDate === TRACK_DATE.No
+            ) {
               break;
             }
 
@@ -182,7 +186,7 @@ const LPNDateTableRow = ({
               />
             );
           case column.isExpirationDate:
-            if (!row.trackExpiryDate) {
+            if (!row.trackExpiryDate || row.trackExpiryDate === TRACK_DATE.No) {
               break;
             }
 

@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React from "react";
@@ -20,7 +20,6 @@ const App = () => (
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Router>
             <Routes>

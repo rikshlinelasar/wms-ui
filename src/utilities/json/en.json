@@ -20,7 +20,7 @@
   "clearChanges": "Clear Changes",
   "clearSortFilter": "Clear Sort/Filter",
   "saveAll": "Save All",
-  "clearWarningMessage": "Please save or clear the changes before filtering, sorting or changing the page!",
+  "clearWarningMessage": "If you navigate, filter, or sort the page, the modifications will be reverted. Do you want to continue?",
   "alert": "Alert",
   "taskGroup": "Task Group",
   "usersListTitle": "Select the user(s) you wish to manage task groups for",

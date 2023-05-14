@@ -39,7 +39,7 @@ const TransferList = ({
 
         return value.toLowerCase().includes(filter.toLowerCase());
       })
-      .map((item, i) => {
+      .map((item) => {
         let [value, text] = [item, item];
 
         if (renderBy) {
@@ -52,7 +52,7 @@ const TransferList = ({
         return (
           <Fragment key={value}>
             <Divider />
-            <ListItemButton role="listitem" onClick={() => onSelect(i)}>
+            <ListItemButton role="listitem" onClick={() => onSelect(value)}>
               <Grid container alignItems="center">
                 <Grid item xs={2}>
                   <Checkbox checked={selected.indexOf(value) !== -1} />

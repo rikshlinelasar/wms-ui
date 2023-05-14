@@ -34,12 +34,12 @@ const TaskGroupPage = () => {
 
   const handleRemoveModalClose = () => setIsRemoveModalOpen(false);
 
-  const handleUserSelect = (i) => {
-    if (selectedUsers.indexOf(users[i].userId) === -1) {
-      selectedUsers.push(users[i].userId);
+  const handleUserSelect = (id) => {
+    if (selectedUsers.indexOf(id) === -1) {
+      selectedUsers.push(id);
       setSelectedUsers([...selectedUsers]);
     } else {
-      setSelectedUsers(selectedUsers.filter((userId) => userId !== users[i].userId));
+      setSelectedUsers(selectedUsers.filter((userId) => userId !== id));
     }
   };
 
@@ -51,16 +51,12 @@ const TaskGroupPage = () => {
     }
   };
 
-  const handleGroupSelect = (i) => {
-    if (selectedGroups.indexOf(taskGroups[i].taskGroupId) === -1) {
-      selectedGroups.push(taskGroups[i].taskGroupId);
+  const handleGroupSelect = (id) => {
+    if (selectedGroups.indexOf(id) === -1) {
+      selectedGroups.push(id);
       setSelectedGroups([...selectedGroups]);
     } else {
-      setSelectedGroups(
-        selectedGroups.filter(
-          (taskGroupId) => taskGroupId !== taskGroups[i].taskGroupId
-        )
-      );
+      setSelectedGroups(selectedGroups.filter((taskGroupId) => taskGroupId !== id));
     }
   };
 
