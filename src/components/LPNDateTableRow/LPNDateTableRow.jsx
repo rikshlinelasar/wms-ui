@@ -120,7 +120,7 @@ const LPNDateTableRow = ({
         ),
         location: selectedWarehouse,
       },
-      ({ isSuccess, sourceContainerId, message }) => {
+      ({ isSuccess, sourceContainerId, statusMessage }) => {
         setIsUpdated(false);
         dispatch(
           openNotification({
@@ -128,7 +128,7 @@ const LPNDateTableRow = ({
             message: [
               {
                 message: `${sourceContainerId} ${
-                  isSuccess ? en.saveSuccessMessage : message
+                  isSuccess ? en.saveSuccessMessage : statusMessage
                 }`,
                 isSuccess,
                 status: isSuccess ? en.success : en.error,
