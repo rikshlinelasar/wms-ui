@@ -43,7 +43,7 @@ const columns = [
     label: "Product Life In Days",
     minWidth: 110,
   },
-  { id: "reason", label: "Reason", minWidth: 150 },
+  { id: "reason", label: "Reason", minWidth: 250 },
   { id: "dateCode", label: "Date Code", minWidth: 90 },
   {
     id: "trackManufacturingDate",

@@ -105,7 +105,7 @@ const LPNDateCheckPage = () => {
             const index = originalRowsRef.current.findIndex(
               ({ ilpnId }) => ilpnId === id
             );
-            if (index > 0) {
+            if (index >= 0) {
               originalRowsRef.current.splice(index, 1);
             }
           });
@@ -131,6 +131,15 @@ const LPNDateCheckPage = () => {
     }
     handleFilter(filters, true);
   };
+
+  const handleRowSaveFailed = (i) => {
+    const id = unsavedRowsRef.current[i].ilpnId;
+    const originalRow = originalRowsRef.current.filter(({ ilpnId }) => ilpnId === id);
+    const index = rows.findIndex(({ilpnId}) => ilpnId === id);
+    rows[index] = originalRow;
+    delete unsavedRowsRef.current[i];
+    handleFilter(filters, true);
+  }
 
   const handleClearFilters = () => {
     filteredRowsRef.current = [...originalRowsRef.current];
@@ -299,6 +308,7 @@ const LPNDateCheckPage = () => {
                       index={i}
                       saveAllCounter={saveAllCounter}
                       onRowSave={handleRowSave}
+                      onRowSaveFailed={handleRowSaveFailed}
                       setIsPageUpdated={setIsUpdated}
                     />
                   ))
