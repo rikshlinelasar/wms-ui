@@ -28,6 +28,7 @@ const LPNDateTableRow = ({
   row,
   index,
   onRowSave,
+  onRowSaveFailed,
   saveAllCounter,
   setIsPageUpdated,
 }) => {
@@ -120,7 +121,7 @@ const LPNDateTableRow = ({
         ),
         location: selectedWarehouse,
       },
-      ({ isSuccess, sourceContainerId, message }) => {
+      ({ isSuccess, sourceContainerId, statusMessage }) => {
         setIsUpdated(false);
         dispatch(
           openNotification({
@@ -128,7 +129,7 @@ const LPNDateTableRow = ({
             message: [
               {
                 message: `${sourceContainerId} ${
-                  isSuccess ? en.saveSuccessMessage : message
+                  isSuccess ? en.saveSuccessMessage : statusMessage
                 }`,
                 isSuccess,
                 status: isSuccess ? en.success : en.error,
@@ -139,6 +140,8 @@ const LPNDateTableRow = ({
 
         if (isSuccess) {
           onRowSave(index);
+        } else {
+          onRowSaveFailed(index);
         }
       }
     );
@@ -309,6 +312,7 @@ LPNDateTableRow.propTypes = {
   row: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   onRowSave: PropTypes.func.isRequired,
+  onRowSaveFailed: PropTypes.func.isRequired,
   unsavedRowsRef: PropTypes.object.isRequired,
   setIsPageUpdated: PropTypes.func.isRequired,
   saveAllCounter: PropTypes.number.isRequired,
