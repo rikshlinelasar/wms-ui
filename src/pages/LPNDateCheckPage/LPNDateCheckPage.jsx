@@ -1,9 +1,14 @@
-import { CheckCircleOutline, SaveOutlined } from "@mui/icons-material";
+import {
+  CheckCircleOutline,
+  ExitToAppOutlined,
+  SaveOutlined,
+} from "@mui/icons-material";
 import { Button, Fade, Grid, TableContainer, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
 import React, { useEffect, useRef, useState } from "react";
+import { CSVLink } from "react-csv";
 import { useDispatch, useSelector } from "react-redux";
 
 import AlertModal from "../../components/AlertModal/AlertModal";
@@ -29,6 +34,7 @@ import en from "../../utilities/json/en.json";
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
   const tableContainerRef = useRef();
+  const csvLinkRef = useRef();
   const { postAdjustAll } = usePostAdjustAll();
   const { selectedWarehouse } = useSelector(settingsState);
   const unsavedRowsRef = useRef({});
@@ -133,13 +139,15 @@ const LPNDateCheckPage = () => {
   };
 
   const handleRowSaveFailed = (i) => {
-    const id = unsavedRowsRef.current[i].ilpnId;
-    const originalRow = originalRowsRef.current.filter(({ ilpnId }) => ilpnId === id);
-    const index = rows.findIndex(({ilpnId}) => ilpnId === id);
-    rows[index] = originalRow;
     delete unsavedRowsRef.current[i];
-    handleFilter(filters, true);
-  }
+    const id = rows[i].ilpnId;
+    const originalRowIndex = originalRowsRef.current.findIndex(
+      ({ ilpnId }) => ilpnId === id
+    );
+    const temp = [...rows];
+    temp[i] = { ...originalRowsRef.current[originalRowIndex] };
+    setRows(temp);
+  };
 
   const handleClearFilters = () => {
     filteredRowsRef.current = [...originalRowsRef.current];
@@ -221,11 +229,14 @@ const LPNDateCheckPage = () => {
 
     setRows(temp);
   };
+
   const handleReset = () => {
     setIsUpdated(false);
     unsavedRowsRef.current = {};
     setSaveAllCounter(saveAllCounter + 1);
   };
+
+  const handleCSVExport = () => csvLinkRef.current.link.click();
 
   useEffect(() => {
     const resizeListener = () =>
@@ -345,7 +356,24 @@ const LPNDateCheckPage = () => {
           >
             {en.saveAll}
           </Button>
+          <Button
+            variant="contained"
+            data={originalRowsRef.current}
+            endIcon={<ExitToAppOutlined />}
+            sx={{ m: 1, mr: 2 }}
+            onClick={handleCSVExport}
+          >
+            {en.export}
+          </Button>
         </Grid>
+        <CSVLink
+          ref={csvLinkRef}
+          data={originalRowsRef.current}
+          filename="rndc.csv"
+          style={{ display: "none" }}
+        >
+          {en.export}
+        </CSVLink>
         <AlertModal
           isOpen={isChangesModalOpen}
           title={en.alert.toUpperCase()}

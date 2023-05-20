@@ -277,7 +277,7 @@ const LPNDateTableRow = ({
 
   useEffect(() => {
     handleReset();
-  }, [saveAllCounter]);
+  }, [saveAllCounter, row]);
 
   useEffect(() => {
     if (isUpdated) {
